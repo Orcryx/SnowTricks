@@ -14,48 +14,26 @@ class Comment
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $createAt = null;
-
-    #[ORM\Column]
-    private ?\DateTimeImmutable $updateAt = null;
-
     #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
 
-    #[ORM\Column]
-    private ?int $trick = null;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $createAt = null;
 
-    #[ORM\Column]
-    private ?int $user = null;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $updateAt = null;
+
+    #[ORM\ManyToOne(inversedBy: 'comments')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Trick $trick = null;
+
+    #[ORM\ManyToOne(inversedBy: 'comments')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getCreateAt(): ?\DateTimeImmutable
-    {
-        return $this->createAt;
-    }
-
-    public function setCreateAt(\DateTimeImmutable $createAt): static
-    {
-        $this->createAt = $createAt;
-
-        return $this;
-    }
-
-    public function getUpdateAt(): ?\DateTimeImmutable
-    {
-        return $this->updateAt;
-    }
-
-    public function setUpdateAt(\DateTimeImmutable $updateAt): static
-    {
-        $this->updateAt = $updateAt;
-
-        return $this;
     }
 
     public function getContent(): ?string
@@ -70,24 +48,48 @@ class Comment
         return $this;
     }
 
-    public function getTrick(): ?int
+    public function getCreateAt(): ?\DateTimeInterface
+    {
+        return $this->createAt;
+    }
+
+    public function setCreateAt(\DateTimeInterface $createAt): static
+    {
+        $this->createAt = $createAt;
+
+        return $this;
+    }
+
+    public function getUpdateAt(): ?\DateTimeInterface
+    {
+        return $this->updateAt;
+    }
+
+    public function setUpdateAt(\DateTimeInterface $updateAt): static
+    {
+        $this->updateAt = $updateAt;
+
+        return $this;
+    }
+
+    public function getTrick(): ?Trick
     {
         return $this->trick;
     }
 
-    public function setTrick(int $trick): static
+    public function setTrick(?Trick $trick): static
     {
         $this->trick = $trick;
 
         return $this;
     }
 
-    public function getUser(): ?int
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    public function setUser(int $user): static
+    public function setUser(?User $user): static
     {
         $this->user = $user;
 

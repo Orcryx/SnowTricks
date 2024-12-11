@@ -3,6 +3,9 @@
 namespace App\Entity;
 
 use App\Repository\CategoryRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
@@ -16,14 +19,22 @@ class Category
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $createAt = null;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $createAt = null;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $updateAt = null;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $updateAt = null;
 
-    #[ORM\OneToMany(mappedBy: 'category', targetEntity: Trick::class)]
-    private ?int $trick = null;
+    /**
+     * @var Collection<int, Trick>
+     */
+    #[ORM\OneToMany(targetEntity: Trick::class, mappedBy: 'category')]
+    private Collection $tricks;
+
+    public function __construct()
+    {
+        $this->tricks = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -42,38 +53,56 @@ class Category
         return $this;
     }
 
-    public function getCreateAt(): ?\DateTimeImmutable
+    public function getCreateAt(): ?\DateTimeInterface
     {
         return $this->createAt;
     }
 
-    public function setCreateAt(\DateTimeImmutable $createAt): static
+    public function setCreateAt(\DateTimeInterface $createAt): static
     {
         $this->createAt = $createAt;
 
         return $this;
     }
 
-    public function getUpdateAt(): ?\DateTimeImmutable
+    public function getUpdateAt(): ?\DateTimeInterface
     {
         return $this->updateAt;
     }
 
-    public function setUpdateAt(\DateTimeImmutable $updateAt): static
+    public function setUpdateAt(\DateTimeInterface $updateAt): static
     {
         $this->updateAt = $updateAt;
 
         return $this;
     }
 
-    public function getTrick(): ?int
+    /**
+     * @return Collection<int, Trick>
+     */
+    public function getTricks(): Collection
     {
-        return $this->trick;
+        return $this->tricks;
     }
 
-    public function setTrick(int $trick): static
+    public function addTrick(Trick $trick): static
     {
-        $this->trick = $trick;
+        if (!$this->tricks->contains($trick)) {
+            $this->tricks->add($trick);
+            $trick->setCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTrick(Trick $trick): static
+    {
+        if ($this->tricks->removeElement($trick)) {
+            // set the owning side to null (unless already changed)
+            if ($trick->getCategory() === $this) {
+                $trick->setCategory(null);
+            }
+        }
 
         return $this;
     }

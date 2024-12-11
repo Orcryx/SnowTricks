@@ -3,6 +3,9 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -13,36 +16,49 @@ class User
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255, unique: true)]
+    #[ORM\Column(length: 255)]
     private ?string $pseudo = null;
 
     #[ORM\Column(length: 255)]
     private ?string $password = null;
 
     #[ORM\Column]
-    private ?bool $isValidated = false;
+    private ?bool $isValidated = null;
 
-    #[ORM\Column(length: 255, unique: true)]
+    #[ORM\Column(length: 255)]
     private ?string $email = null;
 
     #[ORM\Column]
-    private ?int $role = 1;
+    private ?int $role = null;
 
-    #[ORM\OneToMany(targetEntity: Avatar::class, inversedBy: 'user')]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $createAt = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $updateAt = null;
+
+    #[ORM\OneToOne(inversedBy: 'user', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    private ?int $avatar = null;
+    private ?Avatar $avatar = null;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $createAt = null;
+    /**
+     * @var Collection<int, Trick>
+     */
+    #[ORM\OneToMany(targetEntity: Trick::class, mappedBy: 'user')]
+    private Collection $tricks;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $updateAt = null;
+    /**
+     * @var Collection<int, Comment>
+     */
+    #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'user')]
+    private Collection $comments;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Trick::class, orphanRemoval: true)]
-    private ?int $trick = null;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Comment::class, orphanRemoval: true)]
-    private ?int $comment = null;
+    public function __construct()
+    {
+        $this->tricks = new ArrayCollection();
+        $this->comments = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -109,62 +125,98 @@ class User
         return $this;
     }
 
-    public function getAvatar(): ?int
-    {
-        return $this->avatar;
-    }
-
-    public function setAvatar(int $avatar): static
-    {
-        $this->avatar = $avatar;
-
-        return $this;
-    }
-
-    public function getCreateAt(): ?\DateTimeImmutable
+    public function getCreateAt(): ?\DateTimeInterface
     {
         return $this->createAt;
     }
 
-    public function setCreateAt(\DateTimeImmutable $createAt): static
+    public function setCreateAt(\DateTimeInterface $createAt): static
     {
         $this->createAt = $createAt;
 
         return $this;
     }
 
-    public function getUpdateAt(): ?\DateTimeImmutable
+    public function getUpdateAt(): ?\DateTimeInterface
     {
         return $this->updateAt;
     }
 
-    public function setUpdateAt(\DateTimeImmutable $updateAt): static
+    public function setUpdateAt(\DateTimeInterface $updateAt): static
     {
         $this->updateAt = $updateAt;
 
         return $this;
     }
 
-    public function getTrick(): ?int
+    public function getAvatar(): ?Avatar
     {
-        return $this->trick;
+        return $this->avatar;
     }
 
-    public function setTrick(int $trick): static
+    public function setAvatar(Avatar $avatar): static
     {
-        $this->trick = $trick;
+        $this->avatar = $avatar;
 
         return $this;
     }
 
-    public function getComment(): ?int
+    /**
+     * @return Collection<int, Trick>
+     */
+    public function getTricks(): Collection
     {
-        return $this->comment;
+        return $this->tricks;
     }
 
-    public function setComment(int $comment): static
+    public function addTrick(Trick $trick): static
     {
-        $this->comment = $comment;
+        if (!$this->tricks->contains($trick)) {
+            $this->tricks->add($trick);
+            $trick->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTrick(Trick $trick): static
+    {
+        if ($this->tricks->removeElement($trick)) {
+            // set the owning side to null (unless already changed)
+            if ($trick->getUser() === $this) {
+                $trick->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Comment>
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): static
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments->add($comment);
+            $comment->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): static
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getUser() === $this) {
+                $comment->setUser(null);
+            }
+        }
 
         return $this;
     }

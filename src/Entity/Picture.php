@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\PictureRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PictureRepository::class)]
@@ -19,15 +20,15 @@ class Picture
     #[ORM\Column(length: 255)]
     private ?string $src = null;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $createAt = null;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $createAt = null;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $updateAt = null;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $updateAt = null;
 
-    #[ORM\ManyToOne(targetEntity: Trick::class, inversedBy: 'picture')]
+    #[ORM\ManyToOne(inversedBy: 'picture')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?int $trick = null;
+    private ?Trick $trick = null;
 
     public function getId(): ?int
     {
@@ -58,36 +59,36 @@ class Picture
         return $this;
     }
 
-    public function getCreateAt(): ?\DateTimeImmutable
+    public function getCreateAt(): ?\DateTimeInterface
     {
         return $this->createAt;
     }
 
-    public function setCreateAt(\DateTimeImmutable $createAt): static
+    public function setCreateAt(\DateTimeInterface $createAt): static
     {
         $this->createAt = $createAt;
 
         return $this;
     }
 
-    public function getUpdateAt(): ?\DateTimeImmutable
+    public function getUpdateAt(): ?\DateTimeInterface
     {
         return $this->updateAt;
     }
 
-    public function setUpdateAt(\DateTimeImmutable $updateAt): static
+    public function setUpdateAt(\DateTimeInterface $updateAt): static
     {
         $this->updateAt = $updateAt;
 
         return $this;
     }
 
-    public function getTrick(): ?int
+    public function getTrick(): ?Trick
     {
         return $this->trick;
     }
 
-    public function setTrick(int $trick): static
+    public function setTrick(?Trick $trick): static
     {
         $this->trick = $trick;
 

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\AvatarRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AvatarRepository::class)]
@@ -19,14 +20,14 @@ class Avatar
     #[ORM\Column(length: 255)]
     private ?string $src = null;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $createAt = null;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $createAt = null;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $updateAt = null;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $updateAt = null;
 
-    #[ORM\ManyToOne(mappedBy: 'user', targetEntity: User::class, orphanRemoval: true)]
-    private ?int $user = null;
+    #[ORM\OneToOne(mappedBy: 'avatar', cascade: ['persist', 'remove'])]
+    private ?User $user = null;
 
     public function getId(): ?int
     {
@@ -57,37 +58,42 @@ class Avatar
         return $this;
     }
 
-    public function getCreateAt(): ?\DateTimeImmutable
+    public function getCreateAt(): ?\DateTimeInterface
     {
         return $this->createAt;
     }
 
-    public function setCreateAt(\DateTimeImmutable $createAt): static
+    public function setCreateAt(\DateTimeInterface $createAt): static
     {
         $this->createAt = $createAt;
 
         return $this;
     }
 
-    public function getUpdateAt(): ?\DateTimeImmutable
+    public function getUpdateAt(): ?\DateTimeInterface
     {
         return $this->updateAt;
     }
 
-    public function setUpdateAt(\DateTimeImmutable $updateAt): static
+    public function setUpdateAt(\DateTimeInterface $updateAt): static
     {
         $this->updateAt = $updateAt;
 
         return $this;
     }
 
-    public function getUser(): ?int
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    public function setUser(int $user): static
+    public function setUser(User $user): static
     {
+        // set the owning side of the relation if necessary
+        if ($user->getAvatar() !== $this) {
+            $user->setAvatar($this);
+        }
+
         $this->user = $user;
 
         return $this;

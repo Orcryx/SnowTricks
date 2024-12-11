@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\TrickRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -17,37 +19,50 @@ class Trick
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
-    #[ORM\Column(length: 255, unique: true)]
-    private ?string $pictureDefault = null;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $createAt = null;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $createAt = null;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $updateAt = null;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $updateAt = null;
-
-    #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'trick')]
+    #[ORM\ManyToOne(inversedBy: 'tricks')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?int $category = null;
+    private ?Category $category = null;
 
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'trick')]
+    #[ORM\ManyToOne(inversedBy: 'tricks')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?int $user = null;
+    private ?User $user = null;
 
-    #[ORM\Column(length: 255, unique: true)]
+    /**
+     * @var Collection<int, Picture>
+     */
+    #[ORM\OneToMany(targetEntity: Picture::class, mappedBy: 'trick', orphanRemoval: true)]
+    private Collection $picture;
+
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $slug = null;
 
-    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Picture::class, cascade: ['persist'], orphanRemoval: true)]
-    private ?int $picture = null;
+    /**
+     * @var Collection<int, Video>
+     */
+    #[ORM\OneToMany(targetEntity: Video::class, mappedBy: 'trick', orphanRemoval: true)]
+    private Collection $video;
 
-    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Video::class, cascade: ['persist'], orphanRemoval: true)]
-    private ?int $video = null;
+    /**
+     * @var Collection<int, Comment>
+     */
+    #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'trick')]
+    private Collection $comments;
 
-    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Comment::class, orphanRemoval: true)]
-    private ?int $comment = null;
+    public function __construct()
+    {
+        $this->picture = new ArrayCollection();
+        $this->video = new ArrayCollection();
+        $this->comments = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -71,69 +86,87 @@ class Trick
         return $this->description;
     }
 
-    public function setDescription(string $description): static
+    public function setDescription(?string $description): static
     {
         $this->description = $description;
 
         return $this;
     }
 
-    public function getPictureDefault(): ?string
-    {
-        return $this->pictureDefault;
-    }
-
-    public function setPictureDefault(string $pictureDefault): static
-    {
-        $this->pictureDefault = $pictureDefault;
-
-        return $this;
-    }
-
-    public function getCreateAt(): ?\DateTimeImmutable
+    public function getCreateAt(): ?\DateTimeInterface
     {
         return $this->createAt;
     }
 
-    public function setCreateAt(\DateTimeImmutable $createAt): static
+    public function setCreateAt(\DateTimeInterface $createAt): static
     {
         $this->createAt = $createAt;
 
         return $this;
     }
 
-    public function getUpdateAt(): ?\DateTimeImmutable
+    public function getUpdateAt(): ?\DateTimeInterface
     {
         return $this->updateAt;
     }
 
-    public function setUpdateAt(\DateTimeImmutable $updateAt): static
+    public function setUpdateAt(\DateTimeInterface $updateAt): static
     {
         $this->updateAt = $updateAt;
 
         return $this;
     }
 
-    public function getCategory(): ?int
+    public function getCategory(): ?Category
     {
         return $this->category;
     }
 
-    public function setCategory(int $category): static
+    public function setCategory(?Category $category): static
     {
         $this->category = $category;
 
         return $this;
     }
 
-    public function getUser(): ?int
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    public function setUser(int $user): static
+    public function setUser(?User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Picture>
+     */
+    public function getPicture(): Collection
+    {
+        return $this->picture;
+    }
+
+    public function addPicture(Picture $picture): static
+    {
+        if (!$this->picture->contains($picture)) {
+            $this->picture->add($picture);
+            $picture->setTrick($this);
+        }
+
+        return $this;
+    }
+
+    public function removePicture(Picture $picture): static
+    {
+        if ($this->picture->removeElement($picture)) {
+            // set the owning side to null (unless already changed)
+            if ($picture->getTrick() === $this) {
+                $picture->setTrick(null);
+            }
+        }
 
         return $this;
     }
@@ -143,45 +176,69 @@ class Trick
         return $this->slug;
     }
 
-    public function setSlug(string $slug): static
+    public function setSlug(?string $slug): static
     {
         $this->slug = $slug;
 
         return $this;
     }
 
-    public function getPicture(): ?int
-    {
-        return $this->picture;
-    }
-
-    public function setPicture(int $picture): static
-    {
-        $this->picture = $picture;
-
-        return $this;
-    }
-
-    public function getVideo(): ?int
+    /**
+     * @return Collection<int, Video>
+     */
+    public function getVideo(): Collection
     {
         return $this->video;
     }
 
-    public function setVideo(int $video): static
+    public function addVideo(Video $video): static
     {
-        $this->video = $video;
+        if (!$this->video->contains($video)) {
+            $this->video->add($video);
+            $video->setTrick($this);
+        }
 
         return $this;
     }
 
-    public function getComment(): ?int
+    public function removeVideo(Video $video): static
     {
-        return $this->comment;
+        if ($this->video->removeElement($video)) {
+            // set the owning side to null (unless already changed)
+            if ($video->getTrick() === $this) {
+                $video->setTrick(null);
+            }
+        }
+
+        return $this;
     }
 
-    public function setComment(int $comment): static
+    /**
+     * @return Collection<int, Comment>
+     */
+    public function getComments(): Collection
     {
-        $this->comment = $comment;
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): static
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments->add($comment);
+            $comment->setTrick($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): static
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getTrick() === $this) {
+                $comment->setTrick(null);
+            }
+        }
 
         return $this;
     }
