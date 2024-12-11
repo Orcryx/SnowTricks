@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SnowTricks - Accueil{% endblock %}
+
+{% block sectionOne %}
+ <hero>HeroBannière</hero>
+ <h1></h1>
+ <a href="#gallery">
+    <i class="fa-solid fa-arrow-down"></i>
+ </a>
+{% endblock %}
+
+{% block sectionTwo %}
+<div id="gallery" class="flex"> 
+    <h2>Gallery Tricks</h2>
+    <div class="card flex-center">
+        <div class="card-image"></div> 
+        <div class="card-content">
+            <h2>Carte 1</h2>
+            <p>Contenu de la première carte.</p>
+        </div>
+    </div>
+    <div class="card flex-center">
+        <div class="card-image"></div> 
+        <div class="card-content">
+            <h2>Carte 2</h2>
+            <p>Contenu de la deuxième carte.</p>
+        </div>
+    </div>
+    <div class="card flex-center">
+        <div class="card-image"></div> 
+        <div class="card-content">
+            <h2>Carte 3</h2>
+            <p>Contenu de la troisième carte.</p>
+        </div>
+    </div>
+    <button id="btn-moreTricks"> Plus de tricks</button>
+</div>
+ <a href="#gallery">
+   <i class="fa-solid fa-arrow-up"></i>
+ </a>
+{% endblock %}

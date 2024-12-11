@@ -28,9 +28,6 @@ class User
     #[ORM\Column(length: 255)]
     private ?string $email = null;
 
-    #[ORM\Column]
-    private ?int $role = null;
-
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $createAt = null;
 
@@ -52,6 +49,9 @@ class User
      */
     #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'user')]
     private Collection $comments;
+
+    #[ORM\Column(nullable: false)]
+    private ?array $roles = null;
 
 
     public function __construct()
@@ -113,17 +113,7 @@ class User
         return $this;
     }
 
-    public function getRole(): ?int
-    {
-        return $this->role;
-    }
 
-    public function setRole(int $role): static
-    {
-        $this->role = $role;
-
-        return $this;
-    }
 
     public function getCreateAt(): ?\DateTimeInterface
     {
@@ -217,6 +207,18 @@ class User
                 $comment->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getRoles(): ?array
+    {
+        return $this->roles;
+    }
+
+    public function setRoles(?array $roles): static
+    {
+        $this->roles = $roles;
 
         return $this;
     }
