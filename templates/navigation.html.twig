@@ -1,11 +1,15 @@
 <nav class="navbar flex-between">
     <div>
         <i></i>
-        <a href="#home">SnowTricks</a>
+        <a href="{{ path('app_home') }}">SnowTricks</a>
     </div>
     <div>
-        <a href="#home">HOME</a>
-        <a href="#geister">REGISTER</a>
-        <a href="#login">LOGIN</a>
+        <a href="{{ path('app_home') }}">Accueil</a>
+        <a href="{{ path('app_register') }}">Créer un compte</a>
+        {% if app.user %}
+            <a href="{{ path('app_logout') }}">Se déconnecter</a>
+        {% else %}
+          <a href="{{ path('app_login') }}">Se connecter</a>
+        {% endif %}   
     </div>
 </nav>

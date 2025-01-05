@@ -27,8 +27,7 @@ class Comment
     #[ORM\JoinColumn(nullable: false)]
     private ?Trick $trick = null;
 
-    #[ORM\ManyToOne(inversedBy: 'comments')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(inversedBy: 'comment')]
     private ?User $user = null;
 
     public function getId(): ?int

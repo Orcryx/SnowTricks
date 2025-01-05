@@ -66,6 +66,11 @@ hero , h1
     text-shadow: 1px 1px 4px #000;
 }
 
+input, button
+{
+    color: #000;
+}
+
 /*
 *LES CLASS*
 */
@@ -141,14 +146,14 @@ hero , h1
 }
 
  /* Image pour les cartes impaires */
-.card:nth-child(odd) .card-image {
+/* .card:nth-child(odd) .card-image {
     background-image: url("b1.jpg");
-}
+} */
 
 /* Image pour les cartes paires */
-.card:nth-child(even) .card-image {
+/* .card:nth-child(even) .card-image {
     background-image: url("b2.jpg"); 
-}
+} */
 
 .card-content {
     width: 100%;
