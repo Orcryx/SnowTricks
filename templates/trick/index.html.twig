@@ -1,17 +1,55 @@
 {% extends 'base.html.twig' %}
-{% block title %}SnowTricks - Accueil{% endblock %}
+{% block title %}SnowTricks - Accueil
+{% endblock %}
 
 {% block sectionOne %}
- <div id="picture-trick">
-    <h1>Nom de la figure</h1>
- </div>
+	<pre>
+	{{ dump(trick) }}
+</pre>
+	<div id="picture-trick">
+		{% for picture in trick.picture %}
+			{% if picture.name == "default" %}
+				<img src="{{ picture.src}}" alt="Image présentant la figure {{ trick.name }}">
+			{% endif %}
+		{% endfor %}
+		<h1>{{trick.name}}</h1>
+		<h2>{{ trick.user.pseudo }}</h2>
+	</div>
 {% endblock %}
 
 {% block sectionTwo %}
-<div id="gallery" class="flex"> Gallery Tricks 
-  CARD avec image et video
-</div>
-<div id="comment" class="flex"> Gallery Tricks 
-  <div>Zone de commentaire</div>
-</div>
+	<div class="flex-column-center">
+		<details id="gallery" class="flex" open>
+			<summary>GALERIE</summary>
+			<div>
+				<div id="gallery-img">
+					{% for picture in trick.picture %}
+						<img src="{{ picture.src}}" alt="Image présentant la figure {{ trick.name }}">
+					{% endfor %}
+				</div>
+				<div id="gallery-video">
+					{% for video in trick.video %}
+						<video controls width="250">
+							<source src="{{ video.src}}" type="video/webm"/>
+							<a href="{{ video.src}}">MP4</a>
+							<source src="{{ video.src}}" type="video/mp4"/>
+						</video>
+					{% endfor %}
+				</div>
+			</div>
+		</details>
+		<details open>
+			<summary>DETAILS</summary>
+			<p>{{ trick.category.name }}</p>
+		</details>
+		<details id="comment" class="flex">
+			<summary>COMMENTAIRES</summary>
+
+			{% for comment in trick.comments %}
+				<div class="comment-bloc">
+					<p>{{ comment.content}}"</p>
+				</div>
+			{% endfor %}
+		</details>
+	</div>
 {% endblock %}
