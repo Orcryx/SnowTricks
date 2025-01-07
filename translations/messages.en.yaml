@@ -4,4 +4,6 @@ Pseudo: 'Username'
 Avatar: 'Profile Picture'
 Plain password: 'Password'
 Agree terms: 'Agree to terms and conditions'
-Envoyer: Send
+Envoyer: 'Send'
+New password : 'New password'
+Repeat Password : 'Repeat Password'
