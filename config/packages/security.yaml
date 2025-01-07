@@ -21,6 +21,13 @@ security:
                 login_path: app_login
                 check_path: app_login
                 enable_csrf: true
+                # remember_me:
+                #     secret: '%kernel.secret%'
+                #     lifetime: 604800 # 1 week in seconds
+                    # by default, the feature is enabled by checking a
+                    # checkbox in the login form (see below), uncomment the
+                    # following line to always enable it.
+                    # always_remember_me: true
             logout:
                 path: app_logout
                 # where to redirect after logout
