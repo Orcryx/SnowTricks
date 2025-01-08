@@ -40,11 +40,11 @@
 				<div id="gallery-video">
 					{% for video in trick.video %}
 						{# <video controls width="250">
-																																																																															<source src="{{ video.src}}" type="video/webm"/>
-																																																																															<a href="{{ video.src}}">MP4</a>
-																																																																															<source src="{{ video.src}}" type="video/mp4"/>
-																																																																														</video>
-																																																																														<iframe id="video{{ video.id}}" title="Inline Frame Example {{ video.name}}" width="300" height="200" src="{{ video.src}}"></iframe> #}
+																																																																																																													<source src="{{ video.src}}" type="video/webm"/>
+																																																																																																													<a href="{{ video.src}}">MP4</a>
+																																																																																																													<source src="{{ video.src}}" type="video/mp4"/>
+																																																																																																												</video>
+																																																																																																												<iframe id="video{{ video.id}}" title="Inline Frame Example {{ video.name}}" width="300" height="200" src="{{ video.src}}"></iframe> #}
 					{% endfor %}
 				</div>
 			</div>
@@ -58,11 +58,12 @@
 			<button type="button" class="btn">
 				<i class="fa-solid fa-pen"></i>
 			</button>
-			{% for comment in trick.comments %}
-				<div class="comment-bloc">
-					<p>{{ comment.content}}"</p>
-				</div>
-			{% endfor %}
-		</details>
-	</div>
-{% endblock %}
+			{{form(form)}}
+				{% for comment in trick.comments %}
+					<div class="comment-bloc">
+						<p>{{ comment.content}}"</p>
+					</div>
+				{% endfor %}
+			</details>
+		</div>
+	{% endblock %}

@@ -2,14 +2,17 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Repository\TrickRepository;
+use App\Repository\CommentRepository;
 use App\Entity\Trick;
 use App\Form\TrickType;
+use App\Form\CommentType;
 
 class TrickController extends AbstractController
 {
@@ -57,17 +60,49 @@ class TrickController extends AbstractController
     }
 
     #[Route('/trick/{slug}{id}', name: 'app_trick')]
-    public function trick(Request $request, TrickRepository $trickRepository, string $slug, int $id): Response
+    public function trick(Request $request, EntityManagerInterface $entityManager, TrickRepository $trickRepository, int $id): Response
     {
         // $trick = $trickRepository->findOneBy(['slug' => $slug]);
+
+        // Récupérer le Trick à partir de l'ID
         $trick = $trickRepository->find($id);
+        if (!$trick) {
+            throw $this->createNotFoundException('Le trick demandé n\'existe pas.');
+        }
+
+        $comment = new Comment();
+        $user = $this->getUser();
+
+        // Vérifier que cette méthode existe dans l'entité Comment
+        $comment->setTrick($trick);
+
+        // Créer le formulaire pour le commentaire
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        // Si le formulaire est soumis et valide
+        if ($form->isSubmitted() && $form->isValid()) {
+            $comment->setCreateAt(new \DateTime());
+            $comment->setUpdateAt(new \DateTime());
+            $comment->setUser($user);
+            $entityManager->persist($comment);
+            $entityManager->flush();
+            $this->addFlash('success', 'Modification effectuée');
+
+            // Redirige vers la page du trick 
+            return $this->redirectToRoute('app_trick', [
+                'slug' => $trick->getSlug(),
+                'id' => $trick->getId(),
+            ]);
+        }
         return $this->render('trick/index.html.twig', [
             'trick' => $trick,
+            'form' => $form
         ]);
     }
 
     #[Route('/trick/{id}/edit', name: 'app_trick_edit',  methods: ['GET', 'POST'])]
-    public function edit(Trick $trick, Request $request, TrickRepository $trickRepository, EntityManagerInterface $entityManager, int $id): Response
+    public function edit(Trick $trick, Request $request, EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
         $form = $this->createForm(TrickType::class, $trick);
@@ -92,7 +127,7 @@ class TrickController extends AbstractController
     }
 
     #[Route('/trick/{id}/delete', name: 'app_trick_remove', methods: ['DELETE'])]
-    public function remove(Trick $trick, Request $request, TrickRepository $trickRepository, EntityManagerInterface $entityManager, int $id): Response
+    public function remove(Trick $trick, EntityManagerInterface $entityManager): Response
     {
 
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
