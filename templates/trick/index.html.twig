@@ -4,6 +4,19 @@
 
 {% block sectionOne %}
 	<div id="picture-trick">
+		<div id="btnZone" class="flex">
+			<a href="{{ path('app_trick_edit',{id : trick.id}) }}">
+				<button type="button" class="btn">
+					<i class="fa-solid fa-pen"></i>
+				</button>
+			</a>
+			<form action="{{ path('app_trick_remove',{id : trick.id}) }}" method="POST">
+				<input type="hidden" name="_method" value="DELETE">
+				<button type="submit" class="btn">
+					<i class="fa-solid fa-trash"></i>
+				</button>
+			</form>
+		</div>
 		{% for picture in trick.picture %}
 			{% if picture.name == "default" %}
 				<img src="{{ picture.src}}" alt="Image présentant la figure {{ trick.name }}">
@@ -27,11 +40,11 @@
 				<div id="gallery-video">
 					{% for video in trick.video %}
 						{# <video controls width="250">
-													<source src="{{ video.src}}" type="video/webm"/>
-													<a href="{{ video.src}}">MP4</a>
-													<source src="{{ video.src}}" type="video/mp4"/>
-												</video>
-												<iframe id="video{{ video.id}}" title="Inline Frame Example {{ video.name}}" width="300" height="200" src="{{ video.src}}"></iframe> #}
+																																																																															<source src="{{ video.src}}" type="video/webm"/>
+																																																																															<a href="{{ video.src}}">MP4</a>
+																																																																															<source src="{{ video.src}}" type="video/mp4"/>
+																																																																														</video>
+																																																																														<iframe id="video{{ video.id}}" title="Inline Frame Example {{ video.name}}" width="300" height="200" src="{{ video.src}}"></iframe> #}
 					{% endfor %}
 				</div>
 			</div>

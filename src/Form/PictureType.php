@@ -16,16 +16,16 @@ class PictureType extends AbstractType
         $builder
             ->add('name')
             ->add('src')
-            ->add('createAt', null, [
-                'widget' => 'single_text',
-            ])
-            ->add('updateAt', null, [
-                'widget' => 'single_text',
-            ])
-            ->add('trick', EntityType::class, [
-                'class' => Trick::class,
-'choice_label' => 'id',
-            ])
+            // ->add('createAt', null, [
+            //     'widget' => 'single_text',
+            // ])
+            // ->add('updateAt', null, [
+            //     'widget' => 'single_text',
+            // ])
+            // ->add('trick', EntityType::class, [
+            //     'class' => Trick::class,
+            //     'choice_label' => 'id',
+            // ])
         ;
     }
 

@@ -241,4 +241,21 @@ class Trick
 
         return $this;
     }
+
+    // Méthode pour générer le slug
+    public function generateSlug(): void
+    {
+        // Si le nom n'est pas défini, ne génère pas de slug
+        if (null === $this->name) {
+            return;
+        }
+        // Remplacer les espaces par des tirets et convertir en minuscule
+        $slug = preg_replace('/\s+/', '-', $this->name);
+        $slug = strtolower($slug);
+
+        // Enlever les caractères non-alphanumériques sauf les tirets
+        $slug = preg_replace('/[^a-z0-9-]/', '', $slug);
+
+        $this->slug = $slug;
+    }
 }

@@ -1,0 +1,11 @@
+{# <pre>
+			{{ dump(app.flashes) }}
+		</pre> #}
+{% for type, messages in app.flashes %}
+	<div id="flash" class="{{ type }}">
+		<i class="fa-solid {{ type == 'success' ? 'fa-check' : (type == 'error' ? 'fa-bell' : 'fa-triangle-exclamation') }}"></i>
+		{% for message in messages %}
+			<p class="flash-message">{{ message }}</p>
+		{% endfor %}
+	</div>
+{% endfor %}
