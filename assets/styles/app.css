@@ -9,6 +9,10 @@
     color: #f2f2f2;
 }
 
+a{
+    text-decoration: none;
+
+}
 nav 
 {
     overflow: hidden;
@@ -49,9 +53,9 @@ footer, contain:after
 section
 {
     height: 100vh;
-    background: #948E99;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #2E1437, #948E99);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #2E1437, #948E99); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: #adbabf;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #070d29, #adbabf);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #070d29, #adbabf); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
     padding: 20px;
 
@@ -125,7 +129,8 @@ input, button
 
 .card {
     width: 33%;
-    height: 450px;
+    min-width: 350px;
+    height: 350px;
     position: relative;
     padding: 10px;
     border-radius: 25px;
@@ -145,15 +150,15 @@ input, button
     border-radius: 25px;
 }
 
- /* Image pour les cartes impaires */
-/* .card:nth-child(odd) .card-image {
+ /* Image pour les cartes impaires */ */
+.card:nth-child(odd) .card-image {
     background-image: url("b1.jpg");
-} */
+} 
 
 /* Image pour les cartes paires */
-/* .card:nth-child(even) .card-image {
+.card:nth-child(even) .card-image {
     background-image: url("b2.jpg"); 
-} */
+}
 
 .card-content {
     width: 100%;
@@ -163,6 +168,8 @@ input, button
     
     text-align: center;
 
+    overflow: hidden;
+
     z-index: 1; /* Place le contenu au-dessus de l'image floutée */
 
     background-color: rgb(0,0,0); /* Fallback color */
@@ -171,3 +178,5 @@ input, button
     border: 3px solid #f1f1f1;
     border-radius: 25px;
   }
+
+  
