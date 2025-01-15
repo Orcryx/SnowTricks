@@ -19,8 +19,10 @@ class HomeController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function index(): Response
     {
+        // Récupération de tous les tricks via le manager
         $tricks = $this->trickManager->getAllTricks();
 
+        // Rendu du template Twig avec les données des tricks
         return $this->render('home/index.html.twig', [
             'tricks' => $tricks,
         ]);

@@ -35,16 +35,16 @@ class Trick
     /**
      * @var Collection<int, Picture>
      */
-    #[ORM\OneToMany(targetEntity: Picture::class, mappedBy: 'trick', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Picture::class, mappedBy: 'trick',  cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $picture;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 255, unique: true, nullable: true)]
     private ?string $slug = null;
 
     /**
      * @var Collection<int, Video>
      */
-    #[ORM\OneToMany(targetEntity: Video::class, mappedBy: 'trick', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Video::class, mappedBy: 'trick',  cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $video;
 
     /**
@@ -245,6 +245,7 @@ class Trick
     // Méthode pour générer le slug
     public function generateSlug(): void
     {
+        // ::todo : FIND BY SLUG EN CONDITION
         // Si le nom n'est pas défini, ne génère pas de slug
         if (null === $this->name) {
             return;
@@ -254,8 +255,8 @@ class Trick
         $slug = strtolower($slug);
 
         // Enlever les caractères non-alphanumériques sauf les tirets
-        $slug = preg_replace('/[^a-z0-9-]/', '', $slug);
-
+        // $slug = preg_replace('/[^a-z0-9-]/', '', $slug);
+        // TODO : TRIM
         $this->slug = $slug;
     }
 }

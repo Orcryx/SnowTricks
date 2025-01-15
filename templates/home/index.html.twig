@@ -19,7 +19,7 @@
 {% block sectionTwo %}
 	<div id="gallery" class="flex">
 		{% for trick in tricks %}
-			<a href="{{ path('app_trick',{slug: trick.slug, id : trick.id}) }}">
+			<a href="{{ path('app_trick_show',{slug: trick.slug}) }}">
 				<div class="card flex-center">
 					<div class="card-image"></div>
 					<div class="card-content">

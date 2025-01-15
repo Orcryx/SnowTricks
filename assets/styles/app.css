@@ -8,14 +8,23 @@
     font-family: "Poppins", sans-serif;
     color: #f2f2f2;
 }
+
+label, input, textarea, select
+{
+  color: #000;
+
+}
+
 button
 {
     cursor: pointer;;
 }
+
 a{
     text-decoration: none;
 
 }
+
 nav 
 {
     overflow: hidden;
@@ -68,7 +77,7 @@ section
 
 }
 
-hero , h1
+hero , h1, h2
 {
     text-shadow: 1px 1px 4px #000;
 }
@@ -128,6 +137,7 @@ input, button
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 5px;
 }
 
 .flex-between
@@ -138,7 +148,8 @@ input, button
 
 .flex-column-center
 {
-   
+    display: flex;
+    flex-direction: column;
     align-items: center;
     
 }
@@ -153,6 +164,7 @@ input, button
 .flex
 {
     display: flex;
+    gap: 5px;
 }
 
 .three
@@ -163,9 +175,9 @@ input, button
 /**LES CARDS*/
 
 .card {
-    width: 33%;
-    min-width: 350px;
-    height: 350px;
+    width: 20%;
+    min-width: 300px;
+    height: 300px;
     position: relative;
     padding: 10px;
     border-radius: 25px;
@@ -214,4 +226,21 @@ input, button
     border-radius: 25px;
   }
 
-  
+  .card-content img
+  {
+    width: 100%;
+  }
+
+  #formTrick
+  {
+    padding: 20px;
+    border-radius: 15px;
+    background-color: #f2f2f2;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  }
+
+
+  #gallery
+  {
+    width: 100%;
+  }

@@ -3,18 +3,13 @@
 namespace App\Manager;
 
 use App\Entity\Trick;
-use App\Entity\Comment;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\TrickRepository;
 use Symfony\Component\Form\FormInterface;
 
 class TrickManager implements TrickManagerInterface
 {
-    private EntityManagerInterface $entityManager;
 
-    public function __construct(EntityManagerInterface $entityManager)
-    {
-        $this->entityManager = $entityManager;
-    }
+    public function __construct(private readonly TrickRepository $trickRepository) {}
 
     /**
      * Récupère tous les tricks.
@@ -23,38 +18,37 @@ class TrickManager implements TrickManagerInterface
      */
     public function getAllTricks(): array
     {
-        return $this->entityManager->getRepository(Trick::class)->findAll();
+        return $this->trickRepository->findAll();
     }
 
     public function createTrick(Trick $trick): void
     {
+        $currentDate = new \DateTime();
+
         $trick->setCreateAt(new \DateTime());
         $trick->setUpdateAt(new \DateTime());
         $trick->generateSlug();
-        $this->entityManager->persist($trick);
-        $this->entityManager->flush();
+        foreach ($trick->getPicture() as $picture) {
+            $picture->setCreateAt($currentDate);
+            $picture->setUpdateAt($currentDate);
+        }
+
+        foreach ($trick->getVideo() as $video) {
+            $video->setCreateAt($currentDate);
+            $video->setUpdateAt($currentDate);
+        }
+        $this->trickRepository->save($trick);
     }
 
-    public function updateTrick(Trick $trick): void
-    {
-        $trick->setUpdateAt(new \DateTime());
-        $trick->generateSlug();
-        $this->entityManager->flush();
-    }
 
     public function deleteTrick(Trick $trick): void
     {
-        $this->entityManager->remove($trick);
-        $this->entityManager->flush();
+        $this->trickRepository->save($trick);
     }
 
-    public function handleCommentForm(Comment $comment, FormInterface $form): void
+
+    public function getTrick(string $slug): Trick
     {
-        if ($form->isSubmitted() && $form->isValid()) {
-            $comment->setCreateAt(new \DateTime());
-            $comment->setUpdateAt(new \DateTime());
-            $this->entityManager->persist($comment);
-            $this->entityManager->flush();
-        }
+        return $this->trickRepository->findOneBy(['slug' => $slug]);
     }
 }

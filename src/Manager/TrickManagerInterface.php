@@ -15,7 +15,8 @@ interface TrickManagerInterface
      */
     public function getAllTricks(): array;
     public function createTrick(Trick $trick): void;
-    public function updateTrick(Trick $trick): void;
+    // public function updateTrick(Trick $trick): void;
     public function deleteTrick(Trick $trick): void;
-    public function handleCommentForm(Comment $comment, FormInterface $form): void;
+    // public function handleCommentForm(Comment $comment, FormInterface $form): void;
+    public function getTrick(string $slug): Trick;
 }

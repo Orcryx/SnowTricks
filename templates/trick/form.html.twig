@@ -1,16 +1,105 @@
-{% extends 'base.html.twig' %}
+{% extends 'layout.html.twig' %}
 
-{% block title %}Reset your password
+{% block title %}
+Formulaire Trick
+{% endblock %}
+
+{% block javascripts %}
+
 {% endblock %}
 
 {% block sectionOne %}
-	{% for flash_error in app.flashes('reset_password_error') %}
+	{% for flash_error in app.flashes('') %}
 		<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
 	{% endfor %}
-	<h1>Créer un twig</h1>
-	{{form(form)}}{% endblock %}
-	{% block sectionTwo %}
-		<p>
-			Information du twig
-		</p>
-	{% endblock %}
+
+	<div id="formTrick" class="flex-column">
+		<h1>Editer un Trick</h1>
+		<div class="form-error">
+				{{ form_errors(form) }}
+		</div>
+		<div class="form-row">
+			{{ form_start(form , {'method': 'POST'}) }}
+   				{{ form_row(form.name) }}
+				{{ form_row(form.category) }}
+				{{ form_row(form.description) }}
+				<h2>Images</h2>
+				<button type="button" class="add_item_link" data-collection-holder-class="picture">Ajouter une image</button>
+				<ul class="picture"
+				  	data-index="{{ form.picture|length > 0 ? form.picture|last.vars.name + 1 : 0 }}"
+   					data-prototype="{{ form_widget(form.picture.vars.prototype)|e('html_attr') }}"
+				>
+        			{% for picture in form.picture %}
+					<div class="picture-data">
+					
+						<li>{{ form_row(picture.src) }}</li>
+						<li>{{ form_row(picture.name) }}</li>
+						
+					</div>
+           		 		
+        			{% endfor %}
+    			</ul>
+				
+				<h2>Video</h2>
+				<button type="button" class="add_item_link" data-collection-holder-class="video">Ajouter une video</button> 
+
+				<ul class="video"
+					data-index="{{ form.video|length > 0 ? form.video|last.vars.name + 1 : 0 }}"
+   					data-prototype="{{ form_widget(form.video.vars.prototype)|e('html_attr') }}"
+				>
+        			{% for video in form.video %}
+           		 		<li>{{ form_row(video.src) }}</li>
+        			{% endfor %}
+    			</ul>
+
+			{{ form_end(form) }}
+		</div>
+	</div>
+
+<script>
+
+document.querySelectorAll('.add_item_link')
+  .forEach(btn => {
+      btn.addEventListener("click", addFormToCollection)
+  });
+
+document.querySelectorAll('ul.picture div.picture-data')
+    .forEach((picture) => {
+        addTagFormDeleteLink(picture)
+    })
+function addFormToCollection(e) {
+  const collectionHolder = document.querySelector('.' + e.currentTarget.dataset.collectionHolderClass);
+
+  const item = document.createElement('li');
+
+  item.innerHTML = collectionHolder
+    .dataset
+    .prototype
+    .replace(
+      /__name__/g,
+      collectionHolder.dataset.index
+    );
+
+  collectionHolder.appendChild(item);
+
+  collectionHolder.dataset.index++;
+
+   // add a delete link to the new form
+    addTagFormDeleteLink(item);
+};
+
+function addTagFormDeleteLink(item) {
+    const removeFormButton = document.createElement('button');
+    removeFormButton.innerText = 'Supprimer';
+
+    item.append(removeFormButton);
+
+    removeFormButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        // remove the li for the tag form
+        item.remove();
+    });
+};
+</script>
+{% endblock %}
+

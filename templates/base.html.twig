@@ -11,11 +11,12 @@
 
 		{% block stylesheets %}{% endblock %}
 
-		{% block javascripts %}
-			{% block importmap %}
+		{% block javascripts %}{% endblock %}
+
+		{% block importmap %}
 				{{ importmap('app') }}
-			{% endblock %}
 		{% endblock %}
+
 	</head>
 	<body>
 		{% include 'navigation.html.twig' %}
