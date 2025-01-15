@@ -3,18 +3,24 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
-use App\Repository\TrickRepository;
-
+use Symfony\Component\Routing\Annotation\Route;
+use App\Manager\TrickManagerInterface;
 
 class HomeController extends AbstractController
 {
-    #[Route('/', name: 'app_home')]
-    public function index(Request $request, TrickRepository $trickRepository): Response
+    private TrickManagerInterface $trickManager;
+
+    public function __construct(TrickManagerInterface $trickManager)
     {
-        $tricks = $trickRepository->findAll();
+        $this->trickManager = $trickManager;
+    }
+
+    #[Route('/', name: 'app_home')]
+    public function index(): Response
+    {
+        $tricks = $this->trickManager->getAllTricks();
+
         return $this->render('home/index.html.twig', [
             'tricks' => $tricks,
         ]);
