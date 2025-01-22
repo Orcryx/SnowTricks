@@ -42,28 +42,21 @@ class TrickRepository extends ServiceEntityRepository
     {
         return (bool) $this->findOneBy(['slug' => $slug]);
     }
-    //    /**
-    //     * @return Trick[] Returns an array of Trick objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('t')
-    //            ->andWhere('t.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('t.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
 
-    //    public function findOneBySomeField($value): ?Trick
-    //    {
-    //        return $this->createQueryBuilder('t')
-    //            ->andWhere('t.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    public function updateAssociations(Trick $trick, \DateTime $currentDate): void
+    {
+        foreach ($trick->getPicture() as $picture) {
+            if ($picture->getCreateAt() === null) {
+                $picture->setCreateAt($currentDate); // Définit une date de création si elle est absente
+            }
+            $picture->setUpdateAt($currentDate); // Met à jour la date de modification
+        }
+
+        foreach ($trick->getVideo() as $video) {
+            if ($video->getCreateAt() === null) {
+                $video->setCreateAt($currentDate); // Définit une date de création si elle est absente
+            }
+            $video->setUpdateAt($currentDate); // Met à jour la date de modification
+        }
+    }
 }

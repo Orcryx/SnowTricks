@@ -5,7 +5,6 @@ namespace App\Manager;
 use App\Entity\Trick;
 use App\Repository\TrickRepository;
 
-
 class TrickManager implements TrickManagerInterface
 {
 
@@ -21,62 +20,54 @@ class TrickManager implements TrickManagerInterface
         return $this->trickRepository->findAll();
     }
 
-    // public function createTrick(Trick $trick): void
-    // {
-    //     $currentDate = new \DateTime();
-    //     $slug = $trick->generateSlug();
-
-    //     if ($this->trickRepository->findBySlug($slug)) {
-    //         throw new \InvalidArgumentException("Slug déjà existant");
-    //     }
-    //     $trick->setSlug($slug);
-    //     foreach ($trick->getPicture() as $picture) {
-    //         $picture->setCreateAt($currentDate);
-    //         $picture->setUpdateAt($currentDate);
-    //     }
-
-    //     foreach ($trick->getVideo() as $video) {
-    //         $video->setCreateAt($currentDate);
-    //         $video->setUpdateAt($currentDate);
-    //     }
-    //     $this->trickRepository->save($trick);
-    // }
-
     public function createTrick(Trick $trick): bool
     {
         $currentDate = new \DateTime();
         $slug = $trick->generateSlug();
 
+        // Appelle le repository pour gérer les dates dans les associations
+        $this->trickRepository->updateAssociations($trick, $currentDate);
+
         if ($this->trickRepository->slugExists($slug)) {
-            return false; // Indique que le slug existe déjà
+            return false;
         }
 
         $trick->setSlug($slug);
-
-        foreach ($trick->getPicture() as $picture) {
-            $picture->setCreateAt($currentDate);
-            $picture->setUpdateAt($currentDate);
-        }
-
-        foreach ($trick->getVideo() as $video) {
-            $video->setCreateAt($currentDate);
-            $video->setUpdateAt($currentDate);
-        }
+        $trick->setCreateAt($currentDate);
+        $trick->setUpdateAt($currentDate);
 
         $this->trickRepository->save($trick);
 
-        return true; // Indique que la création a réussi
+        return true;
     }
-
 
     public function deleteTrick(Trick $trick): void
     {
-        $this->trickRepository->save($trick);
+        $this->trickRepository->remove($trick);
     }
-
 
     public function getTrick(string $slug): Trick
     {
         return $this->trickRepository->findOneBy(['slug' => $slug]);
+    }
+
+    public function updateTrick(Trick $trick): bool
+    {
+        $currentDate = new \DateTime();
+
+        // Appelle le repository pour gérer les dates dans les associations
+        $this->trickRepository->updateAssociations($trick, $currentDate);
+
+        $slug = $trick->generateSlug();
+        if ($this->trickRepository->slugExists($slug) && $slug !== $trick->getSlug()) {
+            return false;
+        }
+        $trick->setSlug($slug);
+
+        $trick->setUpdateAt($currentDate);
+
+        $this->trickRepository->save($trick);
+
+        return true;
     }
 }

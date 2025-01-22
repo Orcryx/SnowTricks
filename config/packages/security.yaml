@@ -43,9 +43,9 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
      # Restrict access to the /trick route to authenticated users
-        - { path: ^/trick, roles: IS_AUTHENTICATED_FULLY }
-        - { path: ^/admin, roles: ROLE_ADMIN }
-        - { path: ^/profile, roles: ROLE_USER }
+        # - { path: ^/trick, roles: IS_AUTHENTICATED_FULLY }
+        # - { path: ^/admin, roles: ROLE_ADMIN }
+        # - { path: ^/profile, roles: ROLE_USER }
 
 when@test:
     security:

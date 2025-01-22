@@ -4,20 +4,20 @@
 
 {% block sectionOne %}
 	<div id="picture-trick">
-		<div
-			id="btnZone" class="flex">
-			{# <a href="{{ path('app_trick_edit',{id : trick.id}) }}">
-													<button type="button" class="btn">
-														<i class="fa-solid fa-pen"></i>
-													</button>
-												</a> #}
-			<form action="{{ path('app_trick_remove',{slug : trick.slug}) }}" method="POST">
-				<input type="hidden" name="_method" value="DELETE">
-				<button type="submit" class="btn">
-					<i class="fa-solid fa-trash"></i>
-				</button>
-			</form>
-		</div>
+		<div id="btnZone" class="flex">
+			{% if app.user %}
+				<a href="{{ path('app_trick_edit',{slug : trick.slug}) }}">
+					<button type="button" class="btn">
+						<i class="fa-solid fa-pen"></i>
+					</button>
+				</a>
+				<a href="{{ path('app_trick_remove',{slug : trick.slug}) }}">
+					<button type="submit" class="btn">
+						<i class="fa-solid fa-trash"></i>
+					</button>
+				</a>
+			</div>
+		{% endif %}
 		{% for picture in trick.picture %}
 			{% if picture.name == "default" %}
 				<img src="{{ picture.src}}" alt="Image présentant la figure {{ trick.name }}">
@@ -42,11 +42,11 @@
 				<div id="gallery-video">
 					{% for video in trick.video %}
 						{# <video controls width="250">
-																																											<source src="{{ video.src}}" type="video/webm"/>
-																																											<a href="{{ video.src}}">MP4</a>
-																																											<source src="{{ video.src}}" type="video/mp4"/>
-																																										</video>		
-																																											<iframe id="video{{ video.id}}" title="Inline Frame Example {{ video.name}}" width="300" height="200" src="{{ video.src}}"></iframe> #}
+																																																																																																																									<source src="{{ video.src}}" type="video/webm"/>
+																																																																																																																									<a href="{{ video.src}}">MP4</a>
+																																																																																																																									<source src="{{ video.src}}" type="video/mp4"/>
+																																																																																																																								</video>		
+																																																																																																																									<iframe id="video{{ video.id}}" title="Inline Frame Example {{ video.name}}" width="300" height="200" src="{{ video.src}}"></iframe> #}
 						<a href="{{ video.src}}">{{ video.name}}</a>
 					{% endfor %}
 				</div>
@@ -63,14 +63,16 @@
 			<button type="button" class="btn">
 				<i class="fa-solid fa-pen"></i>
 			</button>
-			<div
-				id="comment-form">{# {{form(form)}} #}
-			</div>
-			{% for comment in trick.comments %}
-				<div id="comment-bloc" class="flex-column">
-					<p>{{ comment.content}}"</p>
-				</div>
-			{% endfor %}
-		</details>
-	</div>
-{% endblock %}
+			{% if app.user %}
+				<div id="comment-form">
+					{{form(form)}}
+					</div>
+				{% endif %}
+				{% for comment in trick.comments %}
+					<div id="comment-bloc" class="flex-column">
+						<p>{{ comment.content}}"</p>
+					</div>
+				{% endfor %}
+			</details>
+		</div>
+	{% endblock %}
