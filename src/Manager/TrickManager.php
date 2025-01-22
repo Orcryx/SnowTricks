@@ -4,7 +4,7 @@ namespace App\Manager;
 
 use App\Entity\Trick;
 use App\Repository\TrickRepository;
-use Symfony\Component\Form\FormInterface;
+
 
 class TrickManager implements TrickManagerInterface
 {
@@ -21,13 +21,38 @@ class TrickManager implements TrickManagerInterface
         return $this->trickRepository->findAll();
     }
 
-    public function createTrick(Trick $trick): void
+    // public function createTrick(Trick $trick): void
+    // {
+    //     $currentDate = new \DateTime();
+    //     $slug = $trick->generateSlug();
+
+    //     if ($this->trickRepository->findBySlug($slug)) {
+    //         throw new \InvalidArgumentException("Slug déjà existant");
+    //     }
+    //     $trick->setSlug($slug);
+    //     foreach ($trick->getPicture() as $picture) {
+    //         $picture->setCreateAt($currentDate);
+    //         $picture->setUpdateAt($currentDate);
+    //     }
+
+    //     foreach ($trick->getVideo() as $video) {
+    //         $video->setCreateAt($currentDate);
+    //         $video->setUpdateAt($currentDate);
+    //     }
+    //     $this->trickRepository->save($trick);
+    // }
+
+    public function createTrick(Trick $trick): bool
     {
         $currentDate = new \DateTime();
+        $slug = $trick->generateSlug();
 
-        $trick->setCreateAt(new \DateTime());
-        $trick->setUpdateAt(new \DateTime());
-        $trick->generateSlug();
+        if ($this->trickRepository->slugExists($slug)) {
+            return false; // Indique que le slug existe déjà
+        }
+
+        $trick->setSlug($slug);
+
         foreach ($trick->getPicture() as $picture) {
             $picture->setCreateAt($currentDate);
             $picture->setUpdateAt($currentDate);
@@ -37,7 +62,10 @@ class TrickManager implements TrickManagerInterface
             $video->setCreateAt($currentDate);
             $video->setUpdateAt($currentDate);
         }
+
         $this->trickRepository->save($trick);
+
+        return true; // Indique que la création a réussi
     }
 
 

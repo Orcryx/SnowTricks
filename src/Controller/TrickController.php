@@ -129,28 +129,27 @@ class TrickController extends AbstractController
     #[Route('/trick/new', name: 'app_trick_new')]
     public function new(Request $request): Response
     {
-        // Vérifie que l'utilisateur a le rôle approprié
         $this->denyAccessUnlessGranted('ROLE_USER');
 
         $trick = new Trick();
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
 
-        // Traitement du formulaire
         if ($form->isSubmitted() && $form->isValid()) {
-            // Lier l'utilisateur actuel au trick
             $trick->setUser($this->getUser());
 
-            // Création du trick via le manager
-            $this->trickManager->createTrick($trick);
+            if ($this->trickManager->createTrick($trick)) {
+                // Ajouter un message flash de succès
+                $this->addFlash('success', 'Trick créé avec succès !');
 
-            // Ajouter un message flash de succès
-            $this->addFlash('success', 'Trick créé avec succès !');
+                // Rediriger vers la page du trick créé, avec son slug et son id
+                return $this->redirectToRoute('app_trick_show', [
+                    'slug' => $trick->getSlug(),
+                ]);
+            }
 
-            // Rediriger vers la page du trick créé, avec son slug et son id
-            return $this->redirectToRoute('app_trick_show', [
-                'slug' => $trick->getSlug(),
-            ]);
+            // Ajouter un message flash d'erreur
+            $this->addFlash('error', 'Le slug existe déjà, veuillez modifier le nom.');
         }
 
         // Rendre le formulaire dans la vue Twig
@@ -158,6 +157,7 @@ class TrickController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
 
     #[Route('/trick/{slug}', name: 'app_trick_show')]
     public function show(string $slug): Response

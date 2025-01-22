@@ -16,15 +16,31 @@ class TrickRepository extends ServiceEntityRepository
         parent::__construct($registry, Trick::class);
     }
 
-    public function save(Trick $trick): void
+    public function save(Trick $trick, bool $flush = true): void
     {
         $this->getEntityManager()->persist($trick);
-        $this->getEntityManager()->flush();
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
     }
-    public function removeTrick(Trick $trick): void
+
+    public function remove(Trick $trick, bool $flush = true): void
     {
         $this->getEntityManager()->remove($trick);
-        $this->getEntityManager()->flush();
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
+    public function findBySlug(string $slug): ?Trick
+    {
+        return $this->findOneBy(['slug' => $slug]);
+    }
+
+    public function slugExists(string $slug): bool
+    {
+        return (bool) $this->findOneBy(['slug' => $slug]);
     }
     //    /**
     //     * @return Trick[] Returns an array of Trick objects

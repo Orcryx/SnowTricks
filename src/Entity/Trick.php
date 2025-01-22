@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\TrickRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -61,6 +62,8 @@ class Trick
         $this->picture = new ArrayCollection();
         $this->video = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->createAt = new \DateTime();
+        $this->updateAt = new \DateTime();
     }
 
     public function getId(): ?int
@@ -243,20 +246,25 @@ class Trick
     }
 
     // Méthode pour générer le slug
-    public function generateSlug(): void
-    {
-        // ::todo : FIND BY SLUG EN CONDITION
-        // Si le nom n'est pas défini, ne génère pas de slug
-        if (null === $this->name) {
-            return;
-        }
-        // Remplacer les espaces par des tirets et convertir en minuscule
-        $slug = preg_replace('/\s+/', '-', $this->name);
-        $slug = strtolower($slug);
+    // public function generateSlug(): void
+    // {
+    //     // Si le nom n'est pas défini, ne génère pas de slug
+    //     if (null === $this->name) {
+    //         return;
+    //     }
+    //     // Remplacer les espaces par des tirets et convertir en minuscule
+    //     $slug = preg_replace('/\s+/', '-', $this->name);
+    //     $slug = strtolower(trim($slug)); //retirer les espaces
 
-        // Enlever les caractères non-alphanumériques sauf les tirets
-        // $slug = preg_replace('/[^a-z0-9-]/', '', $slug);
-        // TODO : TRIM
-        $this->slug = $slug;
+    //     $this->slug = $slug;
+    // }
+
+    public function generateSlug(): string
+    {
+        if (null === $this->name) {
+            throw new \LogicException('Le nom du trick est requis pour générer un slug.');
+        }
+
+        return strtolower(trim(preg_replace('/\s+/', '-', $this->name)));
     }
 }
