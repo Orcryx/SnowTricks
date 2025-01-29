@@ -1,5 +1,5 @@
 {% if tricks is not empty %}
-	<div id="gallery" class="flex">
+	<div id="gallery" class="flex-center">
 
 		{% for trick in tricks %}
 			<a href="{{ path('app_trick_show', {slug: trick.slug}) }}" class="trick">
@@ -30,10 +30,11 @@
 				</div>
 			</a>
 		{% endfor %}
+		<a href="#gallery">
+			<i class="fa-solid fa-arrow-up"></i>
+		</a>
 	</div>
-	<a href="#gallery">
-		<i class="fa-solid fa-arrow-up"></i>
-	</a>
+
 {% else %}
 	<p>Aucune figure disponible pour le moment.</p>
 {% endif %}

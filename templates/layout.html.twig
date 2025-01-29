@@ -20,15 +20,9 @@
 	</head>
 	<body>
 		{% include 'navigation.html.twig' %}
+		{% include "flash.html.twig" %}
 		<div class="container">
-			{% block message %}
-
-				{% include "flash.html.twig" %}
-			{% endblock %}
-
 			<section id="section-one" class="one flex-center" id="home"> {% block sectionOne %}{% endblock %}
-
-
 				</section>
 				{% include 'footer.html.twig' %}</body>
 		</body>

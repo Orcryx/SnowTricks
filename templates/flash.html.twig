@@ -1,8 +1,22 @@
-{% for type, messages in app.flashes %}
-	<div id="flash" class="{{ type }}">
-		<i class="fa-solid {{ type == 'success' ? 'fa-check' : (type == 'error' ? 'fa-bell' : 'fa-triangle-exclamation') }}"></i>
-		{% for message in messages %}
-			<p class="flash-message">{{ message }}</p>
-		{% endfor %}
-	</div>
-{% endfor %}
+<div id="flash">
+	{% for message in app.flashes('notice') %}
+		<div class="message flash-notice">
+			{{ message }}
+		</div>
+	{% endfor %}
+	{% for message in app.flashes('success') %}
+		<div class="message flash-notice">
+			{{ message }}
+		</div>
+	{% endfor %}
+	{% for message in app.flashes('verify_email_error') %}
+		<div class="message flash-notice">
+			{{ message }}
+		</div>
+	{% endfor %}
+	{% for message in app.flashes('error') %}
+		<div class="message flash-notice">
+			{{ message }}
+		</div>
+	{% endfor %}
+</div>

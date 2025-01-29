@@ -44,8 +44,9 @@ class TrickController extends AbstractController
                 return $this->redirectToRoute('app_trick_show', [
                     'slug' => $trick->getSlug(),
                 ]);
+            } else {
+                $this->addFlash('error', 'Le slug existe déjà, veuillez modifier le nom.');
             }
-            $this->addFlash('error', 'Le slug existe déjà, veuillez modifier le nom.');
         }
 
         return $this->render('trick/form.html.twig', [
@@ -75,10 +76,10 @@ class TrickController extends AbstractController
             $comment->setUser($this->getUser());
             $this->commentManager->saveComment($comment); // Utilisation du CommentManager pour sauvegarder le commentaire
 
-            $this->addFlash('success', 'Commentaire ajouté');
-            return $this->redirectToRoute('app_trick_show', [
+            return $this->redirectToRoute('success', [
                 'slug' => $trick->getSlug(),
             ]);
+            $this->addFlash('success', 'Commentaire ajouté');
         }
 
         return $this->render('trick/index.html.twig', [
@@ -97,7 +98,7 @@ class TrickController extends AbstractController
 
         $isdelete = $this->trickManager->deleteTrick($trick);
 
-        if ($isdelete) {
+        if (!$isdelete) {
             $this->addFlash('success', 'Suppression effectuée');
         } else {
             $this->addFlash('error', 'Échec de la suppression');
