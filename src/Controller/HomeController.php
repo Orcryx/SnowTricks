@@ -6,6 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Manager\TrickManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class HomeController extends AbstractController
 {
@@ -17,14 +19,35 @@ class HomeController extends AbstractController
     }
 
     #[Route('/', name: 'app_home')]
-    public function index(): Response
+    public function index(Request $request): Response
     {
-        // Récupération de tous les tricks via le manager
-        $tricks = $this->trickManager->getAllTricks();
+        $page = max(1, $request->query->getInt('page', 1));
+        $tricks = $this->trickManager->getPaginatedTricks($page);
+        $totalTricks = $this->trickManager->getNumberTricks();
+        $totalPages = ceil($totalTricks / 5);
 
-        // Rendu du template Twig avec les données des tricks
+        // Vérifie si la requête est AJAX
+        if ($request->isXmlHttpRequest()) {
+            $html = $this->renderView('home/_tricks.html.twig', [
+                'tricks' => $tricks,
+                'currentPage' => $page,
+                'totalPages' => $totalPages,
+            ]);
+
+            // Crée un rendu de la pagination dynamique
+            $pagination = $this->renderView('home/_pagination.html.twig', [
+                'currentPage' => $page,
+                'totalPages' => $totalPages,
+            ]);
+
+            return new JsonResponse(['html' => $html, 'pagination' => $pagination]);
+        }
+
+        // Retourne la page complète pour une requête normale
         return $this->render('home/index.html.twig', [
             'tricks' => $tricks,
+            'currentPage' => $page,
+            'totalPages' => $totalPages,
         ]);
     }
 }

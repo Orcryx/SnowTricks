@@ -45,7 +45,6 @@ class TrickController extends AbstractController
                     'slug' => $trick->getSlug(),
                 ]);
             }
-
             $this->addFlash('error', 'Le slug existe déjà, veuillez modifier le nom.');
         }
 
@@ -53,21 +52,6 @@ class TrickController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
-    // //afficher un slug
-    // #[Route('/trick/{slug}', name: 'app_trick_show')]
-    // public function show(string $slug): Response
-    // {
-    //     $trick = $this->trickManager->getTrick($slug);
-
-    //     if (!$trick) {
-    //         throw $this->createNotFoundException('Trick non trouvé');
-    //     }
-
-    //     return $this->render('trick/index.html.twig', [
-    //         'trick' => $trick,
-    //     ]);
-    // }
 
     #[Route('/trick/{slug}', name: 'app_trick_show')]
     public function show(Request $request, string $slug): Response

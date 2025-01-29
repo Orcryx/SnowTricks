@@ -1,0 +1,43 @@
+{% if tricks is not empty %}
+	<div id="gallery" class="flex">
+
+		{% for trick in tricks %}
+			<a href="{{ path('app_trick_show', {slug: trick.slug}) }}" class="trick">
+				<div class="card flex-center">
+					<div class="card-content">
+						{% if trick.picture is not empty %}
+							<img src="{{ trick.picture[0].src }}" alt="Image présentant la figure {{ trick.name }}">
+						{% endif %}
+						<div class="card-name flex">
+							<p>{{ trick.name }}</p>
+
+							{% if app.user %}
+								<div id="btnZone" class="flex">
+									<a href="{{ path('app_trick_edit', {slug: trick.slug}) }}">
+										<button type="button" class="btn">
+											<i class="fa-solid fa-pen"></i>
+										</button>
+									</a>
+									<a href="{{ path('app_trick_remove', {slug: trick.slug}) }}">
+										<button type="submit" class="btn">
+											<i class="fa-solid fa-trash"></i>
+										</button>
+									</a>
+								</div>
+							{% endif %}
+						</div>
+					</div>
+				</div>
+			</a>
+		{% endfor %}
+	</div>
+	<a href="#gallery">
+		<i class="fa-solid fa-arrow-up"></i>
+	</a>
+{% else %}
+	<p>Aucune figure disponible pour le moment.</p>
+{% endif %}
+
+{% block javascript %}
+	<script></script>
+{% endblock %}

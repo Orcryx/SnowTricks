@@ -1,0 +1,9 @@
+<div class="pagination">
+	{% if currentPage > 1 %}
+		<button onclick="loadPage({{ currentPage - 1 }})">Réduire</button>
+	{% endif %}
+
+	{% if currentPage < totalPages %}
+		<button onclick="loadPage({{ currentPage + 1 }})">Voir plus</button>
+	{% endif %}
+</div>

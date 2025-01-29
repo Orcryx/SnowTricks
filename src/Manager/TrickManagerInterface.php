@@ -3,6 +3,7 @@
 namespace App\Manager;
 
 use App\Entity\Trick;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 interface TrickManagerInterface
 {
@@ -16,4 +17,6 @@ interface TrickManagerInterface
     public function updateTrick(Trick $trick): bool;
     public function deleteTrick(Trick $trick): void;
     public function getTrick(string $slug): ?Trick;
+    public function getPaginatedTricks(int $page, int $limit = 5): Paginator;
+    public function getNumberTricks(): int;
 }

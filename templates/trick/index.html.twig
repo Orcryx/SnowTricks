@@ -4,8 +4,8 @@
 
 {% block sectionOne %}
 	<div id="picture-trick">
-		<div id="btnZone" class="flex">
-			{% if app.user %}
+		{% if app.user %}
+			<div id="btnZone" class="flex">
 				<a href="{{ path('app_trick_edit',{slug : trick.slug}) }}">
 					<button type="button" class="btn">
 						<i class="fa-solid fa-pen"></i>
@@ -19,7 +19,7 @@
 			</div>
 		{% endif %}
 		{% for picture in trick.picture %}
-			{% if picture.name == "default" %}
+			{% if loop.first %}
 				<img src="{{ picture.src}}" alt="Image présentant la figure {{ trick.name }}">
 			{% endif %}
 		{% endfor %}
@@ -42,11 +42,11 @@
 				<div id="gallery-video">
 					{% for video in trick.video %}
 						{# <video controls width="250">
-																																																																																																																									<source src="{{ video.src}}" type="video/webm"/>
-																																																																																																																									<a href="{{ video.src}}">MP4</a>
-																																																																																																																									<source src="{{ video.src}}" type="video/mp4"/>
-																																																																																																																								</video>		
-																																																																																																																									<iframe id="video{{ video.id}}" title="Inline Frame Example {{ video.name}}" width="300" height="200" src="{{ video.src}}"></iframe> #}
+																																																																																																																																											<source src="{{ video.src}}" type="video/webm"/>
+																																																																																																																																											<a href="{{ video.src}}">MP4</a>
+																																																																																																																																											<source src="{{ video.src}}" type="video/mp4"/>
+																																																																																																																																										</video>		
+																																																																																																																																											<iframe id="video{{ video.id}}" title="Inline Frame Example {{ video.name}}" width="300" height="200" src="{{ video.src}}"></iframe> #}
 						<a href="{{ video.src}}">{{ video.name}}</a>
 					{% endfor %}
 				</div>

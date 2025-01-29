@@ -4,6 +4,7 @@ namespace App\Manager;
 
 use App\Entity\Trick;
 use App\Repository\TrickRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 class TrickManager implements TrickManagerInterface
 {
@@ -69,5 +70,15 @@ class TrickManager implements TrickManagerInterface
         $this->trickRepository->save($trick);
 
         return true;
+    }
+
+    public function getPaginatedTricks(int $page, int $limit = 5): Paginator
+    {
+        return $this->trickRepository->findPaginatedTricks($page, $limit);
+    }
+
+    public function getNumberTricks(): int
+    {
+        return $this->trickRepository->getTotalTricks();
     }
 }

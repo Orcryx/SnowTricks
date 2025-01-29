@@ -10,6 +10,10 @@
 	{% for flash_error in app.flashes('error') %}
 		<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
 	{% endfor %}
+	{% for flash_error in app.flashes('success') %}
+		<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+	{% endfor %}
+
 
 	<div id="formTrick" class="flex-column">
 		<h1>Editer un Trick</h1>

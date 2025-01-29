@@ -4,38 +4,27 @@
 {% endblock %}
 
 {% block sectionOne %}
-	<hero>HeroBannière</hero>
-	<h1></h1>
-	<div>
-		Bienvenue sur Snowtricks !
-		<br>
-		Chaque virage vous rapproche un peu plus de la perfection sur les pistes enneigées !
+	<div class="hero-image">
+		<div class="hero-text">
+			<h1>Snowtricks</h1>
+			<div>
+				<p>Bienvenue sur Snowtricks ! Chaque virage vous rapproche un peu plus de la perfection sur les pistes enneigées !</p>
+			</div>
+		</div>
+		<a href="#gallery">
+			<i class="fa-solid fa-arrow-down"></i>
+		</a>
 	</div>
-	<a href="#gallery">
-		<i class="fa-solid fa-arrow-down"></i>
-	</a>
 {% endblock %}
 
 {% block sectionTwo %}
-	<div id="gallery" class="flex">
-		{% for trick in tricks %}
-			<a href="{{ path('app_trick_show',{slug: trick.slug}) }}">
-				<div class="card flex-center">
-					<div class="card-image"></div>
-					<div class="card-content">
-						<h2>{{trick.name}}</h2>
-						{% for picture in trick.picture %}
-							{% if picture.name == "default" %}
-								<img src="{{ picture.src}}" alt="Image présentant la figure {{ trick.name }}">
-							{% endif %}
-						{% endfor %}
-						<p>{{trick.description}}</p>
-					</div>
-				</div>
-			</a>
-		{% endfor %}
+
+	<div id="trick-container">
+		{% include "home/_tricks.html.twig" %}
 	</div>
-	<a href="#gallery">
-		<i class="fa-solid fa-arrow-up"></i>
-	</a>
+
+
+	{% include "home/_pagination.html.twig" %}
+
 {% endblock %}
+{% block javascript %}{% endblock %}

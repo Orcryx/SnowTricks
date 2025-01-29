@@ -11,24 +11,24 @@
 
 		{% block stylesheets %}{% endblock %}
 
-		{% block javascripts %}{% endblock %}
+		{% block javascripts %}
+			<script src="{{ asset('js/loadMoreTricks.js') }}"></script>
+		{% endblock %}
 
 		{% block importmap %}
-				{{ importmap('app') }}
+			{{ importmap('app') }}
 		{% endblock %}
 
 	</head>
 	<body>
 		{% include 'navigation.html.twig' %}
-
 		<div class="container">
 			{% block message %}
-				<h1>JE suis un message</h1>
 				{% include "flash.html.twig" %}
 			{% endblock %}
-			<section class="one flex-center" id="home"> {% block sectionOne %}{% endblock %}
+			<section id="section-one" class="one flex-center" id="home"> {% block sectionOne %}{% endblock %}
 				</section>
-				<section class="two flex-center" id="news"> {% block sectionTwo %}{% endblock %}
+				<section id="section-two" class="two flex-center" id="news"> {% block sectionTwo %}{% endblock %}
 					</section>
 					{% include 'footer.html.twig' %}</body>
 			</body>
