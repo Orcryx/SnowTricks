@@ -1,42 +1,12 @@
-
-//     let currentPage = 1; // Suivi de la page actuelle
-
-//     window.loadPage = function (page) {
-//         if (page === currentPage) return;
-        
-//         const url = new URL(window.location.href);
-//         url.searchParams.set('page', page);
-
-//         fetch(url, {
-//             method: 'GET',
-//             headers: {
-//                 'X-Requested-With': 'XMLHttpRequest'
-//             }
-//         }).then(response => response.json()).then(data => {
-//             const trickContainer = document.getElementById('trick-container');
-            
-//             if (page > currentPage) {
-//                 // Ajoute les nouveaux tricks à la fin
-//                 trickContainer.insertAdjacentHTML('beforeend', data.html);
-//             } else if (page < currentPage && page >= 1) {
-//                 // Supprime tout sauf la première page
-//                 trickContainer.innerHTML = data.html;
-//             }
-            
-//             // Mise à jour de la pagination
-//             const pagination = document.querySelector('.pagination');
-//             if (pagination) {
-//                 pagination.innerHTML = data.pagination;
-//             }
-
-//             currentPage = page; // Mettre à jour la page actuelle
-//         }).catch(error => {
-//             console.error('Erreur lors du chargement des tricks:', error);
-//         });
-//     }
-// });
 document.addEventListener('DOMContentLoaded', function () {
-    let currentPage = 1; // Suivi de la page actuelle
+    let currentPage = 1;
+    const zoneArrow = document.getElementById('arrowUp');
+    zoneArrow.style.display = "none" ;
+    zoneArrow.addEventListener('click', function (event) {
+        event.preventDefault(); // Empêche le rechargement ou retour en arrière
+        window.scrollTo({ top: 0, behavior: 'smooth' }); // Remonte en douceur
+    });
+    
 
     window.loadPage = function (page) {
         if (page === currentPage) return;
@@ -73,10 +43,20 @@ document.addEventListener('DOMContentLoaded', function () {
                 pagination.innerHTML = data.pagination;
             }
 
-            currentPage = page; // Mettre à jour la page actuelle
+            currentPage = page; e
+            if (currentPage >= 3)
+            {
+                zoneArrow.style.display = "block" ;
+            }
+            else
+            {
+                zoneArrow.style.display = "none" ;
+            }
+            
         }).catch(error => {
             console.error('Erreur lors du chargement des tricks:', error);
         });
+
     }
 });
 

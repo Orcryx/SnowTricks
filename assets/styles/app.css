@@ -248,6 +248,12 @@ footer
     margin-top: 10px;
 }
 
+#arrowUp
+{
+    /* visibility: hidden; */
+    display: none;
+}
+
 /* LES CLASS */
 
 .btn, #formulaire button

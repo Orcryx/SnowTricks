@@ -22,12 +22,15 @@
 {% endblock %}
 {% block zoneTwo %}
 	<div id="zoneTwo">
+		<span id="gallery"></span>
 		<div id="trick-container">
 			{% include "home/_tricks.html.twig" %}
 		</div>
 		{% include "home/_pagination.html.twig" %}
-		<a href="#gallery">
-			<i class="fa-solid fa-arrow-up"></i>
-		</a>
+		<div id="arrowUp">
+			<a href="#gallery">
+				<i class="fa-solid fa-arrow-up"></i>
+			</a>
+		</div>
 	</div>
 {% endblock %}
