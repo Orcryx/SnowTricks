@@ -31,6 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
             // Mise à jour de la pagination
             const pagination = document.querySelector('.pagination');
             if (pagination) {
+                pagination.innerHTML = " ";
                 pagination.innerHTML = data.pagination;
             }
 

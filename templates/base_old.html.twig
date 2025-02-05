@@ -23,9 +23,14 @@
 	<body>
 		{% include 'navigation.html.twig' %}
 		{% include "flash.html.twig" %}
-		<div id="contain" class="flex-column-center"> {% block zoneOne %}{% endblock %}{% block zoneTwo %}{% endblock %}
-			</div>
-
+		<div class="container">
+			<section id="section-one" class="one flex-center" id="home"> {% block sectionOne %}{% endblock %}
+				</section>
+				<section id="section-two" class="two" id="news"> {% block sectionTwo %}{% endblock %}
+					</section>
+				</div>
+			{% endblock %}
 			{% include 'footer.html.twig' %}
 		</body>
 	</html>
+</body></html>

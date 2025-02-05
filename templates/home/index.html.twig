@@ -3,28 +3,32 @@
 {% block title %}SnowTricks - Accueil
 {% endblock %}
 
-{% block sectionOne %}
-	<div class="hero-image">
-		<div class="hero-text">
-			<h1>Snowtricks</h1>
-			<div>
-				<p>Bienvenue sur Snowtricks ! Chaque virage vous rapproche un peu plus de la perfection sur les pistes enneigées !</p>
-				<a href="#gallery">
-					<i class="fa-solid fa-arrow-down"></i>
-				</a>
+{% block zoneOne %}
+	<div id="zoneOne">
+		<div class="hero-image">
+			<div class="hero-text">
+				<h1>Snowtricks</h1>
+				<div>
+					<p>Bienvenue sur Snowtricks ! Chaque virage vous rapproche un peu plus de la perfection sur les pistes enneigées !</p>
+					<a href="#gallery">
+						<i class="fa-solid fa-arrow-down"></i>
+					</a>
+				</div>
 			</div>
 		</div>
 	</div>
+
+
 {% endblock %}
+{% block zoneTwo %}
+	<div id="zoneTwo">
+		<div id="trick-container" class="flex-center">
+			{% include "home/_tricks.html.twig" %}
+		</div>
+		<a href="#gallery">
+			<i class="fa-solid fa-arrow-up"></i>
+		</a>
+		{% include "home/_pagination.html.twig" %}
 
-{% block sectionTwo %}
-
-	<div id="trick-container">
-		{% include "home/_tricks.html.twig" %}
 	</div>
-
-
-	{% include "home/_pagination.html.twig" %}
-
 {% endblock %}
-{% block javascript %}{% endblock %}

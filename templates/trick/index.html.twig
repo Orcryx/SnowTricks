@@ -23,30 +23,35 @@
 				<img src="{{ picture.src}}" alt="Image présentant la figure {{ trick.name }}">
 			{% endif %}
 		{% endfor %}
-		<h1>{{trick.name}}</h1>
-		<h2>{{ trick.user.pseudo }}</h2>
+		<div class="info-trick">
+			<h1>{{trick.name}}</h1>
+			<h2>{{ trick.user.pseudo }}</h2>
+		</div>
 	</div>
+
+
 {% endblock %}
 
 {% block sectionTwo %}
 	<div class="flex-column-center">
-
+		<div id="caroussel-trick"></div>
 		<details id="gallery" class="flex" open>
 			<summary>GALERIE</summary>
-			<div>
-				<div id="gallery-img">
-					{% for picture in trick.picture %}
-						<img src="{{ picture.src}}" alt="Image présentant la figure {{ trick.name }}">
-					{% endfor %}
-				</div>
+			<div id="gallery-img" class="flex-center">
+				{% for picture in trick.picture %}
+					<div class="card">
+						<img class="card-content " src="{{ picture.src}}" alt="Image présentant la figure {{ trick.name }}">
+					</div>
+				{% endfor %}
+
 				<div id="gallery-video">
 					{% for video in trick.video %}
 						{# <video controls width="250">
-																																																																																																																																											<source src="{{ video.src}}" type="video/webm"/>
-																																																																																																																																											<a href="{{ video.src}}">MP4</a>
-																																																																																																																																											<source src="{{ video.src}}" type="video/mp4"/>
-																																																																																																																																										</video>		
-																																																																																																																																											<iframe id="video{{ video.id}}" title="Inline Frame Example {{ video.name}}" width="300" height="200" src="{{ video.src}}"></iframe> #}
+																																																																																																																																																																																																																																																	<source src="{{ video.src}}" type="video/webm"/>
+																																																																																																																																																																																																																																																	<a href="{{ video.src}}">MP4</a>
+																																																																																																																																																																																																																																																	<source src="{{ video.src}}" type="video/mp4"/>
+																																																																																																																																																																																																																																																</video>		
+																																																																																																																																																																																																																																																	<iframe id="video{{ video.id}}" title="Inline Frame Example {{ video.name}}" width="300" height="200" src="{{ video.src}}"></iframe> #}
 						<a href="{{ video.src}}">{{ video.name}}</a>
 					{% endfor %}
 				</div>
@@ -60,9 +65,7 @@
 
 		<details id="comment" class="flex">
 			<summary>COMMENTAIRES</summary>
-			<button type="button" class="btn">
-				<i class="fa-solid fa-pen"></i>
-			</button>
+
 			{% if app.user %}
 				<div id="comment-form">
 					{{form(form)}}

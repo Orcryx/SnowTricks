@@ -5,15 +5,12 @@ namespace App\Manager;
 use App\Entity\Comment;
 use App\Entity\Trick;
 use App\Repository\CommentRepository;
+use Dotenv\Store\File\Reader;
 
 class CommentManager implements CommentManagerInterface
 {
-    private CommentRepository $commentRepository;
 
-    public function __construct(CommentRepository $commentRepository)
-    {
-        $this->commentRepository = $commentRepository;
-    }
+    public function __construct(private readonly CommentRepository $commentRepository) {}
 
     // Récupérer les commentaires associés à un trick
     public function getCommentsByTrick(Trick $trick): array
@@ -28,6 +25,7 @@ class CommentManager implements CommentManagerInterface
 
         // $comment->setCreateAt(new \DateTime());
         // $comment->setUpdateAt(new \DateTime());
+        // $this->commentRepository->manageDate(currentDate: new \DateTime(), comment: $comment);
         $this->commentRepository->manageDate($comment, $currentDate);
         $this->commentRepository->save($comment);
     }

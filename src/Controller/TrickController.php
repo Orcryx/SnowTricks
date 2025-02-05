@@ -75,11 +75,11 @@ class TrickController extends AbstractController
             $comment->setTrick($trick);
             $comment->setUser($this->getUser());
             $this->commentManager->saveComment($comment); // Utilisation du CommentManager pour sauvegarder le commentaire
+            $this->addFlash('success', 'Commentaire ajouté');
 
-            return $this->redirectToRoute('success', [
+            return $this->redirectToRoute('app_trick_show', [
                 'slug' => $trick->getSlug(),
             ]);
-            $this->addFlash('success', 'Commentaire ajouté');
         }
 
         return $this->render('trick/index.html.twig', [

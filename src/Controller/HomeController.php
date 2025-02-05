@@ -11,12 +11,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class HomeController extends AbstractController
 {
-    private TrickManagerInterface $trickManager;
 
-    public function __construct(TrickManagerInterface $trickManager)
-    {
-        $this->trickManager = $trickManager;
-    }
+    public function __construct(private readonly TrickManagerInterface $trickManager) {}
 
     #[Route('/', name: 'app_home')]
     public function index(Request $request): Response
@@ -40,6 +36,7 @@ class HomeController extends AbstractController
                 'totalPages' => $totalPages,
             ]);
 
+            //TODO : investiguer l'utilisation du JSON
             return new JsonResponse(['html' => $html, 'pagination' => $pagination]);
         }
 
