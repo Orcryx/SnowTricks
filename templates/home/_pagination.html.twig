@@ -1,9 +1,9 @@
-<div class="pagination">
+<div class="pagination flex-center">
 	{% if currentPage > 1 %}
-		<button class="btn" onclick="loadPage({{ currentPage - 1 }})">Réduire</button>
+		<button id="moreTrick" class="btn" onclick="loadPage({{ currentPage - 1 }})">Réduire</button>
 	{% endif %}
 
 	{% if currentPage < totalPages %}
-		<button class="btn" onclick="loadPage({{ currentPage + 1 }})">Voir plus</button>
+		<button id="moreTrick" class="btn" onclick="loadPage({{ currentPage + 1 }})">Voir plus</button>
 	{% endif %}
 </div>

@@ -1,5 +1,4 @@
 {% if tricks is not empty %}
-
 	{% for trick in tricks %}
 		<div class="gallery">
 			<a href="{{ path('app_trick_show', {slug: trick.slug}) }}" class="trick">
