@@ -2,7 +2,7 @@
 {% block title %}SnowTricks - Accueil
 {% endblock %}
 
-{% block sectionOne %}
+{% block  zoneOne %}
 	<div id="picture-trick">
 		{% if app.user %}
 			<div id="btnZone" class="flex">
@@ -32,7 +32,7 @@
 
 {% endblock %}
 
-{% block sectionTwo %}
+{% block zoneTwo %}
 	<div class="flex-column-center">
 		<div id="caroussel-trick"></div>
 		<details id="gallery" class="flex" open>
@@ -47,11 +47,11 @@
 				<div id="gallery-video">
 					{% for video in trick.video %}
 						{# <video controls width="250">
-																																																																																																																																																																																																																																																	<source src="{{ video.src}}" type="video/webm"/>
-																																																																																																																																																																																																																																																	<a href="{{ video.src}}">MP4</a>
-																																																																																																																																																																																																																																																	<source src="{{ video.src}}" type="video/mp4"/>
-																																																																																																																																																																																																																																																</video>		
-																																																																																																																																																																																																																																																	<iframe id="video{{ video.id}}" title="Inline Frame Example {{ video.name}}" width="300" height="200" src="{{ video.src}}"></iframe> #}
+																																																																																																																																																																																																																																																							<source src="{{ video.src}}" type="video/webm"/>
+																																																																																																																																																																																																																																																							<a href="{{ video.src}}">MP4</a>
+																																																																																																																																																																																																																																																							<source src="{{ video.src}}" type="video/mp4"/>
+																																																																																																																																																																																																																																																						</video>		
+																																																																																																																																																																																																																																																							<iframe id="video{{ video.id}}" title="Inline Frame Example {{ video.name}}" width="300" height="200" src="{{ video.src}}"></iframe> #}
 						<a href="{{ video.src}}">{{ video.name}}</a>
 					{% endfor %}
 				</div>
