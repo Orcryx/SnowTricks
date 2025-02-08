@@ -327,7 +327,9 @@ footer
     margin-top: 20px;
     width: 150px;
 }
-div.gallery {
+
+div.gallery 
+{
     position : relative;
 
     width: 20%;
@@ -339,7 +341,7 @@ div.gallery {
     border: 1px solid #ccc;
    
 
-  }
+}
 
   div.gallery:hover {
     border: 1px solid #777;
@@ -368,6 +370,85 @@ div.gallery {
 
     background-color: #cccccc86;
   }
+
+
+  /*LA PAGE TRICK*/
+
+  #btn-trickZone
+  {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    gap: 10px;
+
+    padding: 20px;
+
+  }
+
+ #carrousel
+{
+    width: 100%;
+    height: 250px;
+
+    display: flex;
+    align-items: center;
+
+    overflow-y: scroll;
+
+    padding: 0 10px;
+
+    background-color: #f2f2f2;
+}
+
+#carrousel div
+{
+    display: flex;
+    justify-content: space-between;
+
+}
+
+#carrousel .card
+{
+        width: 33%;
+        height: 230px;
+
+        
+}
+
+video, iframe, .card a
+{
+    width: 100%;
+    height: 100%;
+}
+
+
+.hero-picture{
+    position: relative;
+  }
+
+  .hero-picture img{
+    height: 100vh;
+    width: 100%;
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+  }
+
+  .grand-text
+  {
+    font-size: 2em;
+    text-transform: uppercase;
+  }
+
+  .ombre
+  {
+    text-shadow: 1px 1px 2px #000;
+  }
+
+
 
 
 

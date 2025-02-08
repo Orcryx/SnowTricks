@@ -1,81 +1,84 @@
 {% extends 'base.html.twig' %}
-{% block title %}SnowTricks - Accueil
+{% block title %}SnowTricks - trick
 {% endblock %}
 
 {% block  zoneOne %}
-	<div id="picture-trick">
-		{% if app.user %}
-			<div id="btnZone" class="flex">
-				<a href="{{ path('app_trick_edit',{slug : trick.slug}) }}">
-					<button type="button" class="btn">
-						<i class="fa-solid fa-pen"></i>
-					</button>
-				</a>
-				<a href="{{ path('app_trick_remove',{slug : trick.slug}) }}">
-					<button type="submit" class="btn">
-						<i class="fa-solid fa-trash"></i>
-					</button>
-				</a>
-			</div>
-		{% endif %}
-		{% for picture in trick.picture %}
-			{% if loop.first %}
-				<img src="{{ picture.src}}" alt="Image présentant la figure {{ trick.name }}">
+
+	<div id="zoneOne">
+		<div class="hero-picture">
+			{% for picture in trick.picture %}
+				{% if loop.first %}
+					<img src="{{ picture.src}}" alt="Image présentant la figure {{ trick.name }}">
+					<div class="hero-text grand-text ombre">
+						<h1>{{trick.name}}</h1>
+					</div>
+				{% endif %}
+			{% endfor %}
+			{% if app.user %}
+				<div id="btn-trickZone" class="flex">
+					<a href="{{ path('app_trick_edit',{slug : trick.slug}) }}">
+						<button type="button" class="btn">
+							<i class="fa-solid fa-pen"></i>
+						</button>
+					</a>
+					<a href="{{ path('app_trick_remove',{slug : trick.slug}) }}">
+						<button type="submit" class="btn">
+							<i class="fa-solid fa-trash"></i>
+						</button>
+					</a>
+				</div>
 			{% endif %}
-		{% endfor %}
-		<div class="info-trick">
-			<h1>{{trick.name}}</h1>
-			<h2>{{ trick.user.pseudo }}</h2>
 		</div>
 	</div>
-
-
 {% endblock %}
 
 {% block zoneTwo %}
-	<div class="flex-column-center">
-		<div id="caroussel-trick"></div>
-		<details id="gallery" class="flex" open>
-			<summary>GALERIE</summary>
-			<div id="gallery-img" class="flex-center">
+	<div id="zoneTwo">
+		<div id="carrousel" class=" gallery">
+			<div>
 				{% for picture in trick.picture %}
 					<div class="card">
 						<img class="card-content " src="{{ picture.src}}" alt="Image présentant la figure {{ trick.name }}">
 					</div>
 				{% endfor %}
-
-				<div id="gallery-video">
-					{% for video in trick.video %}
-						{# <video controls width="250">
-																																																																																																																																																																																																																																																							<source src="{{ video.src}}" type="video/webm"/>
-																																																																																																																																																																																																																																																							<a href="{{ video.src}}">MP4</a>
-																																																																																																																																																																																																																																																							<source src="{{ video.src}}" type="video/mp4"/>
-																																																																																																																																																																																																																																																						</video>		
-																																																																																																																																																																																																																																																							<iframe id="video{{ video.id}}" title="Inline Frame Example {{ video.name}}" width="300" height="200" src="{{ video.src}}"></iframe> #}
-						<a href="{{ video.src}}">{{ video.name}}</a>
-					{% endfor %}
-				</div>
-			</div>
-		</details>
-
-		<details open>
-			<summary>DETAILS</summary>
-			<p>{{ trick.category.name }}</p>
-		</details>
-
-		<details id="comment" class="flex">
-			<summary>COMMENTAIRES</summary>
-
-			{% if app.user %}
-				<div id="comment-form">
-					{{form(form)}}
-					</div>
-				{% endif %}
-				{% for comment in trick.comments %}
-					<div id="comment-bloc" class="flex-column">
-						<p>{{ comment.content}}"</p>
-					</div>
+				{% for video in trick.video %}
+					<div class="card">
+						{% if "youtube.com" in video.src or "youtu.be" in video.src %}
+							{# <iframe width="250" height="140" src="{{ video.src | replace({'watch?v=': 'embed/'}) }}" frameborder="0" allowfullscreen></iframe> #}
+							<a href="{{ video.src }}" target="_blank">
+								<img class="video" src="https://img.youtube.com/vi/{{ video.src | split('?v=') | last | split('&') | first }}/hqdefault.jpg" alt="Vidéo YouTube">
+							</a>
+						{% else %}
+							<video controls width="250">
+								<source src="{{ video.src }}" type="video/mp4">
+								<a href="{{ video.src }}">MP4</a>
+							</video>
+						</div>
+					{% endif %}
 				{% endfor %}
-			</details>
+			</div>
 		</div>
-	{% endblock %}
+
+	</div>
+
+	<details open>
+		<summary>DETAILS</summary>
+		<p>{{ trick.category.name }}</p>
+	</details>
+
+	<details id="comment" class="flex">
+		<summary>COMMENTAIRES</summary>
+
+		{% if app.user %}
+			<div id="comment-form">
+				{{form(form)}}
+				</div>
+			{% endif %}
+			{% for comment in trick.comments %}
+				<div id="comment-bloc" class="flex-column">
+					<p>{{ comment.content}}"</p>
+				</div>
+			{% endfor %}
+		</details>
+	</div>
+</div>{% endblock %}
