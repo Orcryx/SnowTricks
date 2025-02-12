@@ -68,8 +68,10 @@
 			<div id="details-info" class="flex">
 				<p class="encart">{{ trick.category.name }}</p>
 				<p class="encart">
+					Mise en ligne :
 					{{trick.createAt|date("m/d/Y")}}</p>
-				<p class="encart">{{trick.updateAt|date("m/d/Y")}}</p>
+				<p class="encart">Dernière modification :
+					{{trick.updateAt|date("m/d/Y")}}</p>
 			</div>
 			<hr/>
 
