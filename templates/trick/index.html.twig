@@ -6,14 +6,11 @@
 
 	<div id="zoneOne">
 		<div class="hero-picture">
-			{% for picture in trick.picture %}
-				{% if loop.first %}
-					<img src="{{ picture.src}}" alt="Image présentant la figure {{ trick.name }}">
-					<div class="hero-text grand-text ombre">
-						<h1>{{trick.name}}</h1>
-					</div>
-				{% endif %}
-			{% endfor %}
+			<img src="{{ trick.pictureDefault }}" alt="Image présentant la figure {{ trick.name }}">
+			<div class="hero-text grand-text ombre">
+				<h1>{{trick.name}}</h1>
+			</div>
+
 			{% if app.user %}
 				<div id="btn-trickZone" class="flex">
 					<a href="{{ path('app_trick_edit',{slug : trick.slug}) }}">
@@ -80,8 +77,9 @@
 				<div id="comment-form">
 					{{form(form)}}
 					</div>
+					<hr/>
 				{% endif %}
-				<hr/>
+
 				<div id="comments-container">
 					{% for comment in trick.comments %}
 						<div class="comment-bloc flex-column" {% if loop.index > 5 %} style="display: none;" {% else %} style="display: flex;" {% endif %}>

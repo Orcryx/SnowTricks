@@ -31,6 +31,7 @@ class TrickType extends AbstractType
             ->add('slug', HiddenType::class, [
                 'required' => false,
             ])
+            ->add('picture_default')
             ->add('description')
             ->add('category', EntityType::class, [
                 'class' => Category::class,

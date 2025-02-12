@@ -2,9 +2,7 @@
 	{% for trick in tricks %}
 		<div class="gallery">
 			<a href="{{ path('app_trick_show', {slug: trick.slug}) }}" class="trick">
-				{% if trick.picture is not empty %}
-					<img src="{{ trick.picture[0].src }}" alt="Image présentant la figure {{ trick.name }}">
-				{% endif %}
+				<img src="{{ trick.pictureDefault }}" alt="Image présentant la figure {{ trick.name }}">
 				<div class="desc">
 					{{ trick.name }}
 					{% if app.user %}

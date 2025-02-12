@@ -6,15 +6,15 @@
 {% block zoneOne %}
 	<div id="zoneOne">
 		<div class="hero-picture">
-			{% if form.picture.vars.data|length > 0 %}
-				<img src="{{ form.picture.vars.data[0].src }}" alt="Image principale du trick">
-				<button class="edit-btn">
-					<i class="fa fa-pen"></i>
-				</button>
-				<button class="delete-btn">
-					<i class="fa fa-trash"></i>
-				</button>
-			{% endif %}
+			<img src="{{ trick.pictureDefault }}" alt="Image présentant la figure {{ trick.name }}">
+			<button class="edit-btn">
+				<i class="fa fa-pen"></i>
+			</button>
+			<button class="delete-btn">
+				<i class="fa fa-trash"></i>
+			</button>
+			{{ form_row(form.picture_default) }}
+
 			<div class="hero-text grand-text ombre">
 				<h1>{{ trick.name }}</h1>
 			</div>
@@ -63,7 +63,7 @@
 
 				<div class="flex">
 					<a href="{{ path('app_trick_remove', {slug: trick.slug}) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce trick ? Cette action est irréversible.')" class="btn btn-danger">Supprimer</a>
-					<a type="submit" class="btn btn-primary">Sauvegarder</a>
+					<a href="{{ path('app_trick_edit', {slug: trick.slug}) }}" type="submit" class="btn btn-primary">Sauvegarder</a>
 				</div>
 				{{ form_end(form, {"render_rest": false}) }}
 			</div>

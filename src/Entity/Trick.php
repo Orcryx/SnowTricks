@@ -58,6 +58,9 @@ class Trick
     #[ORM\ManyToOne(inversedBy: 'trick')]
     private ?User $user = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $picture_default = null;
+
     public function __construct()
     {
         $this->picture = new ArrayCollection();
@@ -246,20 +249,6 @@ class Trick
         return $this;
     }
 
-    // Méthode pour générer le slug
-    // public function generateSlug(): void
-    // {
-    //     // Si le nom n'est pas défini, ne génère pas de slug
-    //     if (null === $this->name) {
-    //         return;
-    //     }
-    //     // Remplacer les espaces par des tirets et convertir en minuscule
-    //     $slug = preg_replace('/\s+/', '-', $this->name);
-    //     $slug = strtolower(trim($slug)); //retirer les espaces
-
-    //     $this->slug = $slug;
-    // }
-
     public function generateSlug(): string
     {
         if (null === $this->name) {
@@ -267,5 +256,17 @@ class Trick
         }
 
         return strtolower(trim(preg_replace('/\s+/', '-', $this->name)));
+    }
+
+    public function getPictureDefault(): ?string
+    {
+        return $this->picture_default;
+    }
+
+    public function setPictureDefault(string $picture_default): static
+    {
+        $this->picture_default = $picture_default;
+
+        return $this;
     }
 }
