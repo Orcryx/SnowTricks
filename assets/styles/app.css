@@ -710,6 +710,11 @@ width: 100%;
     {
         display: none;
     }
+
+    #carrousel
+    {
+        display: block;
+    }
 }
 
 

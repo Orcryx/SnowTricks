@@ -2,8 +2,16 @@ document.addEventListener("DOMContentLoaded", function () {
     const btnCarrousel = document.querySelector(".btn-carrousel .btn");
     const carrousel = document.getElementById("carrousel");
 
-    // Masquer le carrousel par défaut
-    carrousel.style.display = "none";
+    function toggleCarrouselOnResize() {
+        if (window.innerWidth >= 800) {
+            carrousel.style.display = "block";
+        } else {
+            carrousel.style.display = "none";
+        }
+    }
+
+    toggleCarrouselOnResize(); // Vérifier au chargement
+    window.addEventListener("resize", toggleCarrouselOnResize);
 
     btnCarrousel.addEventListener("click", function () {
         if (carrousel.style.display === "none") {
