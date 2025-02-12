@@ -18,7 +18,7 @@ class CommentType extends AbstractType
         $builder
             ->add('content', TextareaType::class, [
                 'required' => true,
-                'label' => 'Votre message',
+                'label' => 'Ajouter un commentaire',
                 'constraints' => [
                     new Regex([
                         'pattern' => '/[a-zA-Z]{3,}[a-zA-Z0-9\-]*/',
@@ -26,20 +26,6 @@ class CommentType extends AbstractType
                     ]),
                 ],
             ])
-            //             ->add('createAt', null, [
-            //                 'widget' => 'single_text',
-            //             ])
-            //             ->add('updateAt', null, [
-            //                 'widget' => 'single_text',
-            //             ])
-            //             ->add('trick', EntityType::class, [
-            //                 'class' => Trick::class,
-            // 'choice_label' => 'id',
-            //             ])
-            //             ->add('user', EntityType::class, [
-            //                 'class' => User::class,
-            // 'choice_label' => 'id',
-            //             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Envoyer', // Libellé du bouton
             ])

@@ -33,8 +33,8 @@
 {% endblock %}
 
 {% block zoneTwo %}
-	<div id="zoneTwo">
-		<div id="carrousel" class=" gallery">
+	<div id="zoneTwo" class="flex-column-center">
+		<div id="carrousel" class="gallery">
 			<div>
 				{% for picture in trick.picture %}
 					<div class="card">
@@ -42,13 +42,17 @@
 					</div>
 				{% endfor %}
 				{% for video in trick.video %}
-					<div class="card">
-						{% if "youtube.com" in video.src or "youtu.be" in video.src %}
-							{# <iframe width="250" height="140" src="{{ video.src | replace({'watch?v=': 'embed/'}) }}" frameborder="0" allowfullscreen></iframe> #}
+					{% if "youtube.com" in video.src or "youtu.be" in video.src %}
+						{# <iframe width="250" height="140" src="{{ video.src | replace({'watch?v=': 'embed/'}) }}" frameborder="0" allowfullscreen></iframe> #}
+						<div class="card">
 							<a href="{{ video.src }}" target="_blank">
+
 								<img class="video" src="https://img.youtube.com/vi/{{ video.src | split('?v=') | last | split('&') | first }}/hqdefault.jpg" alt="Vidéo YouTube">
+
 							</a>
-						{% else %}
+						</div>
+					{% else %}
+						<div class="card">
 							<video controls width="250">
 								<source src="{{ video.src }}" type="video/mp4">
 								<a href="{{ video.src }}">MP4</a>
@@ -58,27 +62,48 @@
 				{% endfor %}
 			</div>
 		</div>
+		<div id="details" class="flex-column-center">
+			<h2>{{trick.name}}</h2>
+			<div id="details-descr">{{trick.description}}</div>
+			<div id="details-info" class="flex">
+				<p class="encart">{{ trick.category.name }}</p>
+				<p class="encart">
+					{{trick.createAt|date("m/d/Y")}}</p>
+				<p class="encart">{{trick.updateAt|date("m/d/Y")}}</p>
+			</div>
+			<hr/>
 
-	</div>
-
-	<details open>
-		<summary>DETAILS</summary>
-		<p>{{ trick.category.name }}</p>
-	</details>
-
-	<details id="comment" class="flex">
-		<summary>COMMENTAIRES</summary>
-
-		{% if app.user %}
-			<div id="comment-form">
-				{{form(form)}}
+		</div>
+		<div id="details-info" class="flex-column">
+			{% if app.user %}
+				<div id="comment-form">
+					{{form(form)}}
+					</div>
+				{% endif %}
+				<hr/>
+				<div id="comments-container">
+					{% for comment in trick.comments %}
+						<div class="comment-bloc flex-column" {% if loop.index > 5 %} style="display: none;" {% else %} style="display: flex;" {% endif %}>
+							<div class="commentaire flex">
+								<div class="avatar">
+									{% if comment.user and comment.user.avatar %}
+										<img src="{{ comment.user.avatar }}" alt="Avatar de {{ comment.user.pseudo }}" class="avatar-img">
+									{% else %}
+										<img src="https://img.freepik.com/free-vector/para-snowboard-concept-illustration_114360-18502.jpg?t=st=1739357466~exp=1739361066~hmac=b818099bdbc92853d7d27ba02bc77f9772328ee776b0a503dbdb1f312a5d7408&w=740" alt="Avatar par défaut" class="avatar-img">
+									{% endif %}
+								</div>
+								<div class="texte">{{ comment.content }}</div>
+							</div>
+						</div>
+					{% endfor %}
 				</div>
-			{% endif %}
-			{% for comment in trick.comments %}
-				<div id="comment-bloc" class="flex-column">
-					<p>{{ comment.content}}"</p>
-				</div>
-			{% endfor %}
-		</details>
-	</div>
-</div>{% endblock %}
+
+
+				{% if trick.comments|length > 5 %}
+					<button id="load-more" class="btn">Afficher plus</button>
+				{% endif %}
+
+			</div>
+			<script src="{{ asset('js/comment.js') }}"></script>
+
+		{% endblock %}
