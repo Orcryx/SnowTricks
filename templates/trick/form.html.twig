@@ -23,19 +23,19 @@
 						{% for picture in form.picture %}
 							<div class="picture-data">
 								<li>{{ form_row(picture.src) }}</li>
-								<li>{{ form_row(picture.name) }}</li>
+								{# <li>{{ form_row(picture.name) }}</li> #}
 							</div>
 						{% endfor %}
 					</ul>
+
 					<h2>Video</h2>
 					<button type="button" class="add_item_link" data-collection-holder-class="video">Ajouter une video</button>
-
 					<ul class="video" data-index="{{ form.video|length > 0 ? form.video|last.vars.name + 1 : 0 }}" data-prototype="{{ form_widget(form.video.vars.prototype)|e('html_attr') }}">
 						{% for video in form.video %}
 							<li>{{ form_row(video.src) }}</li>
 						{% endfor %}
 					</ul>
-					{{ form_end(form) }}
+					{{ form_end(form, {"render_rest" : false}) }}
 				</div>
 			</div>
 			<script src="{{ asset('js/MoreAssetTricks.js') }}"></script>
