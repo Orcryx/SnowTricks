@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const carrousel = document.getElementById("carrousel");
 
     function toggleCarrouselOnResize() {
-        if (window.innerWidth >= 800) {
+        if (window.innerWidth >= 801) {
             carrousel.style.display = "block";
         } else {
             carrousel.style.display = "none";
