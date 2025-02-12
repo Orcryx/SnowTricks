@@ -62,6 +62,9 @@
 				{% endfor %}
 			</div>
 		</div>
+		<div class="btn-carrousel">
+			<button class="btn">Voir les images</button>
+		</div>
 		<div id="details" class="flex-column-center">
 			<h2>{{trick.name}}</h2>
 			<div id="details-descr">{{trick.description}}</div>
@@ -107,5 +110,6 @@
 
 			</div>
 			<script src="{{ asset('js/comment.js') }}"></script>
+			<script src="{{ asset('js/displayGallery.js') }}"></script>
 
 		{% endblock %}
