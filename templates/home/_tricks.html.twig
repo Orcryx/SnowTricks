@@ -11,7 +11,7 @@
 						<a href="{{ path('app_trick_edit', {slug: trick.slug}) }}">
 							<i class="fa-solid fa-pen"></i>
 						</a>
-						<a href="{{ path('app_trick_remove', {slug: trick.slug}) }}">
+						<a href="{{ path('app_trick_remove', {slug: trick.slug}) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce trick ? Cette action est irréversible.')">
 							<i class="fa-solid fa-trash"></i>
 						</a>
 					{% endif %}

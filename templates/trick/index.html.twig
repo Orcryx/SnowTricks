@@ -21,7 +21,7 @@
 							<i class="fa-solid fa-pen"></i>
 						</button>
 					</a>
-					<a href="{{ path('app_trick_remove',{slug : trick.slug}) }}">
+					<a href="{{ path('app_trick_remove',{slug : trick.slug}) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce trick ? Cette action est irréversible.')">
 						<button type="submit" class="btn">
 							<i class="fa-solid fa-trash"></i>
 						</button>
