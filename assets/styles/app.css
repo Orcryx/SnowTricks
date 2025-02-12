@@ -148,22 +148,6 @@ footer
 
 /* LES ID */
 
-#flash
-{
-    position: absolute;
-
-    width: 100%;
-    height: auto;
-
-    padding: 0.5em;
-
-    top: 55px;
-    z-index: 998;
-
-    text-align: center;
-
-    background-color: transparent;
-} 
 
 #navigationIcone
 {
@@ -312,7 +296,54 @@ footer
     font-size: 1.5em;
   }
 
+/*LES FLASH*/
+#flash
+{
+    position: absolute;
 
+    width: 100%;
+    height: auto;
+
+    padding: 0.5em;
+
+    top: 55px;
+    z-index: 998;
+
+    text-align: center;
+
+    background-color: transparent;
+} 
+
+.message
+{
+    color: #ccc;
+    font-style: italic;
+    font-weight: 600;
+
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+    animation: fadeOut 4s forwards; /* L'animation dure 4 secondes */
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    80% { opacity: 1; } /* Le message reste visible un moment */
+    100% { opacity: 0; } /* Puis disparaît */
+}
+.success
+{
+    background-color: green;
+}
+
+.flash-notice
+{
+    background-color: skyblue;
+}
+
+.flash-error, .flash-verify_email_error
+{
+    background-color: crimson;
+}
 
 /*LA GALLERIE DE LA PAGE HOME*/
 
