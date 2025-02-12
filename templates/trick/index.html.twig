@@ -43,13 +43,9 @@
 				{% endfor %}
 				{% for video in trick.video %}
 					{% if "youtube.com" in video.src or "youtu.be" in video.src %}
-						{# <iframe width="250" height="140" src="{{ video.src | replace({'watch?v=': 'embed/'}) }}" frameborder="0" allowfullscreen></iframe> #}
 						<div class="card">
-							<a href="{{ video.src }}" target="_blank">
+							<iframe width="250" height="140" src="{{ video.src | replace({'youtu.be/': 'www.youtube.com/embed/', 'watch?v=': 'embed/'}) }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-								<img class="video" src="https://img.youtube.com/vi/{{ video.src | split('?v=') | last | split('&') | first }}/hqdefault.jpg" alt="Vidéo YouTube">
-
-							</a>
 						</div>
 					{% else %}
 						<div class="card">
