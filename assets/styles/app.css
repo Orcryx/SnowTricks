@@ -381,8 +381,6 @@ div.gallery
 
     background-color: #f2f2f2;
     border: 1px solid #ccc;
-   
-
 }
 
   div.gallery:hover {
@@ -481,7 +479,7 @@ hr
  #carrousel
 {
     width: 100%;
-    height: 250px;
+    min-height: 250px;
 
     display: flex;
     align-items: center;
@@ -505,9 +503,7 @@ hr
 {
         width: 33%;
         min-width: 300px;
-        height: 230px;
-
-        
+        height: 230px;   
 }
 
 #comment-form form
@@ -606,6 +602,59 @@ width: 100%;
     padding: 20px;
 }
 
+/*PAGE MODIFIER UN TRICKS*/
+
+#hero-manageBtn
+{
+    position:absolute;
+    width: 300px;
+    top: 50px;
+    right: 30px;
+}
+
+#hero-manageBtn input
+{
+    width: 100%;
+}
+
+#editTrick-input
+{
+    display: none;
+}
+
+.minSize
+{
+    min-height: 250px;
+}
+
+.editTrick-btn
+{   
+    gap: 10px;
+    justify-content: flex-end;
+
+    margin-bottom: 20px;
+}
+
+.editTrick-btn button
+{   
+    width: 80px;
+    height: 30px;
+
+    background-color: #070d29;
+    color: #f1f1f1;
+
+    border : none;
+    border-radius: 5px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+
+.highlight {
+    border: 3px solid #ffcc00;
+    box-shadow: 0px 0px 10px rgba(255, 204, 0, 0.8);
+    transition: all 0.3s ease-in-out;
+}
+
+/*** LE RESPONSIVE ***/
 
 /* Use a media query to add a breakpoint at 800px: */
 @media screen and (max-width: 800px) {
@@ -693,7 +742,7 @@ width: 100%;
         background-color: #f2f2f2;
         padding: 5px;
     }
-
+    
   }
 
 

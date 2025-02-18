@@ -59,7 +59,7 @@ class Trick
     private ?User $user = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $picture_default = null;
+    private ?string $image = null;
 
     public function __construct()
     {
@@ -258,14 +258,14 @@ class Trick
         return strtolower(trim(preg_replace('/\s+/', '-', $this->name)));
     }
 
-    public function getPictureDefault(): ?string
+    public function getImage(): ?string
     {
-        return $this->picture_default;
+        return $this->image;
     }
 
-    public function setPictureDefault(string $picture_default): static
+    public function setImage(string $image): static
     {
-        $this->picture_default = $picture_default;
+        $this->image = $image;
 
         return $this;
     }

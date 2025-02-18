@@ -1,73 +1,97 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Modifier le Trick
+{% block title %}Modifier un Trick
 {% endblock %}
 
-{% block zoneOne %}
-	<div id="zoneOne">
-		<div class="hero-picture">
-			<img src="{{ trick.pictureDefault }}" alt="Image présentant la figure {{ trick.name }}">
-			<button class="edit-btn">
-				<i class="fa fa-pen"></i>
-			</button>
-			<button class="delete-btn">
-				<i class="fa fa-trash"></i>
-			</button>
-			{{ form_row(form.picture_default) }}
 
+{% block zoneOne %}
+
+	<div id="zoneOne">
+		<div class="form-error">
+			{{ form_errors(form) }}
+		</div>
+		{{ form_start(form , {'method': 'POST'}) }}
+		<div class="hero-picture minSize">
+			<img src="{{ trick.image }}" alt="Image présentant la figure {{ trick.name }}">
+			<div id="hero-manageBtn">
+				<div class="editTrick-btn flex">
+					<button type="button" id="editBtn-hero" class="edit-btn">
+						<i class="fa fa-pen"></i>
+					</button>
+				</div>
+				<div id="editTrick-input">
+					{{ form_row(form.image) }}
+				</div>
+			</div>
 			<div class="hero-text grand-text ombre">
 				<h1>{{ trick.name }}</h1>
 			</div>
 		</div>
 
-		<div id="formulaire">
-			<div id="formTrick" class="flex-column">
-				<h1>Editer un Trick</h1>
-				<div class="form-error">
-					{{ form_errors(form) }}
-				</div>
-				<div id="carrousel" class="flex">
-					<ul class="picture" data-index="{{ form.picture|length > 0 ? form.picture|last.vars.name + 1 : 0 }}" data-prototype="{{ form_widget(form.picture.vars.prototype)|e('html_attr') }}">
-						{% for picture in form.picture %}
-							<div class="card picture-data">
-								<img src="{{ picture.vars.data.src }}" alt="Image du trick">
-								{{ form_row(picture.src) }}
-							</div>
-						{% endfor %}
-					</ul>
-					<ul class="video" data-index="{{ form.video|length > 0 ? form.video|last.vars.name + 1 : 0 }}" data-prototype="{{ form_widget(form.video.vars.prototype)|e('html_attr') }}">
-						{% for video in form.video %}
-							<div class="card">
-								{% if "youtube.com" in video.vars.data.src or "youtu.be" in video.vars.data.src %}
-									<a href="{{ video.vars.data.src }}" target="_blank">
-										<img class="video" src="https://img.youtube.com/vi/{{ video.vars.data.src | split('?v=') | last | split('&') | first }}/hqdefault.jpg" alt="Vidéo YouTube">
-									</a>
-								{% else %}
-									<video controls width="250">
-										<source src="{{ video.vars.data.src }}" type="video/mp4">
-										{{ form_row(video.src) }}
-									</video>
-								{% endif %}
-							</ul>
+		<div id="carrousel" class="gallery">
+			<div>
+				{% for picture in trick.picture %}
+					<div class="card">
+						<img class="card-content" src="{{ picture.src }}" alt="Image présentant la figure {{ trick.name }}">
+					</div>
+				{% endfor %}
+
+				{% for video in trick.video %}
+					{% if "youtube.com" in video.src or "youtu.be" in video.src %}
+						<div class="card">
+							<iframe width="250" height="140" src="{{ video.src | replace({'youtu.be/': 'www.youtube.com/embed/', 'watch?v=': 'embed/'}) }}" frameborder="0" allowfullscreen></iframe>
 						</div>
-					{% endfor %}
-				</div>
-				<button type="button" class="add_item_link" data-collection-holder-class="picture">Ajouter une image</button>
-				<button type="button" class="add_item_link" data-collection-holder-class="video">Ajouter une video</button>
-
-				{{ form_start(form , {'method': 'POST'}) }}
-				{{ form_row(form.name) }}
-				{{ form_row(form.description, {'attr': {'class': 'large-textarea'}}) }}
-				{{ form_row(form.category) }}
-
-
-				<div class="flex">
-					<a href="{{ path('app_trick_remove', {slug: trick.slug}) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce trick ? Cette action est irréversible.')" class="btn btn-danger">Supprimer</a>
-					<a href="{{ path('app_trick_edit', {slug: trick.slug}) }}" type="submit" class="btn btn-primary">Sauvegarder</a>
-				</div>
-				{{ form_end(form, {"render_rest": false}) }}
+					{% else %}
+						<div class="card">
+							<video controls width="250">
+								<source src="{{ video.src }}" type="video/mp4">
+								<a href="{{ video.src }}">MP4</a>
+							</video>
+						</div>
+					{% endif %}
+				{% endfor %}
 			</div>
 		</div>
+
+		<div id="formulaire">
+			<div id="formTrick" class="flex-column">
+				<h1>Modifier
+					{{ trick.name }}</h1>
+				{{ form_row(form.name) }}
+
+				{{ form_row(form.description, {'attr': {'class': 'large-textarea'}}) }}
+				{{ form_row(form.category) }}
+			</div>
+
+			<h2>Images</h2>
+			<button type="button" class="add_item_link" data-collection-holder-class="picture">Ajouter une image</button>
+			<ul class="picture" data-index="{{ form.picture|length > 0 ? form.picture|last.vars.name + 1 : 0 }}" data-prototype="{{ form_widget(form.picture.vars.prototype)|e('html_attr') }}">
+				{% for picture in form.picture %}
+					<div class="picture-data">
+						<li>{{ form_row(picture.src) }}</li>
+						<li>{{ form_row(picture.name) }}</li>
+					</div>
+				{% endfor %}
+			</ul>
+
+			<h2>Vidéos</h2>
+			<button type="button" class="add_item_link" data-collection-holder-class="video">Ajouter une vidéo</button>
+			<ul class="video" data-index="{{ form.video|length > 0 ? form.video|last.vars.name + 1 : 0 }}" data-prototype="{{ form_widget(form.video.vars.prototype)|e('html_attr') }}">
+				{% for video in form.video %}
+					<li>{{ form_row(video.src) }}</li>
+				{% endfor %}
+			</ul>
+			{{form_row(form.submit)}}
+			{{ form_end(form, {"render_rest" : false}) }}
+		</div>
+		{# <div>
+									<a href="{{ path('app_trick_remove',{slug : trick.slug}) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce trick ? Cette action est irréversible.')">
+										<button type="submit" class="btn">
+											<i class="fa-solid fa-trash"></i>
+										</button>
+									</a>
+								</div> #}
 	</div>
-	<script src="{{ asset('js/MoreAssetTricks.js') }}"></script>
+
+
 {% endblock %}
