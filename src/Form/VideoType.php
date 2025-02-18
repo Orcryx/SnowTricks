@@ -15,12 +15,7 @@ class VideoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', TextType::class, ['required' => true, 'label' => 'nom', 'constraints' => [
-                new Regex([
-                    'pattern' => '/[a-zA-z]{3,}[a-zA-Z-0-9\-]*/',
-                    // 'message' => 'The title must contain at least 3 letters',
-                ]),
-            ]])
+            ->add('name', TextType::class, ['required' => true, 'label' => 'nom'])
             ->add('src', UrlType::class, [
                 'label' => 'Ajouter une vidéo',
                 'required' => true,

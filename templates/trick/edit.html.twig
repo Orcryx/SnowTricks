@@ -5,7 +5,6 @@
 
 
 {% block zoneOne %}
-
 	<div id="zoneOne">
 		<div class="form-error">
 			{{ form_errors(form) }}
@@ -58,7 +57,9 @@
 				<h1>Modifier
 					{{ trick.name }}</h1>
 				{{ form_row(form.name) }}
-
+				<div class="hidden">
+					<input type="hidden" name="slug" value="{{ trick.slug}}">
+				</div>
 				{{ form_row(form.description, {'attr': {'class': 'large-textarea'}}) }}
 				{{ form_row(form.category) }}
 			</div>
@@ -81,17 +82,26 @@
 					<li>{{ form_row(video.src) }}</li>
 				{% endfor %}
 			</ul>
+			<div class="hidden">
+				{% if not form.picture.rendered %}
+					{{ form_row(form.picture) }}
+				{% endif %}
+				{% if not form.video.rendered %}
+					{{ form_row(form.video) }}
+				{% endif %}
+			</div>
 			{{form_row(form.submit)}}
-			{{ form_end(form, {"render_rest" : false}) }}
-		</div>
-		{# <div>
-									<a href="{{ path('app_trick_remove',{slug : trick.slug}) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce trick ? Cette action est irréversible.')">
-										<button type="submit" class="btn">
-											<i class="fa-solid fa-trash"></i>
-										</button>
-									</a>
-								</div> #}
-	</div>
 
+			{{form_end(form)}}
+		</div>
+		<div>
+			<a href="{{ path('app_trick_remove',{slug : trick.slug}) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce trick ? Cette action est irréversible.')">
+				<button type="submit" class="btn">
+					<i class="fa-solid fa-trash"></i>
+				</button>
+			</a>
+		</div>
+	</div>
+	<script src="{{ asset('js/MoreAssetTricks.js') }}"></script>
 
 {% endblock %}

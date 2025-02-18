@@ -39,7 +39,7 @@ class TrickType extends AbstractType
             ])
             ->add('picture', CollectionType::class, [
                 'entry_type' => PictureType::class,
-                // 'entry_options' => ['label' => false], //retirer le label (0,1,etc.)
+                'entry_options' => ['label' => false], //retirer le label (0,1,etc.)
                 'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false,
