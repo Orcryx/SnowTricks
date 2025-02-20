@@ -23,7 +23,8 @@ class TrickRepository extends ServiceEntityRepository
             ->orderBy('t.createAt', 'DESC')
             ->setFirstResult(($page - 1) * $limit)
             ->setMaxResults($limit)
-            ->getQuery();
+            ->getQuery()
+            ->setHint(Paginator::HINT_ENABLE_DISTINCT, false);
 
         return new Paginator($query);
     }

@@ -24,6 +24,8 @@ html, body
 {
     flex-grow: 1;
     padding-top: 56px; 
+    display: flex;
+    justify-content: center;
 }
 
 footer 
