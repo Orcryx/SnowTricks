@@ -2,8 +2,7 @@
 
 {% block title %}SnowTricks - Accueil
 {% endblock %}
-
-{% block zoneOne %}
+{% block hero %}
 	<div id="zoneOne">
 		<div class="hero-image">
 			<div class="hero-text">
@@ -18,9 +17,8 @@
 		</div>
 	</div>
 {% endblock %}
-{% block zoneTwo %}
+{% block zoneOne %}
 	<div id="zoneTwo">
-		<span id="gallery"></span>
 		<div id="trick-container" class="flex">
 			{% include "home/_tricks.html.twig" %}
 		</div>

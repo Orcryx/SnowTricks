@@ -8,82 +8,44 @@
     font-family: "Poppins", sans-serif;
 }
 
-html 
+
+html, body 
 {
     height: 100%;
-}
-
-body{
+    
     display: flex;
     flex-direction: column;
 
-    min-height: 100vh;
-    width: 100%;
-    /* border: 1px solid salmon; */
-}
+    background-color: #fff;
+  }
 
-label, input, textarea, select
+
+.content 
 {
-  color: #000;
-
+    flex-grow: 1;
+    padding-top: 56px; 
 }
 
-button
+footer 
 {
-    cursor: pointer;
-}
+    padding: 25px 0;
 
-a{
-    text-decoration: none;
-    color: #070d29;
-}
-
-nav 
-{
-    overflow: hidden;
-
-    background-color: #333;
-
-    position: fixed;
-    top: 0;
-
-    z-index: 1000;
-
-    width: 100%;
-    height: 55px;
-
-    padding: 0 30px;
-    
-    box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
-}
-
-nav a 
-{
-    float: right;
-
-    padding: 14px 16px;
-
-    text-transform: uppercase;
-    color: #f1f1f1;
-
-    font-size: 1em;
-    font-weight: 500;
-}
-
-
-footer
-{
-    width: 100%;
-    padding: 25px;
-    
+    text-align: center;
     color: #f2f2f2;
 
     background-color: #333;
     box-shadow: rgba(0, 0, 0, 0.04) 0px -3px 5px;
 
-    z-index: 999;
 }
 
+a{
+    text-decoration: none;
+}
+
+.navbar
+{
+    padding:0 20px;
+}
 
 
 /*LES FLEXBOX*/
@@ -123,441 +85,64 @@ footer
     flex-wrap: wrap-reverse;
 }
 
-
-.flex-logo {
+.flex-center-wrap
+{
     display: flex;
-    align-items: center; 
-    gap: 8px; 
-}
-
-.flex-logo a {
-    display: flex;
-    align-items: center; 
-    gap: 8px; 
-    font-size: 1.2em;
-    font-weight: bold;
-    color: #f1f1f1;
-    text-decoration: none;
-}
-
-.flex-logo a i {
-    font-size: 1.5em; 
-    color: #f1f1f1;
-}
-
-
-/* LES ID */
-
-
-#navigationIcone
-{
-    display: none;
-}
-
-
-#contain
-{
-    min-height: 100vh;
-}
-
-#zoneOne, #zoneTwo
-{
-    width: 100%;
-    height: auto;
-}
-
-
-#zoneUnique
-{
-    width: 100%;
-   height: 100%;
-   min-height: 90vh;
-
     justify-content: center;
-
-    /* sur la base de la taille du nav et du footer */
-    padding-top: 55px; 
-    margin-bottom: 10px;
-
-    background-image: url("6213.jpg");
-
-}
-
-
-#zoneOne
-{
-    margin-top: 54px;
-    /* border: 1px solid fuchsia; */
-
-}
-
-#zoneTwo
-{
-    /* padding: 20px ; */
-    background-image: url("6213.jpg");
-
-}
-
-#formulaire
-{
-    max-height: 600px;
-   
-    overflow-x: scroll;
- 
-    padding: 20px;
-
-    background-color: #f1f1f1d7;
-    border-radius:  5px;
-
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-
-}
-
-
-
-#formulaire div
-{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
     gap: 5px;
 }
 
-#formulaire h1
+
+/*SPECIFIQUE */
+
+#load-more, #comments-container
 {
-   text-align: center;
-}
-
-#formulaire button
-{
-    margin-top: 10px;
-}
-
-#arrowUp
-{
-    /* visibility: hidden; */
-    display: none;
-}
-
-/* LES CLASS */
-
-.btn, #formulaire button
-{
-    width: 100%;
-    height: 30px;
-
-    padding: 0.5em;
-
-    text-align: center;
-    text-transform: uppercase;
-    font-weight: 500;
-
-    background-color: #070d29;
-    color: #f1f1f1;
-
-    border : none;
-    border-radius: 5px;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-}
-
-.btn:hover
-{
-    border : 1px solid #070d29;
-}
-
-.hero-image 
-{
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("b1.jpg");
-   
-    height: 100vh;
-    width: 100%;
-
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    position: relative;
-} 
-
- .hero-text 
-{
-    text-align: center;
-    position: absolute;
-
-    top: 50%;
-    left: 50%;
-
-    transform: translate(-50%, -50%);
-
-    color: white;
-  }
-
-  .fa-snowflake
-  {
-    font-size: 1.5em;
-  }
-
-  .hidden
-  {
-    display: none;
-    visibility: hidden;
-  }
-
-/*LES FLASH*/
-#flash
-{
-    position: absolute;
-
-    width: 100%;
-    height: auto;
-
-    padding: 0.5em;
-
-    top: 55px;
-    z-index: 998;
-
-    text-align: center;
-
-    background-color: transparent;
-} 
-
-.message
-{
-    color: #ccc;
-    font-style: italic;
-    font-weight: 600;
-
-    opacity: 1;
-    transition: opacity 0.5s ease-in-out;
-    animation: fadeOut 4s forwards; /* L'animation dure 4 secondes */
-}
-
-@keyframes fadeOut {
-    0% { opacity: 1; }
-    80% { opacity: 1; } /* Le message reste visible un moment */
-    100% { opacity: 0; } /* Puis disparaît */
-}
-.success
-{
-    background-color: green;
-}
-
-.flash-notice
-{
-    background-color: skyblue;
-}
-
-.flash-error, .flash-verify_email_error
-{
-    background-color: crimson;
-}
-
-/*LA GALLERIE DE LA PAGE HOME*/
-
-#trick-container
-{
-    height: auto;
-
-    gap: 10px;
-
-    padding: 10px;
-    margin:20px 20px 0 20px; 
-
-    background-color: #e6e6e6;
-}
-
-.tricks-page
-{
-    width: 100%;
-}
-#moreTrick
-{
-    margin-top: 20px;
     margin-bottom: 10px;
-    width: 150px;
 }
 
-div.gallery 
+#navigationIcone
 {
-    position : relative;
-
-    width: 20%;
-    height: 180px;
-
-    /* margin: 5px; */
-
-    background-color: #f2f2f2;
-    border: 1px solid #ccc;
+display: none;
 }
 
-  div.gallery:hover {
-    border: 1px solid #777;
-  }
-
-  div.gallery img {
+#gallery, #gallery div
+{
     width: 100%;
-    height: 100%;
-  }
+}
 
-  div.desc {
-    position : absolute;
-    bottom : 0px;
-
+#gal-elmt iframe, #gal-elmt video
+{
     display: flex;
+    justify-content: space-around;
+
+    width: 33%;
+    height:210px ;
+}
+
+#btn-trickZone
+{
+    position: absolute;
+    top: 50px;
+    right: 0;
+
     gap: 10px;
-    justify-content: center;
-
-    width: 100%;
-    height: 50px;
-
-    padding: 10px;
-
-    text-align: center;
-    color: #070d29;
-
-    background-color: #cccccc86;
-  }
-
-
-  /*LA PAGE TRICK*/
-video, iframe, .card a
-{
-    width: 100%;
-    height: 100%;
-}
-
-hr
-{
-    width: 80%;
-
-    margin-top: 10px;
-    margin-bottom: 10px;
-    margin-left: auto;
-    margin-right: auto;
-
-    align-self: center;
-}
-
-#details, #details-info
-{
-    width: 100%;
-
+    
     padding: 20px;
-
-    background-color: #f2f2f2;
-
-    padding: 10px ;
 }
 
-#details h2
+figure img
 {
-    font-size: large;
-    font-weight: 500;
-
-    color: #070d29;
+    height:190px ;
 }
 
-#details-descr
-{
-    text-align: center;
-    padding: 20px;
-
-}
 
 #details-info
 {
     justify-content: center;
     
     gap: 20px
-}
-
-#btn-trickZone
-{
-    position: absolute;
-    top: 0;
-    right: 0;
-
-    gap: 10px;
-
-    padding: 20px;
-
-}
-
- #carrousel
-{
-    width: 100%;
-    min-height: 250px;
-
-    display: flex;
-    align-items: center;
-
-    overflow-y: scroll;
-
-    padding: 10px;
-
-    background-color: #f2f2f2;
-}
-
-#carrousel div
-{
-    display: flex;
-    /* justify-content: space-between; */
-    gap: 10px;
-
-}
-
-#carrousel .card
-{
-        width: 33%;
-        min-width: 300px;
-        height: 230px;   
-}
-
-#comment-form form
-{
-width: 100%;
-}
-
-#comment
-{
-    display: flex;   
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-
-    text-align: center;
-
-}
-
-#comment label
-{
-    display: none;   
-}
-
-.hero-picture
-{
-    position: relative;
-}
-
-.hero-picture img
-{
-    height: 100vh;
-    width: 100%;
-
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    position: relative;
-}
-
-.grand-text
-{
-    font-size: 2em;
-    text-transform: uppercase;
-}
-
-.ombre
-{
-    text-shadow: 1px 1px 2px #000;
 }
 
 .encart
@@ -573,12 +158,51 @@ width: 100%;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 }
 
-.avatar-img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    object-fit: cover;
-}
+/*Les bannières heros*/
+
+.hero-image 
+{
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("b1.jpg");
+   
+    height: 100vh;
+    width: 100%;
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+} 
+
+.hero-text 
+{
+    text-align: center;
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    color: white;
+  }
+
+  .hero-picture
+  {
+      position: relative;
+  }
+  
+  .hero-picture img
+  {
+      height: 80vh;
+      width: 100%;
+  
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      position: relative;
+  }
+
+/*commentaire du trick*/
 
 .commentaire
 {
@@ -592,6 +216,13 @@ width: 100%;
 
 }
 
+.texte
+{
+    flex: 2;
+
+    padding: 20px;
+}
+
 .avatar
 {
     display: flex;
@@ -601,176 +232,9 @@ width: 100%;
     width: 80px;
 }
 
-.texte
-{
-    flex: 2;
-
-    padding: 20px;
+.avatar-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
 }
-
-/*PAGE MODIFIER UN TRICKS*/
-
-#hero-manageBtn
-{
-    position:absolute;
-    width: 300px;
-    top: 50px;
-    right: 30px;
-}
-
-#hero-manageBtn input
-{
-    width: 100%;
-}
-
-#editTrick-input
-{
-    display: none;
-}
-
-.minSize
-{
-    min-height: 250px;
-}
-
-.editTrick-btn
-{   
-    gap: 10px;
-    justify-content: flex-end;
-
-    margin-bottom: 20px;
-}
-
-.editTrick-btn button
-{   
-    width: 80px;
-    height: 30px;
-
-    background-color: #070d29;
-    color: #f1f1f1;
-
-    border : none;
-    border-radius: 5px;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-}
-
-.highlight {
-    border: 3px solid #ffcc00;
-    box-shadow: 0px 0px 10px rgba(255, 204, 0, 0.8);
-    transition: all 0.3s ease-in-out;
-}
-
-/*** LE RESPONSIVE ***/
-
-/* Use a media query to add a breakpoint at 800px: */
-@media screen and (max-width: 800px) {
-  #navigation
-  {
-    display: none;
-  }
-
-  #navigationIcone
-    {
-        display: block;
-    }
-
-  
-    #zoneOne
-    {   
-    margin-top: 0;
-    }  
-
-    #zoneTwo
-    {   
-        height: auto;
-    /* margin-bottom: 50px; */
-    }  
-
-
-    div.gallery{
-      width: 100%; 
-    }
-
-      #trick-container, .tricks-page
-    {
-        flex-direction: column;
-        flex-wrap: wrap;
-    }  
-
-    div.desc 
-    {
-        font-size: 0.9em;
-    }
-
-
-   nav {
-        position: fixed;
-        bottom: 0;
-        top: auto;
-
-
-        width: 100%;
-        height: 55px;
-
-
-        padding: 0;
-    }
-    
-  
-   #contain #infoFooter
-    {
-        display: none;
-    }
-    
-    #carrousel
-    {
-        overflow-x: scroll;
-        height: auto;
-    }
-
-    #carrousel div
-    {
-        flex-direction: column;
-        gap: 10px;
-
-        height: auto;
-    }
-    
-    #carrousel .card
-    {
-            width: 100%;
-            height: 230px;      
-    }
-
-    .btn-carrousel
-    {
-        width: 100%;
-        background-color: #f2f2f2;
-        padding: 5px;
-    }
-    
-  }
-
-
-/* Sur grand écran, cacher les icônes et afficher le texte */
-@media screen and (min-width: 801px) {
-    nav a i {
-        display: none;
-    }
-    
-    nav a {
-        font-size: 1em; /* Affiche le texte */
-    }
-
-    .btn-carrousel
-    {
-        display: none;
-    }
-
-    #carrousel
-    {
-        display: block;
-    }
-}
-
-

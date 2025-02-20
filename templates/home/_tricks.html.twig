@@ -1,10 +1,10 @@
-<div class="tricks-page flex-center">
+<div class="card-deck flex-center-wrap">
 	{% for trick in tricks %}
-		<div class="gallery">
-			<a href="{{ path('app_trick_show', {slug: trick.slug}) }}" class="trick">
-				<img src="{{ trick.image }}" alt="Image présentant la figure {{ trick.name }}">
-				<div class="desc">
-					{{ trick.name }}
+		<a href="{{ path('app_trick_show', {slug: trick.slug}) }}" class="trick">
+			<div class="card bg-light mb-3" style="max-width: 17rem;">
+				<img src="{{ trick.image }}" alt="Image présentant la figure {{ trick.name }}" class="card-img-top">
+				<div class="card-body">
+					<h5 class="card-title">{{ trick.name }}</h5>
 					{% if app.user %}
 						<a href="{{ path('app_trick_edit', {slug: trick.slug}) }}">
 							<i class="fa-solid fa-pen"></i>
@@ -13,8 +13,12 @@
 							<i class="fa-solid fa-trash"></i>
 						</a>
 					{% endif %}
+					<p class="card-text">
+						<small class="text-muted">Last updated
+							{{trick.updateAt|date("d/m/Y")}}</small>
+					</p>
 				</div>
-			</a>
-		</div>
+			</div>
+		</a>
 	{% endfor %}
 </div>

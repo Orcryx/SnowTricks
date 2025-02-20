@@ -68,3 +68,4 @@ document.addEventListener("click", function (event) {
         setTimeout(initTricksPagination, 100); // Réinitialise après navigation
     }
 });
+

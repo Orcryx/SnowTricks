@@ -26,9 +26,9 @@ class CommentType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('submit', SubmitType::class, [
-                'label' => 'Envoyer', // Libellé du bouton
-            ])
+            // ->add('submit', SubmitType::class, [
+            //     'label' => 'Envoyer', // Libellé du bouton
+            // ])
         ;
     }
 
