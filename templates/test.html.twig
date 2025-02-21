@@ -1,0 +1,159 @@
+{# {% block zoneTwo %}
+
+	<div id="formulaire">
+		<div id="formTrick" class="flex-column"></div>
+		<h2>Images</h2>
+		<button type="button" class="add_item_link" data-collection-holder-class="picture">Ajouter une image</button>
+		<div id="edit-picture" class="picture" data-index="{{ form.picture|length > 0 ? form.picture|last.vars.name + 1 : 0 }}" data-prototype="{{ form_widget(form.picture.vars.prototype)|e('html_attr') }}">
+			{% for picture in form.picture %}
+				<div class="picture-data">
+					{{ form_row(picture.name) }}
+					{{ form_row(picture.src) }}
+				</div>
+			{% endfor %}
+		</div>
+		<h2>Vidéos</h2>
+		<button type="button" class="add_item_link" data-collection-holder-class="video">Ajouter une vidéo</button>
+		<div class="video" data-index="{{ form.video|length > 0 ? form.video|last.vars.name + 1 : 0 }}" data-prototype="{{ form_widget(form.video.vars.prototype)|e('html_attr') }}">
+			{% for video in form.video %}
+				<div class="picture-data">
+					{{ form_row(video.src) }}
+				</div>
+			{% endfor %}
+		</div>
+		<div class="hidden">
+			{% if not form.picture.rendered %}
+				{{ form_row(form.picture) }}
+			{% endif %}
+			{% if not form.video.rendered %}
+				{{ form_row(form.video) }}
+			{% endif %}
+		</div>
+		{{form_row(form.submit)}}
+
+		{{form_end(form)}}
+	</div>
+	<div>
+		<a href="{{ path('app_trick_remove',{slug : trick.slug}) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce trick ? Cette action est irréversible.')">
+			<button type="submit" class="btn">
+				<i class="fa-solid fa-trash"></i>
+			</button>
+		</a>
+	</div>
+</div>{#<script src="{{asset('js/MoreAssetTricks.js') }}"></script>#}{% endblock %}
+{% block JS %}
+{#{<script src="{{ asset('js/displayHide.js') }}"></script>} #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier un Trick
+{% endblock %}
+
+
+{% block hero %}
+	<div class="hero-picture">
+		<div class="form-error">
+			{{ form_errors(form) }}
+		</div>
+		{{ form_start(form , {'method': 'POST'}) }}
+		<img src="{{ trick.image }}" alt="Image présentant la figure {{ trick.name }}">
+		<div id="btn-trickZone" class="flex">
+			<details id="editTrick-container">
+				<summary id="editBtn-hero">
+					<div type="button" class="btn btn-primary mt-2">
+						<i class="fa fa-pen"></i>
+					</div>
+					<button type="button" id="hero-deleteBtn" class="btn btn-primary mt-2">
+						<i class="fa-solid fa-trash"></i>
+					</button>
+				</summary>
+
+				<div id="editTrick-input">
+					{{ form_row(form.image) }}
+				</div>
+			</details>
+		</div>
+	</div>
+{% endblock %}
+
+
+{% block zoneOne %}
+	<div class="container-sm">
+		<h1 class="flex-center">Modifier
+			{{ trick.name }}</h1>
+		<div>
+			<div class="container text-center py-5">
+				<div id="gallery" class="row justify-content-center">
+					<div class="col-md-8">
+						<div id="gal-elmt" class="row justify-content-center">
+							{% for picture in trick.picture %}
+								<div class="card">
+									<figure class="figure">
+										<img src="{{ picture.src }}" class="figure-img img-fluid rounded">
+										<figcaption class="figure-caption">{{ picture.name }}</figcaption>
+									</figure>
+								</div>
+							{% endfor %}
+
+							<div class="card-form">
+								{% if not form.picture.rendered %}
+									{{ form_row(form.picture) }}
+								{% endif %}
+							</div>
+
+							{% for video in trick.video %}
+								{% if "youtube.com" in video.src or "youtu.be" in video.src %}
+									<div class="card">
+										<iframe src="{{ video.src | replace({'youtu.be/': 'www.youtube.com/embed/', 'watch?v=': 'embed/'}) }}" allowfullscreen></iframe>
+									</div>
+								{% else %}
+									<div class="card">
+										<video controls width="250">
+											<source src="{{ video.src }}" type="video/mp4">
+										</video>
+									</div>
+								{% endif %}
+							{% endfor %}
+
+							<div class="card-form">
+								{% if not form.video.rendered %}
+									{{ form_row(form.video) }}
+								{% endif %}
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<hr class="my-4"/>
+		</div>
+
+
+		<div id="details" class="flex-column-center">
+			<div class="hidden">
+				<input type="hidden" name="slug" value="{{ trick.slug}}">
+			</div>
+			<div class="edit-name">
+				{{ form_row(form.name) }}
+			</div>
+			<div class="edit-descr">
+				{{ form_row(form.description, {'attr': {'class': 'large-textarea'}}) }}
+			</div>
+			<div class="edit-categ">
+				{{ form_row(form.category) }}
+			</div>
+		</div>
+		<div class="hidden">
+			{% if not form.picture.rendered %}
+				{{ form_row(form.picture) }}
+			{% endif %}
+			{% if not form.video.rendered %}
+				{{ form_row(form.video) }}
+			{% endif %}
+		</div>
+		{{form_row(form.submit)}}
+
+		{{form_end(form)}}
+
+	</div>
+{% endblock %}

@@ -3,127 +3,124 @@
 {% block title %}Modifier un Trick
 {% endblock %}
 
-{% block stylesheets %}
-	{# <link rel="stylesheet" href="{{ asset('css/createForm.css') }}"> #}
-{% endblock %}
-
 {% block zoneOne %}
-	<div id="zoneOne">
-		<div class="form-error">
-			{{ form_errors(form) }}
+<div class="container mt-4">
+	<h1 class="mb-4">Modifier le Trick</h1>
+
+	{# Affichage de l'image principale du Trick #}
+	{% if trick.image %}
+		<div class="text-center mb-4">
+			<h3>Image principale</h3>
+			<img src="{{ trick.image }}" alt="Image principale du Trick" class="img-fluid rounded" style="max-width: 400px;">
 		</div>
-		{{ form_start(form , {'method': 'POST'}) }}
-		<div class="hero-picture minSize">
-			<img src="{{ trick.image }}" alt="Image présentant la figure {{ trick.name }}">
-			<div id="hero-manageBtn">
-				<details id="editTrick-container">
-					<summary id="editBtn-hero" class="edit-btn">
-						<div class="btn flex-center">
-							<i class="fa fa-pen"></i>
-						</div>
-						<button type="button" id="hero-deleteBtn" class="delete-btn btn">
-							<i class="fa-solid fa-trash"></i>
-						</button>
-					</summary>
+	{% endif %}
 
-					<div id="editTrick-input">
-						{{ form_row(form.image) }}
-					</div>
-				</details>
-			</div>
+	{{ form_start(form) }}
 
-
-			<div class="hero-text grand-text ombre">
-				<h1>{{ trick.name }}</h1>
-			</div>
-		</div>
-
-		<div id="carrousel" class="gallery">
-			<div>
-				{% for picture in trick.picture %}
-					<div class="card">
-						<img class="card-content" src="{{ picture.src }}" alt="Image présentant la figure {{ trick.name }}">
-					</div>
-				{% endfor %}
-
-				{% for video in trick.video %}
-					{% if "youtube.com" in video.src or "youtu.be" in video.src %}
-						<div class="card">
-							<iframe width="250" height="140" src="{{ video.src | replace({'youtu.be/': 'www.youtube.com/embed/', 'watch?v=': 'embed/'}) }}" frameborder="0" allowfullscreen></iframe>
-						</div>
-					{% else %}
-						<div class="card">
-							<video controls width="250">
-								<source src="{{ video.src }}" type="video/mp4">
-								<a href="{{ video.src }}">MP4</a>
-							</video>
-						</div>
-					{% endif %}
-				{% endfor %}
-			</div>
-		</div>
-
-		<div id="formulaire">
-			<div id="formTrick" class="flex-column">
-				<h1>Modifier
-					{{ trick.name }}</h1>
-				<div class="hidden">
-					<input type="hidden" name="slug" value="{{ trick.slug}}">
-				</div>
-				<div class="edit-name">
-					{{ form_row(form.name) }}
-				</div>
-				<div class="edit-descr">
-					{{ form_row(form.description, {'attr': {'class': 'large-textarea'}}) }}
-				</div>
-				<div class="edit-categ">
-					{{ form_row(form.category) }}
-				</div>
-
-			</div>
-			<h2>Images</h2>
-			<button type="button" class="add_item_link" data-collection-holder-class="picture">Ajouter une image</button>
-			<div id="edit-picture" class="picture" data-index="{{ form.picture|length > 0 ? form.picture|last.vars.name + 1 : 0 }}" data-prototype="{{ form_widget(form.picture.vars.prototype)|e('html_attr') }}">
-				{% for picture in form.picture %}
-					<div class="picture-data">
-						{{ form_row(picture.name) }}
-						{{ form_row(picture.src) }}
-					</div>
-				{% endfor %}
-			</div>
-			<h2>Vidéos</h2>
-			<button type="button" class="add_item_link" data-collection-holder-class="video">Ajouter une vidéo</button>
-			<div class="video" data-index="{{ form.video|length > 0 ? form.video|last.vars.name + 1 : 0 }}" data-prototype="{{ form_widget(form.video.vars.prototype)|e('html_attr') }}">
-				{% for video in form.video %}
-					<div class="picture-data">
-						{{ form_row(video.src) }}
-					</div>
-				{% endfor %}
-			</div>
-			<div class="hidden">
-				{% if not form.picture.rendered %}
-					{{ form_row(form.picture) }}
-				{% endif %}
-				{% if not form.video.rendered %}
-					{{ form_row(form.video) }}
-				{% endif %}
-			</div>
-			{{form_row(form.submit)}}
-
-			{{form_end(form)}}
-		</div>
-		<div>
-			<a href="{{ path('app_trick_remove',{slug : trick.slug}) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce trick ? Cette action est irréversible.')">
-				<button type="submit" class="btn">
-					<i class="fa-solid fa-trash"></i>
-				</button>
-			</a>
-		</div>
+	<div class="mb-3">
+		{{ form_label(form.name) }}
+		{{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+		{{ form_errors(form.name) }}
 	</div>
-	{#<script src="{{asset('js/MoreAssetTricks.js') }}"></script>#}
 
-{% endblock %}
-{% block JS %}
-	{#{<script src="{{ asset('js/displayHide.js') }}"></script>}
-			#}
-{% endblock %}
+	<div class="mb-3">
+		{{ form_label(form.description) }}
+		{{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+		{{ form_errors(form.description) }}
+	</div>
+
+	<div class="mb-3">
+		{{ form_label(form.category) }}
+		{{ form_widget(form.category, {'attr': {'class': 'form-select'}}) }}
+		{{ form_errors(form.category) }}
+	</div>
+
+	<h3>Images associées</h3>
+	<div id="picture-collection" data-prototype="{{ form_widget(form.picture.vars.prototype)|e('html_attr') }}">
+		{% for picture in form.picture %}
+			<div class="picture-item d-flex flex-column align-items-start mb-3">
+				{% if picture.vars.value.src is not empty %}
+					<img src="{{ picture.vars.value.src }}" alt="Image du Trick" class="img-thumbnail mb-2" style="max-width: 200px;">
+				{% endif %}
+				<div class="d-flex">
+					{{ form_row(picture.name, {'attr': {'class': 'form-control me-2'}}) }}
+					{{ form_row(picture.src, {'attr': {'class': 'form-control me-2'}}) }}
+					<button type="button" class="btn btn-danger remove-picture">Supprimer</button>
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+	<button type="button" class="btn btn-success mt-2" id="add-picture">Ajouter une image</button>
+
+	<h3>Vidéos associées</h3>
+	<div id="video-collection" data-prototype="{{ form_widget(form.video.vars.prototype)|e('html_attr') }}">
+		{% for video in form.video %}
+			<div class="video-item d-flex flex-column align-items-start mb-3">
+				{% if video.vars.value.src is not empty %}
+					<iframe width="300" height="170" src="{{ video.vars.value.src }}" frameborder="0" allowfullscreen class="mb-2"></iframe>
+				{% endif %}
+				<div class="d-flex">
+					{{ form_row(video.name, {'attr': {'class': 'form-control me-2'}}) }}
+					{{ form_row(video.src, {'attr': {'class': 'form-control me-2'}}) }}
+					<button type="button" class="btn btn-danger remove-video">Supprimer</button>
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+	<button type="button" class="btn btn-success mt-2" id="add-video">Ajouter une vidéo</button>
+
+	<div class="mt-4">
+		<button type="submit" class="btn btn-primary">Enregistrer</button>
+	</div>
+
+	{{ form_end(form) }}
+</div>
+
+//
+<script>
+
+	// 		document.addEventListener("DOMContentLoaded", function () {
+	// let pictureCollection = document.getElementById("picture-collection");
+	// let videoCollection = document.getElementById("video-collection");
+	// let addPictureButton = document.getElementById("add-picture");
+	// let addVideoButton = document.getElementById("add-video");
+	// let pictureIndex = pictureCollection.children.length;
+	// let videoIndex = videoCollection.children.length;
+	
+	// function addCollectionItem(collection, index, type) {
+	// let prototype = collection.dataset.prototype;
+	// let newItemHtml = prototype.replace(/__name__/g, index);
+	// let div = document.createElement("div");
+	// div.classList.add(type + "-item", "d-flex", "align-items-center", "mb-2");
+	// div.innerHTML = newItemHtml;
+	
+	// let removeButton = document.createElement("button");
+	// removeButton.type = "button";
+	// removeButton.classList.add("btn", "btn-danger", "ms-2", "remove-" + type);
+	// removeButton.textContent = "Supprimer";
+	
+	// div.appendChild(removeButton);
+	// collection.appendChild(div);
+	// }
+	
+	// // Gestion de l'ajout des images et vidéos
+	// addPictureButton.addEventListener("click", function () {
+	// addCollectionItem(pictureCollection, pictureIndex++, "picture");
+	// });
+	
+	// addVideoButton.addEventListener("click", function () {
+	// addCollectionItem(videoCollection, videoIndex++, "video");
+	// });
+	
+	// // 🔹 Délégation d’événement pour gérer la suppression d’éléments dynamiques
+	// document.body.addEventListener("click", function (event) {
+	// if (event.target.classList.contains("remove-picture")) {
+	// event.target.closest(".picture-item").remove();
+	// }
+	// if (event.target.classList.contains("remove-video")) {
+	// event.target.closest(".video-item").remove();
+	// }
+	// });
+	// });
+	// 	</script>
+	{% endblock %}
