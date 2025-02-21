@@ -50,21 +50,37 @@ class TrickType extends AbstractType
                 'label' => 'Catégorie',
                 'placeholder' => 'Sélectionnez une catégorie',
             ])
+            // ->add('picture', CollectionType::class, [
+            //     'entry_type' => PictureType::class,
+            //     'entry_options' => ['label' => false],
+            //     'allow_add' => true,
+            //     'allow_delete' => true,
+            //     'by_reference' => false,
+            //     'label' => 'Images',
+            // ])
+            // ->add('video', CollectionType::class, [
+            //     'entry_type' => VideoType::class,
+            //     'entry_options' => ['label' => false],
+            //     'allow_add' => true,
+            //     'allow_delete' => true,
+            //     'by_reference' => false,
+            //     'label' => 'Vidéos',
+            // ])
             ->add('picture', CollectionType::class, [
-                'entry_type' => PictureType::class,
-                'entry_options' => ['label' => false],
-                'allow_add' => true,
-                'allow_delete' => true,
-                'by_reference' => false,
-                'label' => 'Images',
+                'entry_type' => PictureType::class, // Type du formulaire enfant
+                'allow_add' => true, // Permet d'ajouter dynamiquement des images
+                'allow_delete' => true, // Permet la suppression
+                'by_reference' => false, // Important pour les relations OneToMany
+                'prototype' => true, // Permet d'ajouter avec JavaScript
+                'attr' => ['class' => 'picture-collection'],
             ])
             ->add('video', CollectionType::class, [
                 'entry_type' => VideoType::class,
-                'entry_options' => ['label' => false],
                 'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false,
-                'label' => 'Vidéos',
+                'prototype' => true,
+                'attr' => ['class' => 'video-collection'],
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Enregistrer le trick',

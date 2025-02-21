@@ -2,125 +2,98 @@
 
 {% block title %}Modifier un Trick
 {% endblock %}
-
-{% block zoneOne %}
-<div class="container mt-4">
-	<h1 class="mb-4">Modifier le Trick</h1>
-
-	{# Affichage de l'image principale du Trick #}
-	{% if trick.image %}
-		<div class="text-center mb-4">
-			<h3>Image principale</h3>
-			<img src="{{ trick.image }}" alt="Image principale du Trick" class="img-fluid rounded" style="max-width: 400px;">
+{% block hero %}
+	<div class="hero-picture">
+		<div class="form-error">
+			{{ form_errors(form) }}
 		</div>
-	{% endif %}
+		{{ form_start(form , {'method': 'POST'}) }}
+		<img src="{{ trick.image }}" alt="Image présentant la figure {{ trick.name }}">
+		<div id="btn-trickZone" class="flex">
+			<details id="editTrick-container">
+				<summary id="editBtn-hero">
+					<div type="button" class="btn btn-primary mt-2">
+						<i class="fa fa-pen"></i>
+					</div>
+					<button type="button" id="hero-deleteBtn" class="btn btn-primary mt-2">
+						<i class="fa-solid fa-trash"></i>
+					</button>
+				</summary>
 
-	{{ form_start(form) }}
-
-	<div class="mb-3">
-		{{ form_label(form.name) }}
-		{{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
-		{{ form_errors(form.name) }}
-	</div>
-
-	<div class="mb-3">
-		{{ form_label(form.description) }}
-		{{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
-		{{ form_errors(form.description) }}
-	</div>
-
-	<div class="mb-3">
-		{{ form_label(form.category) }}
-		{{ form_widget(form.category, {'attr': {'class': 'form-select'}}) }}
-		{{ form_errors(form.category) }}
-	</div>
-
-	<h3>Images associées</h3>
-	<div id="picture-collection" data-prototype="{{ form_widget(form.picture.vars.prototype)|e('html_attr') }}">
-		{% for picture in form.picture %}
-			<div class="picture-item d-flex flex-column align-items-start mb-3">
-				{% if picture.vars.value.src is not empty %}
-					<img src="{{ picture.vars.value.src }}" alt="Image du Trick" class="img-thumbnail mb-2" style="max-width: 200px;">
-				{% endif %}
-				<div class="d-flex">
-					{{ form_row(picture.name, {'attr': {'class': 'form-control me-2'}}) }}
-					{{ form_row(picture.src, {'attr': {'class': 'form-control me-2'}}) }}
-					<button type="button" class="btn btn-danger remove-picture">Supprimer</button>
+				<div id="editTrick-input">
+					{{ form_row(form.image) }}
 				</div>
-			</div>
-		{% endfor %}
+			</details>
+		</div>
 	</div>
-	<button type="button" class="btn btn-success mt-2" id="add-picture">Ajouter une image</button>
-
-	<h3>Vidéos associées</h3>
-	<div id="video-collection" data-prototype="{{ form_widget(form.video.vars.prototype)|e('html_attr') }}">
-		{% for video in form.video %}
-			<div class="video-item d-flex flex-column align-items-start mb-3">
-				{% if video.vars.value.src is not empty %}
-					<iframe width="300" height="170" src="{{ video.vars.value.src }}" frameborder="0" allowfullscreen class="mb-2"></iframe>
-				{% endif %}
-				<div class="d-flex">
-					{{ form_row(video.name, {'attr': {'class': 'form-control me-2'}}) }}
-					{{ form_row(video.src, {'attr': {'class': 'form-control me-2'}}) }}
-					<button type="button" class="btn btn-danger remove-video">Supprimer</button>
+{% endblock %}
+{% block zoneOne %}
+	<div class="container mt-4">
+		<h1 class="flex-center">Modifier
+			{{ trick.name }}</h1>
+		<div>
+			<div id="zone-media">
+				<div class="zone-media">
+					<h3>Images associées</h3>
+					<button type="button" class="btn btn-success mt-2" id="add-picture">Ajouter une image</button>
+					<div id="picture-collection" data-prototype="{{ form_widget(form.picture.vars.prototype)|e('html_attr') }}">
+						{% for picture in form.picture %}
+							<div class="picture-item d-flex align-items-start mb-3 carte-collection">
+								{% if picture.vars.value.src is not empty %}
+									<img src="{{ picture.vars.value.src }}" alt="Image du Trick" class="img-thumbnail mb-2" style="max-width: 100%;">
+								{% endif %}
+								<div class="flex-column zone-media-form">
+									{{ form_row(picture.name, {'attr': {'class': 'form-control me-2'}}) }}
+									{{ form_row(picture.src, {'attr': {'class': 'form-control me-2'}}) }}
+									<button type="button" class="btn btn-danger remove-picture">Supprimer</button>
+								</div>
+							</div>
+						{% endfor %}
+					</div>
 				</div>
+
+				<div class="zone-media">
+					<h3>Vidéos associées</h3>
+					<button type="button" class="btn btn-success mt-2" id="add-video">Ajouter une vidéo</button>
+					<div id="video-collection" data-prototype="{{ form_widget(form.video.vars.prototype)|e('html_attr') }}">
+						{% for video in form.video %}
+							<div class="video-item d-flex align-items-start mb-3 carte-collection">
+								{% if video.vars.value.src is not empty %}
+									<div class="flex-column zone-media-form">
+										<iframe src="{{ video.vars.value.src | replace({'youtu.be/': 'www.youtube.com/embed/', 'watch?v=': 'embed/'}) }}" frameborder="0" allowfullscreen class="mb-2"></iframe>
+									</div>
+								{% endif %}
+								<div class="flex-column zone-media-form">
+									{{ form_row(video.name, {'attr': {'class': 'form-control me-2'}}) }}
+									{{ form_row(video.src, {'attr': {'class': 'form-control me-2'}}) }}
+									<button type="button" class="btn btn-danger remove-video">Supprimer</button>
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+
 			</div>
-		{% endfor %}
-	</div>
-	<button type="button" class="btn btn-success mt-2" id="add-video">Ajouter une vidéo</button>
 
-	<div class="mt-4">
-		<button type="submit" class="btn btn-primary">Enregistrer</button>
-	</div>
+			<div class="mb-1">
+				{{ form_label(form.name) }}
+				{{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+				{{ form_errors(form.name) }}
+			</div>
 
-	{{ form_end(form) }}
-</div>
+			<div class="mb-3">
+				{{ form_label(form.description) }}
+				{{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+				{{ form_errors(form.description) }}
+			</div>
 
-//
-<script>
+			<div class="mb-1">
+				{{ form_label(form.category) }}
+				{{ form_widget(form.category, {'attr': {'class': 'form-select'}}) }}
+				{{ form_errors(form.category) }}
+			</div>
 
-	// 		document.addEventListener("DOMContentLoaded", function () {
-	// let pictureCollection = document.getElementById("picture-collection");
-	// let videoCollection = document.getElementById("video-collection");
-	// let addPictureButton = document.getElementById("add-picture");
-	// let addVideoButton = document.getElementById("add-video");
-	// let pictureIndex = pictureCollection.children.length;
-	// let videoIndex = videoCollection.children.length;
-	
-	// function addCollectionItem(collection, index, type) {
-	// let prototype = collection.dataset.prototype;
-	// let newItemHtml = prototype.replace(/__name__/g, index);
-	// let div = document.createElement("div");
-	// div.classList.add(type + "-item", "d-flex", "align-items-center", "mb-2");
-	// div.innerHTML = newItemHtml;
-	
-	// let removeButton = document.createElement("button");
-	// removeButton.type = "button";
-	// removeButton.classList.add("btn", "btn-danger", "ms-2", "remove-" + type);
-	// removeButton.textContent = "Supprimer";
-	
-	// div.appendChild(removeButton);
-	// collection.appendChild(div);
-	// }
-	
-	// // Gestion de l'ajout des images et vidéos
-	// addPictureButton.addEventListener("click", function () {
-	// addCollectionItem(pictureCollection, pictureIndex++, "picture");
-	// });
-	
-	// addVideoButton.addEventListener("click", function () {
-	// addCollectionItem(videoCollection, videoIndex++, "video");
-	// });
-	
-	// // 🔹 Délégation d’événement pour gérer la suppression d’éléments dynamiques
-	// document.body.addEventListener("click", function (event) {
-	// if (event.target.classList.contains("remove-picture")) {
-	// event.target.closest(".picture-item").remove();
-	// }
-	// if (event.target.classList.contains("remove-video")) {
-	// event.target.closest(".video-item").remove();
-	// }
-	// });
-	// });
-	// 	</script>
+			{{form_row(form.submit)}}
+			{{ form_end(form) }}
+		</div>
 	{% endblock %}

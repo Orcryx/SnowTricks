@@ -68,7 +68,7 @@ class TrickManager implements TrickManagerInterface
         $trick->setUpdateAt($currentDate);
 
         $this->trickRepository->save($trick);
-
+        dump("Après sauvegarde :", $trick->getPicture(), $trick->getVideo());
         return true;
     }
 

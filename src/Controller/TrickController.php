@@ -118,6 +118,8 @@ class TrickController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            dump($form->getData());
+            dump($trick->getPicture(), $trick->getVideo()); // Vérifie si elles so
             $trick->setUser($this->getUser());
             $this->trickManager->updateTrick($trick);
 

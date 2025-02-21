@@ -112,7 +112,7 @@
 		<div id="details-info" class="flex-column">
 			{% if app.user %}
 				<div id="comment-form" class="mt-4">
-					<div class="card shadow-sm">
+					<div class="">
 						<div class="card-body">
 							{{ form_start(form, {'attr': {'class': 'needs-validation'}}) }}
 
@@ -153,7 +153,9 @@
 
 
 		{% if trick.comments|length > 5 %}
-			<button id="load-more" class="btn btn-primary mt-2">Afficher plus</button>
+			<div class="flex-center">
+				<button id="load-more" class="btn btn-primary mt-2">Afficher plus</button>
+			</div>
 		{% endif %}
 
 		<script src="{{ asset('js/comment.js') }}"></script>

@@ -51,13 +51,24 @@ summary {
     padding:0 20px;
 }
 
+#bottomNav
+{
+    display: none;
+}
+
 .content 
 {
     flex-grow: 1;
-    padding-top: 56px; 
-    display: flex;
-    justify-content: center;
+
+    padding: 20px 20px 0 20px;
+    
 }
+
+.mb-1
+{
+    width: 350px;
+}
+
 
 
 /*LES FLEXBOX*/
@@ -106,6 +117,15 @@ summary {
     gap: 5px;
 }
 
+.gap20
+{
+    gap: 20px;
+}
+
+.gap10
+{
+    gap: 10px;
+}
 
 /*SPECIFIQUE */
 
@@ -168,6 +188,11 @@ figure img
     border-radius: 5px;
     border: 1px solid #ccc;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+.pagination
+{
+    margin-bottom: 20px;
 }
 
 /*Les bannières heros*/
@@ -251,30 +276,52 @@ figure img
     object-fit: cover;
 }
 
-/*Les cards du form edit Tricks*/
+/*Les cards du Tricks*/
+
+.card-deck
+{
+    width: 100%;
+
+    display: flex;  
+    align-items: center;
+
+    gap : 2px;
+
+    padding: 0 10px;
+}
+
 
 .card {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    width: 350px; /* Taille fixe pour toutes les cartes */
-    height: 350px; /* Hauteur fixe */
+
+    width: 350px; 
+    max-width: 17rem;
+    height: 300px; /* Hauteur fixe */
+
     border: 1px solid #ddd;
     border-radius: 8px;
+
     overflow: hidden;
+
     background: #fff;
+
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
     padding: 10px;
 }
 
-.card img {
+/* .card img
+{
     width: 100%;
-    height: 60%; /* Prend 60% de la hauteur */
-    object-fit: cover; /* Ajuste l'image sans déformation */
+    max-height: 300px; 
+    object-fit: cover;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
-}
+} */
+
 
 .card-form {
     width: 100%;
@@ -300,3 +347,120 @@ figure img
     border-radius: 4px;
     font-size: 14px;
 }
+
+.card-title
+{
+    font-size: 1rem;
+}
+
+
+/*Les carte de collection */
+
+.carte-collection
+{
+    /* width:; */
+    height: 230px;    
+
+    display: flex;
+
+    padding: 10px;
+
+    margin-top: 10px;
+
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
+
+.carte-collection img
+{
+    height: 100%;
+
+}
+
+#zone-media
+{
+    display: flex;
+    flex-direction: column;
+
+    /* border: 2px solid darkcyan; */
+}
+
+.zone-media
+{
+    display: flex;
+    flex-direction: column;
+    padding: 10px 10px 0 10px;
+
+    /* border: 1px solid orange; */
+}
+
+.zone-media-form
+{
+    width: 100%;
+    gap: 10px;
+    padding: 10px;
+    /* border: 1px solid purSple; */
+
+}
+
+.zone-media-form label
+{
+  font-weight: 700;
+}
+
+.zone-media-form iframe
+{
+    height: 200px;
+    width: 100%;
+}
+
+
+
+/*** LE RESPONSIVE ***/
+
+@media screen and (max-width: 800px) 
+{
+
+    #topNav
+    {
+        display: none;
+    }
+
+    #bottomNav
+    {
+        display: block;
+    }
+
+  /*   footer
+    {
+        display: none;
+    } */
+
+    .card {
+        width: 100%; 
+        max-width: none;
+        max-height: 350px;
+    
+        border: 1px solid #ddd;
+        border-radius: 8px;
+
+    
+        margin: 0 10px;
+    }
+
+
+    .card-deck
+    {
+        width: 100%;
+
+     flex-direction: column;
+    }
+
+    .trick-page
+    {
+        display: flex;
+        
+    }
+}
+
+@media screen and (min-width: 801px) {}

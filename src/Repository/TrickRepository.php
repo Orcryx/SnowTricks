@@ -65,20 +65,49 @@ class TrickRepository extends ServiceEntityRepository
         return (bool) $this->findOneBy(['slug' => $slug]);
     }
 
+    // public function updateAssociations(Trick $trick, \DateTime $currentDate): void
+    // {
+    //     foreach ($trick->getPicture() as $picture) {
+    //         if ($picture->getCreateAt() === null) {
+    //             $picture->setCreateAt($currentDate); // Définit une date de création si elle est absente
+    //         }
+    //         $picture->setUpdateAt($currentDate); // Met à jour la date de modification
+    //     }
+
+    //     foreach ($trick->getVideo() as $video) {
+    //         if ($video->getCreateAt() === null) {
+    //             $video->setCreateAt($currentDate); // Définit une date de création si elle est absente
+    //         }
+    //         $video->setUpdateAt($currentDate); // Met à jour la date de modification
+    //     }
+    // }
+
     public function updateAssociations(Trick $trick, \DateTime $currentDate): void
     {
+        // Vérification et mise à jour des images
         foreach ($trick->getPicture() as $picture) {
             if ($picture->getCreateAt() === null) {
-                $picture->setCreateAt($currentDate); // Définit une date de création si elle est absente
+                $picture->setCreateAt($currentDate);
             }
-            $picture->setUpdateAt($currentDate); // Met à jour la date de modification
+            $picture->setUpdateAt($currentDate);
+
+            // S'assurer que l'image est bien liée au Trick
+            if ($picture->getTrick() === null) {
+                $picture->setTrick($trick);
+            }
         }
 
+        // Vérification et mise à jour des vidéos
         foreach ($trick->getVideo() as $video) {
             if ($video->getCreateAt() === null) {
-                $video->setCreateAt($currentDate); // Définit une date de création si elle est absente
+                $video->setCreateAt($currentDate);
             }
-            $video->setUpdateAt($currentDate); // Met à jour la date de modification
+            $video->setUpdateAt($currentDate);
+
+            // S'assurer que la vidéo est bien liée au Trick
+            if ($video->getTrick() === null) {
+                $video->setTrick($trick);
+            }
         }
     }
 }
