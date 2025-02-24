@@ -8,6 +8,8 @@ use App\Manager\CommentManagerInterface;
 use App\Entity\Trick;
 use App\Form\TrickType;
 use App\Manager\TrickManagerInterface;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -107,31 +109,74 @@ class TrickController extends AbstractController
         return $this->redirectToRoute('app_home');
     }
 
-    //Editer un trick
-    #[Route('/trick/{slug}/edit', name: 'app_trick_edit')]
-    public function edit(Request $request, string $slug): Response
-    {
+    // //Editer un trick
+    // #[Route('/trick/{slug}/edit', name: 'app_trick_edit')]
+    // public function edit(Request $request, string $slug): Response
+    // {
+    //     // Recherche du trick par son slug
+    //     $trick = $this->trickManager->getTrick($slug);
+    //     $form = $this->createForm(TrickType::class, $trick);
+    //     $form->handleRequest($request);
 
+    //     foreach ($form->getErrors(true) as $error) {
+    //         $errors[] = ['error' => $error->getMessage()];
+    //     }
+    //     if ($form->isSubmitted() && $form->isValid()) {
+
+    //         $trick->setUser($this->getUser());
+    //         $this->trickManager->updateTrick($trick);
+
+    //         $this->addFlash('success', 'Modification effectuée');
+    //         return $this->redirectToRoute('app_trick_show', [
+    //             'slug' => $trick->getSlug(),
+    //         ]);
+    //     }
+
+    //     if ($form->isSubmitted() && !$form->isValid()) {
+    //         $this->addFlash('error', 'Il y a une erreur de saisie dans le formulaire.');
+    //     }
+
+
+    //     return $this->render('trick/edit.html.twig', [
+    //         'trick' => $trick,
+    //         'form' => $form,
+    //     ]);
+    // }
+
+    #[Route('/trick/{slug}/edit', name: 'app_trick_edit')]
+    public function edit(Request $request, string $slug, EntityManagerInterface $entityManager): Response
+    {
         // Recherche du trick par son slug
         $trick = $this->trickManager->getTrick($slug);
+
+        if (!$trick) {
+            throw $this->createNotFoundException('Le trick demandé n\'existe pas.');
+        }
+
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            dump($form->getData());
-            dump($trick->getPicture(), $trick->getVideo()); // Vérifie si elles so
-            $trick->setUser($this->getUser());
-            $this->trickManager->updateTrick($trick);
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                try {
+                    $trick->setUser($this->getUser());
+                    $this->trickManager->updateTrick($trick);
 
-            $this->addFlash('success', 'Modification effectuée');
-            return $this->redirectToRoute('app_trick_show', [
-                'slug' => $trick->getSlug(),
-            ]);
+                    $this->addFlash('success', 'Le trick a été modifié avec succès.');
+                    return $this->redirectToRoute('app_trick_show', [
+                        'slug' => $trick->getSlug(),
+                    ]);
+                } catch (UniqueConstraintViolationException $e) {
+                    $this->addFlash('error', 'Ce nom de trick est déjà utilisé. Veuillez en choisir un autre.');
+                }
+            } else {
+                $this->addFlash('error', 'Il y a une erreur dans le formulaire.');
+            }
         }
 
         return $this->render('trick/edit.html.twig', [
             'trick' => $trick,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 }

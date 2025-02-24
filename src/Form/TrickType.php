@@ -13,8 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Regex;
+
 
 class TrickType extends AbstractType
 {
@@ -24,15 +23,6 @@ class TrickType extends AbstractType
             ->add('name', TextType::class, [
                 'required' => true,
                 'label' => 'Nom du trick',
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Le nom du trick est obligatoire.',
-                    ]),
-                    new Regex([
-                        'pattern' => '/^[a-zA-Z]{3,}[a-zA-Z0-9\-]*$/',
-                        'message' => 'Le titre doit contenir au moins 3 lettres et peut inclure des chiffres et des tirets.',
-                    ]),
-                ],
             ])
             ->add('image')
             ->add('slug', HiddenType::class, [
@@ -41,7 +31,7 @@ class TrickType extends AbstractType
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Description du trick',
-                'required' => false,
+                'required' => true,
                 'attr' => ['rows' => 5],
             ])
             ->add('category', EntityType::class, [
@@ -50,22 +40,6 @@ class TrickType extends AbstractType
                 'label' => 'Catégorie',
                 'placeholder' => 'Sélectionnez une catégorie',
             ])
-            // ->add('picture', CollectionType::class, [
-            //     'entry_type' => PictureType::class,
-            //     'entry_options' => ['label' => false],
-            //     'allow_add' => true,
-            //     'allow_delete' => true,
-            //     'by_reference' => false,
-            //     'label' => 'Images',
-            // ])
-            // ->add('video', CollectionType::class, [
-            //     'entry_type' => VideoType::class,
-            //     'entry_options' => ['label' => false],
-            //     'allow_add' => true,
-            //     'allow_delete' => true,
-            //     'by_reference' => false,
-            //     'label' => 'Vidéos',
-            // ])
             ->add('picture', CollectionType::class, [
                 'entry_type' => PictureType::class, // Type du formulaire enfant
                 'allow_add' => true, // Permet d'ajouter dynamiquement des images

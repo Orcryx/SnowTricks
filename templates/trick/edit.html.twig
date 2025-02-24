@@ -7,31 +7,33 @@
 		<div class="form-error">
 			{{ form_errors(form) }}
 		</div>
-		
+
 		<img src="{{ trick.image }}" alt="Image présentant la figure {{ trick.name }}">
 		<div id="btn-trickZone" class="flex">
-			
-					<div type="button" class="btn btn-primary mt-2">
-						<i class="fa fa-pen"></i>
-					</div>
-					<button type="button" id="hero-deleteBtn" class="btn btn-primary mt-2">
-						<i class="fa-solid fa-trash"></i>
-					</button>
-				
 
-		
+			<div type="button" class="btn btn-primary mt-2">
+				<i class="fa fa-pen"></i>
+			</div>
+			<button type="button" id="hero-deleteBtn" class="btn btn-primary mt-2">
+				<i class="fa-solid fa-trash"></i>
+			</button>
+
+
 		</div>
 	</div>
 {% endblock %}
 {% block zoneOne %}
 	<div class="container mt-4">
-		<h1 class="flex-center">Modifier
-			{{ trick.name }}</h1>
 		<div>
-		{{ form_start(form , {'method': 'POST'}) }}
-				<div id="editTrick-input">
-					{{ form_row(form.image) }}
-				</div>
+			{{ form_start(form , {'method': 'POST'}) }}
+			<div id="editTrick-input">
+				{{ form_row(form.image) }}
+			</div>
+			<div class="mb-1">
+				{{ form_label(form.name) }}
+				{{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+				{{ form_errors(form.name) }}
+			</div>
 			<div id="zone-media">
 				<div class="zone-media">
 					<h3>Images associées</h3>
@@ -75,11 +77,6 @@
 
 			</div>
 
-			<div class="mb-1">
-				{{ form_label(form.name) }}
-				{{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
-				{{ form_errors(form.name) }}
-			</div>
 
 			<div class="mb-3">
 				{{ form_label(form.description) }}
