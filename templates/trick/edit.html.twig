@@ -28,11 +28,12 @@
 			{{ form_start(form , {'method': 'POST'}) }}
 			<div id="editTrick-input">
 				{{ form_row(form.image) }}
+				{{ form_errors(form.image) }}
 			</div>
 			<div class="mb-1">
 				{{ form_label(form.name) }}
 				{{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
-				{{ form_errors(form.name) }}
+				{# {{ form_errors(form.name) }} #}
 			</div>
 			<div id="zone-media">
 				<div class="zone-media">

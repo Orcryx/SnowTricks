@@ -13,6 +13,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 
 class TrickType extends AbstractType
@@ -24,7 +26,15 @@ class TrickType extends AbstractType
                 'required' => true,
                 'label' => 'Nom du trick',
             ])
-            ->add('image')
+            // ->add('image')
+            ->add('image', TextType::class, [
+                'required' => true,
+                'label' => 'URL de l\'image',
+                'constraints' => [
+                    new Assert\NotBlank(['message' => 'L\'URL de l\'image est obligatoire.']),
+                    new Assert\Url(['message' => 'Veuillez saisir une URL valide.']),
+                ],
+            ])
             ->add('slug', HiddenType::class, [
                 'required' => false,
                 'mapped' => false, // Désactiver le mapping si le slug est généré automatiquement

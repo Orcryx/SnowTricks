@@ -148,11 +148,6 @@ class TrickController extends AbstractController
     {
         // Recherche du trick par son slug
         $trick = $this->trickManager->getTrick($slug);
-
-        if (!$trick) {
-            throw $this->createNotFoundException('Le trick demandé n\'existe pas.');
-        }
-
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
 

@@ -277,12 +277,13 @@ figure img
 
 /*Les cards du Tricks*/
 
-.card-deck
+.card-deck, .tricks-page
 {
     width: 100%;
 
     display: flex;  
     align-items: center;
+    justify-content: center;
 
     gap : 2px;
 
