@@ -25,7 +25,7 @@ class PictureType extends AbstractType
                         'message' => 'Le nom de l’image est obligatoire.',
                     ]),
                     new Regex([
-                        'pattern' => '/^[a-zA-Z]{3,}[a-zA-Z0-9\-]*$/',
+                        'pattern' => '/^[a-zA-Z]{3,}[a-zA-Z0-9\- ]*$/',
                         'message' => 'Le nom doit contenir au moins 3 lettres et peut inclure des chiffres et des tirets.',
                     ]),
                 ],

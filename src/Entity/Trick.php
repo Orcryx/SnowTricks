@@ -21,7 +21,7 @@ class Trick
     private ?int $id = null;
 
     #[Assert\NotBlank(message: 'Le nom du trick est obligatoire.')]
-    #[Assert\Regex('/^[a-zA-Z]{3,}[a-zA-Z0-9\-]*$/', message: 'Le titre doit contenir au moins 5 lettres et peut inclure des chiffres et des tirets.')]
+    #[Assert\Regex('/^[a-zA-Z]{3,}[a-zA-Z0-9\- ]*$/', message: 'Le titre doit contenir au moins 5 lettres et peut inclure des chiffres et des tirets.')]
     #[ORM\Column(length: 255,  unique: true)]
     private ?string $name = null;
 

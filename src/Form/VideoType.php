@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Url;
 
 class VideoType extends AbstractType
@@ -21,7 +22,11 @@ class VideoType extends AbstractType
                 'label' => 'Nom de la vidéo',
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Le nom de la vidéo est obligatoire.',
+                        'message' => 'Le nom de la video est obligatoire.',
+                    ]),
+                    new Regex([
+                        'pattern' => '/^[a-zA-Z]{3,}[a-zA-Z0-9\- ]*$/',
+                        'message' => 'Le nom doit contenir au moins 3 lettres et peut inclure des chiffres et des tirets.',
                     ]),
                 ],
             ])
