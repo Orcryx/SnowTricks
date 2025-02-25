@@ -5,7 +5,7 @@
 
 {% block zoneOne %}
 	<div id="zoneUnique">
-		<form method="post">
+		<form method="post" id="formulaire">
 			{% if error %}
 				<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 			{% endif %}
