@@ -1,61 +1,27 @@
-// setTimeout(() => {
-//     let pictureCollection = document.getElementById("picture-collection");
-//     let videoCollection = document.getElementById("video-collection");
-//     let addPictureButton = document.getElementById("add-picture");
-//     let addVideoButton = document.getElementById("add-video");
-//     let pictureIndex = pictureCollection.children.length;
-//     let videoIndex = videoCollection.children.length;
-
-//     function addCollectionItem(collection, index, type) {
-//         let prototype = collection.dataset.prototype;
-//         let newItemHtml = prototype.replace(/__name__/g, index);
-//         let div = document.createElement("div");
-//         div.classList.add(type + "-item", "d-flex", "align-items-center", "mb-2", "carte-collection");
-//         div.innerHTML = newItemHtml;
-
-//         let removeButton = document.createElement("button");
-//         removeButton.type = "button";
-//         removeButton.classList.add("btn", "btn-danger", "ms-2", "remove-" + type);
-//         removeButton.textContent = "Supprimer";
-
-//         div.appendChild(removeButton);
-//         collection.appendChild(div);
-//     }
-
-//     // 🔹 Empêcher l'ajout multiple des écouteurs d'événements
-//     if (!addPictureButton.dataset.listener) {
-//         addPictureButton.dataset.listener = "true"; // Marquer le bouton comme "écouté"
-//         addPictureButton.addEventListener("click", function () {
-//             addCollectionItem(pictureCollection, pictureIndex++, "picture");
-//         });
-//     }
-
-//     if (!addVideoButton.dataset.listener) {
-//         addVideoButton.dataset.listener = "true";
-//         addVideoButton.addEventListener("click", function () {
-//             addCollectionItem(videoCollection, videoIndex++, "video");
-//         });
-//     }
-
-//     // 🔹 Délégation d’événement pour supprimer un élément (évite l'ajout multiple d'écouteurs)
-//     document.body.addEventListener("click", function (event) {
-//         if (event.target.classList.contains("remove-picture")) {
-//             event.target.closest(".picture-item").remove();
-//         }
-//         if (event.target.classList.contains("remove-video")) {
-//             event.target.closest(".video-item").remove();
-//         }
-//     });
-
-// }, 500);
-
 setTimeout(() => {
     let pictureCollection = document.getElementById("picture-collection");
     let addPictureButton = document.getElementById("add-picture");
-    let pictureIndex = pictureCollection.children.length;
+    let pictureIndex = pictureCollection ? pictureCollection.children.length : 0;
     let videoCollection = document.getElementById("video-collection");
     let addVideoButton = document.getElementById("add-video");
-    let videoIndex = videoCollection.children.length;
+    let videoIndex = videoCollection ? videoCollection.children.length : 0;
+
+    let heroImage = document.querySelector(".hero-picture img");
+    let heroTitle = document.querySelector(".hero-text h1");
+    let imageInput = document.getElementById("trick_image");
+    let titleInput = document.getElementById("trick_name");
+
+    if (imageInput && heroImage) {
+        imageInput.addEventListener("input", function () {
+            heroImage.src = imageInput.value || "https://img.freepik.com/vecteurs-libre/illustration-icone-galerie_53876-27002.jpg?t=st=1740487305~exp=1740490905~hmac=83aff2dde6b95f4397a299c3ad47f43307c472699f7e33fddd89784565044a42&w=740";
+        });
+    }
+
+    if (titleInput && heroTitle) {
+        titleInput.addEventListener("input", function () {
+            heroTitle.textContent = titleInput.value || "Titre par défaut";
+        });
+    }
 
     function addCollectionItem(collection, index, type) {
         let prototype = collection.dataset.prototype;
@@ -63,18 +29,17 @@ setTimeout(() => {
         let div = document.createElement("div");
         div.classList.add(type + "-item", "d-flex", "align-items-start", "mb-3", "carte-collection");
 
-        // Création du conteneur de formulaire
         let formContainer = document.createElement("div");
         formContainer.classList.add("flex-column", "zone-media-form");
         formContainer.innerHTML = newItemHtml;
 
         if (type === "picture") {
-            // Création de l'élément image par défaut
             let imagePlaceholder = document.createElement("img");
             imagePlaceholder.src = "https://via.placeholder.com/150";
             imagePlaceholder.alt = "Image du Trick";
             imagePlaceholder.classList.add("img-thumbnail", "mb-2");
-            imagePlaceholder.style.maxWidth = "100%";
+            imagePlaceholder.style.width = "210px";
+            imagePlaceholder.style.height = "210px";
 
             let imageInput = formContainer.querySelector("input[id^='trick_picture'][id$='_src']");
             imageInput.addEventListener("input", function () {
@@ -83,14 +48,13 @@ setTimeout(() => {
 
             div.appendChild(imagePlaceholder);
         } else if (type === "video") {
-            // Création de l'élément iframe par défaut pour la vidéo
             let videoPlaceholder = document.createElement("iframe");
             videoPlaceholder.src = "https://www.youtube.com/embed/";
             videoPlaceholder.setAttribute("frameborder", "0");
             videoPlaceholder.setAttribute("allowfullscreen", "true");
             videoPlaceholder.classList.add("mb-2");
-            videoPlaceholder.style.width = "100%";
-            videoPlaceholder.style.height = "200px";
+            videoPlaceholder.style.width = "210px";
+            videoPlaceholder.style.height = "210px";
 
             let videoInput = formContainer.querySelector("input[id^='trick_video'][id$='_src']");
             videoInput.addEventListener("input", function () {
@@ -106,7 +70,6 @@ setTimeout(() => {
             div.appendChild(videoPlaceholder);
         }
 
-        // Bouton de suppression
         let removeButton = document.createElement("button");
         removeButton.type = "button";
         removeButton.classList.add("btn", "btn-danger", "remove-" + type);
@@ -117,14 +80,14 @@ setTimeout(() => {
         collection.appendChild(div);
     }
 
-    if (!addPictureButton.dataset.listener) {
+    if (addPictureButton && !addPictureButton.dataset.listener) {
         addPictureButton.dataset.listener = "true";
         addPictureButton.addEventListener("click", function () {
             addCollectionItem(pictureCollection, pictureIndex++, "picture");
         });
     }
 
-    if (!addVideoButton.dataset.listener) {
+    if (addVideoButton && !addVideoButton.dataset.listener) {
         addVideoButton.dataset.listener = "true";
         addVideoButton.addEventListener("click", function () {
             addCollectionItem(videoCollection, videoIndex++, "video");
@@ -141,3 +104,4 @@ setTimeout(() => {
     });
 
 }, 500);
+
