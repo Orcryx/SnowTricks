@@ -141,7 +141,17 @@ summary {
 display: none;
 }
 
-#gallery, #gallery div
+#media
+{ 
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    height: 300px;
+    overflow-x: scroll;
+    padding: 10px;
+}
+
+#media div
 {
     width: 100%;
 }
@@ -166,9 +176,18 @@ display: none;
     padding: 20px;
 }
 
-figure img
+
+.figure
 {
-    height:190px ;
+    height: 100%;
+    width: 300px;
+}
+
+.figure img
+{
+    height:100% ;
+    width: 100%;
+    object-fit: cover;
 }
 
 
@@ -177,6 +196,11 @@ figure img
     justify-content: center;
     
     gap: 20px
+}
+
+#details-descr
+{
+    margin: 20px 0;
 }
 
 .encart

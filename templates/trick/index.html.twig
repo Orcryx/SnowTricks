@@ -28,73 +28,65 @@
 
 {% block zoneOne %}
 	<div class="container-sm">
-		<div>
-			<div class="container text-center py-5">
-				<div id="gallery" class="row justify-content-center">
-					<div class="col-md-8">
-						<div id="gal-elmt" class="row justify-content-center">
-							{% for picture in trick.picture %}
-								<a href="#" class="col-sm-3" data-bs-toggle="modal" data-bs-target="#lightboxModal">
-									<figure class="figure">
-										<img data-bs-target="#lightboxCarousel" data-bs-slide-to="{{ loop.index0 }}" src="{{ picture.src }}" class="figure-img img-fluid rounded">
-										<figcaption class="figure-caption">{{ picture.name }}</figcaption>
-									</figure>
-								</a>
-							{% endfor %}
-							{% for video in trick.video %}
-								{% if "youtube.com" in video.src or "youtu.be" in video.src %}
-									<iframe src="{{ video.src | replace({'youtu.be/': 'www.youtube.com/embed/', 'watch?v=': 'embed/'}) }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-								{% else %}
-									<video controls width="250">
-										<source src="{{ video.src }}" type="video/mp4">
-										<a href="{{ video.src }}">MP4</a>
-									</video>
-								{% endif %}
-							{% endfor %}
+		{% if trick.picture is not empty or trick.video is not empty %}
+			<div id="media">
+				{% for picture in trick.picture %}
+					<a href="#" class="col-sm-3" data-bs-toggle="modal" data-bs-target="#lightboxModal">
+						<div class="figure">
+							<img data-bs-target="#lightboxCarousel" data-bs-slide-to="{{ loop.index0 }}" src="{{ picture.src }}" class="figure-img img-fluid rounded">
 						</div>
-					</div>
-				</div>
+					</a>
+				{% endfor %}
+				{% for video in trick.video %}
+					{% if "youtube.com" in video.src or "youtu.be" in video.src %}
+						<iframe src="{{ video.src | replace({'youtu.be/': 'www.youtube.com/embed/', 'watch?v=': 'embed/'}) }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+					{% else %}
+						<video controls width="250">
+							<source src="{{ video.src }}" type="video/mp4">
+							<a href="{{ video.src }}">MP4</a>
+						</video>
+					{% endif %}
+				{% endfor %}
 			</div>
 			<hr class="my-4"/>
-			<div class="modal fade" id="lightboxModal" tabindex="-1" aria-labelledby="lightboxModalLabel" aria-hidden="true">
-				<div class="modal-dialog modal-xl modal-dialog-centered">
-					<div class="modal-content">
-						<div class="modal-body">
-							<div id="lightboxCarousel" class="carousel slide" data-bs-ride="carousel">
-								<div class="carousel-inner ratio ratio-16x9 bg-dark">
-									{% for picture in trick.picture %}
-										<div class="carousel-item {% if loop.first %}active{% endif %} text-center">
-											<img src="{{ picture.src }}" class="img-fluid mh-100">
-										</div>
-									{% endfor %}
-									{% for video in trick.video %}
-										<div class="carousel-item text-center">
-											{% if "youtube.com" in video.src or "youtu.be" in video.src %}
-												<iframe class="img-fluid mh-200" src="{{ video.src | replace({'youtu.be/': 'www.youtube.com/embed/', 'watch?v=': 'embed/'}) }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-											{% else %}
-												<video controls class="img-fluid mh-100">
-													<source src="{{ video.src }}" type="video/mp4">
-													<a href="{{ video.src }}">MP4</a>
-												</video>
-											{% endif %}
-										</div>
-									{% endfor %}
-								</div>
-								<button class="carousel-control-prev" type="button" data-bs-target="#lightboxCarousel" data-bs-slide="prev">
-									<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-									<span class="visually-hidden">Previous</span>
-								</button>
-								<button class="carousel-control-next" type="button" data-bs-target="#lightboxCarousel" data-bs-slide="next">
-									<span class="carousel-control-next-icon" aria-hidden="true"></span>
-									<span class="visually-hidden">Next</span>
-								</button>
+		{% endif %}
+		<div class="modal fade" id="lightboxModal" tabindex="-1" aria-labelledby="lightboxModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-xl modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-body">
+						<div id="lightboxCarousel" class="carousel slide" data-bs-ride="carousel">
+							<div class="carousel-inner ratio ratio-16x9 bg-dark">
+								{% for picture in trick.picture %}
+									<div class="carousel-item {% if loop.first %}active{% endif %} text-center">
+										<img src="{{ picture.src }}" class="img-fluid mh-100">
+									</div>
+								{% endfor %}
+								{% for video in trick.video %}
+									<div class="carousel-item text-center">
+										{% if "youtube.com" in video.src or "youtu.be" in video.src %}
+											<iframe class="img-fluid mh-200" src="{{ video.src | replace({'youtu.be/': 'www.youtube.com/embed/', 'watch?v=': 'embed/'}) }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+										{% else %}
+											<video controls class="img-fluid mh-100">
+												<source src="{{ video.src }}" type="video/mp4">
+												<a href="{{ video.src }}">MP4</a>
+											</video>
+										{% endif %}
+									</div>
+								{% endfor %}
 							</div>
+							<button class="carousel-control-prev" type="button" data-bs-target="#lightboxCarousel" data-bs-slide="prev">
+								<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+								<span class="visually-hidden">Previous</span>
+							</button>
+							<button class="carousel-control-next" type="button" data-bs-target="#lightboxCarousel" data-bs-slide="next">
+								<span class="carousel-control-next-icon" aria-hidden="true"></span>
+								<span class="visually-hidden">Next</span>
+							</button>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-
 
 		<div id="details" class="flex-column-center">
 			<h2>{{trick.name}}</h2>
@@ -130,7 +122,6 @@
 				<hr class="my-4"/>
 			{% endif %}
 		</div>
-
 		<div id="comments-container">
 			{% for comment in trick.comments %}
 				<div class="comment-bloc flex-column" {% if loop.index > 5 %} style="display: none;" {% else %} style="display: flex;" {% endif %}>
@@ -147,16 +138,12 @@
 				</div>
 			{% endfor %}
 		</div>
-
-
 		{% if trick.comments|length > 5 %}
 			<div class="flex-center">
 				<button id="load-more" class="btn btn-primary mt-2">Afficher plus</button>
 			</div>
 		{% endif %}
-
-		<script src="{{ asset('js/comment.js') }}"></script>
 	</div>
-
+	<script src="{{ asset('js/comment.js') }}"></script>
 
 {% endblock %}

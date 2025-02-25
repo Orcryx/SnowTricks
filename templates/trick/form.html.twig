@@ -1,53 +1,96 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}
-	Formulaire Trick
+{% block title %}Créer un trick
 {% endblock %}
-
+{% block hero %}
+	<div class="hero-picture">
+		<img src="" alt="Image présentant la figure">
+		<div class="hero-text grand-text ombre">
+			<h1>Image par défaut</h1>
+		</div>
+	</div>
+{% endblock %}
 {% block zoneOne %}
-	<div id="zoneUnique" class="flex-column-center">
-		<div id="formulaire">
-			<div id="formTrick" class="flex-column">
-				<h1>Editer un Trick</h1>
-				<div class="form-error">
-					{{ form_errors(form) }}
+	<div class="container mt-4">
+		<div>
+			<div class="form-error">
+				{{ form_errors(form) }}
+			</div>
+			{{ form_start(form , {'method': 'POST'}) }}
+			<div class="flex-column gap10">
+				<h3>Images de mise en avant</h3>
+				<div id="editTrick-input" class="flex-column">
+					{{ form_row(form.image, {'attr': {'class': 'form-control'}}) }}
+					{{ form_errors(form.image) }}
 				</div>
-				<div class="form-row">
-					{{ form_start(form , {'method': 'POST'}) }}
-					{{ form_row(form.name) }}
-					{{ form_row(form.image) }}
-					{{ form_row(form.category) }}
-					{{ form_row(form.description) }}
-					<h2>Images</h2>
-					<button type="button" class="add_item_link" data-collection-holder-class="picture">Ajouter une image</button>
-					<ul class="picture" data-index="{{ form.picture|length > 0 ? form.picture|last.vars.name + 1 : 0 }}" data-prototype="{{ form_widget(form.picture.vars.prototype)|e('html_attr') }}">
-						{% for picture in form.picture %}
-							<div class="picture-data">
-								{{ form_row(picture.src) }}
-								{{ form_row(picture.name) }}
-							</div>
-						{% endfor %}
-					</ul>
-
-					<h2>Video</h2>
-					<button type="button" class="add_item_link" data-collection-holder-class="video">Ajouter une video</button>
-					<ul class="video" data-index="{{ form.video|length > 0 ? form.video|last.vars.name + 1 : 0 }}" data-prototype="{{ form_widget(form.video.vars.prototype)|e('html_attr') }}">
-						{% for video in form.video %}
-							{{ form_row(video.src) }}
-							{{ form_row(video.name) }}
-						{% endfor %}
-					</ul>
-					<div class="hidden">
-						{{ form_row(form.picture) }}
-						{{ form_row(form.video) }}
-					</div>
-					{{form_row(form.submit)}}
-
-					{# {{ form_end(form, {render_rest: false}) }} #}
-					{{form_end(form)}}
+				<div class="mb-1">
+					{{ form_label(form.name) }}
+					{{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+					{{ form_errors(form.name) }}
 				</div>
 			</div>
-			{#<script src="{{ asset('js/MoreAssetTricks.js') }}"></script>#}
+			<div id="zone-media">
+				<div class="zone-media">
+					<h3>Images associées</h3>
+					<button type="button" class="btn btn-success mt-2" id="add-picture">Ajouter une image</button>
+					<div id="picture-collection" data-prototype="{{ form_widget(form.picture.vars.prototype)|e('html_attr') }}">
+						{% for picture in form.picture %}
+							<div class="picture-item d-flex align-items-start mb-3 carte-collection">
+								{% if picture.vars.value.src is not empty %}
+									<img src="{{ picture.vars.value.src }}" alt="Image du Trick" class="img-thumbnail mb-2" style="width: 210px; height : 210px ">
+								{% endif %}
+								<div class="flex-column zone-media-form">
+									{{ form_row(picture.name, {'attr': {'class': 'form-control me-2'}}) }}
+									{{ form_row(picture.src, {'attr': {'class': 'form-control me-2'}}) }}
+									<button type="button" class="btn btn-danger remove-picture">Supprimer</button>
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+
+				<div class="zone-media">
+					<h3>Vidéos associées</h3>
+					<button type="button" class="btn btn-success mt-2" id="add-video">Ajouter une vidéo</button>
+					<div id="video-collection" data-prototype="{{ form_widget(form.video.vars.prototype)|e('html_attr') }}">
+						{% for video in form.video %}
+							<div class="video-item d-flex align-items-start mb-3 carte-collection">
+								{% if video.vars.value.src is not empty %}
+									<div class="flex-column zone-media-iframe">
+										<iframe src="{{ video.vars.value.src | replace({'youtu.be/': 'www.youtube.com/embed/', 'watch?v=': 'embed/'}) }}" frameborder="0" allowfullscreen class="mb-2"></iframe>
+									</div>
+								{% endif %}
+								<div class="flex-column zone-media-form">
+									{{ form_row(video.name, {'attr': {'class': 'form-control me-2'}}) }}
+									{{ form_row(video.src, {'attr': {'class': 'form-control me-2'}}) }}
+									<button type="button" class="btn btn-danger remove-video">Supprimer</button>
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+
+			</div>
+
+
+			<div class="mb-3">
+				{{ form_label(form.description) }}
+				{{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+				{{ form_errors(form.description) }}
+			</div>
+
+			<div class="mb-1">
+				{{ form_label(form.category) }}
+				{{ form_widget(form.category, {'attr': {'class': 'form-select'}}) }}
+				{{ form_errors(form.category) }}
+			</div>
+
+			<div class="hidden">
+				{{ form_widget(form.picture) }}
+				{{ form_widget(form.video) }}
+			</div>
+			{{form_row(form.submit)}}
+			{{ form_end(form) }}
 		</div>
 	</div>
 {% endblock %}
