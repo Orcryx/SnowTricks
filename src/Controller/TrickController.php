@@ -52,7 +52,7 @@ class TrickController extends AbstractController
         }
 
         return $this->render('trick/form.html.twig', [
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
@@ -65,29 +65,23 @@ class TrickController extends AbstractController
             throw $this->createNotFoundException('Trick non trouvé');
         }
 
-        // Récupérer les commentaires associés au trick
         $comments = $this->commentManager->getCommentsByTrick($trick);
 
-        // Créer un nouveau commentaire
-        $comment = new Comment();
+        $comment = $this->commentManager->createCommentForTrick($trick);
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $comment->setTrick($trick);
-            $comment->setUser($this->getUser());
-            $this->commentManager->saveComment($comment); // Utilisation du CommentManager pour sauvegarder le commentaire
+            $this->commentManager->handleNewComment($comment, $this->getUser());
             $this->addFlash('success', 'Commentaire ajouté');
 
-            return $this->redirectToRoute('app_trick_show', [
-                'slug' => $trick->getSlug(),
-            ]);
+            return $this->redirectToRoute('app_trick_show', ['slug' => $trick->getSlug()]);
         }
 
         return $this->render('trick/index.html.twig', [
             'trick' => $trick,
             'comments' => $comments,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
@@ -108,40 +102,6 @@ class TrickController extends AbstractController
 
         return $this->redirectToRoute('app_home');
     }
-
-    // //Editer un trick
-    // #[Route('/trick/{slug}/edit', name: 'app_trick_edit')]
-    // public function edit(Request $request, string $slug): Response
-    // {
-    //     // Recherche du trick par son slug
-    //     $trick = $this->trickManager->getTrick($slug);
-    //     $form = $this->createForm(TrickType::class, $trick);
-    //     $form->handleRequest($request);
-
-    //     foreach ($form->getErrors(true) as $error) {
-    //         $errors[] = ['error' => $error->getMessage()];
-    //     }
-    //     if ($form->isSubmitted() && $form->isValid()) {
-
-    //         $trick->setUser($this->getUser());
-    //         $this->trickManager->updateTrick($trick);
-
-    //         $this->addFlash('success', 'Modification effectuée');
-    //         return $this->redirectToRoute('app_trick_show', [
-    //             'slug' => $trick->getSlug(),
-    //         ]);
-    //     }
-
-    //     if ($form->isSubmitted() && !$form->isValid()) {
-    //         $this->addFlash('error', 'Il y a une erreur de saisie dans le formulaire.');
-    //     }
-
-
-    //     return $this->render('trick/edit.html.twig', [
-    //         'trick' => $trick,
-    //         'form' => $form,
-    //     ]);
-    // }
 
     #[Route('/trick/{slug}/edit', name: 'app_trick_edit')]
     public function edit(Request $request, string $slug, EntityManagerInterface $entityManager): Response

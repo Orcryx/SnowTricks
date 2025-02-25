@@ -115,7 +115,6 @@
 					<div class="">
 						<div class="card-body">
 							{{ form_start(form, {'attr': {'class': 'needs-validation'}}) }}
-
 							<div class="form-group">
 								{{ form_label(form.content, 'Ajouter un commentaire', {'label_attr': {'for': 'commentContent', 'class': 'form-label'}}) }}
 								{{ form_widget(form.content, {'attr': {'class': 'form-control', 'id': 'commentContent', 'rows': 4}}) }}
@@ -124,8 +123,6 @@
 							<div class="flex-center">
 								<button type="submit" class="btn btn-primary mt-2">Envoyer</button>
 							</div>
-
-
 							{{ form_end(form) }}
 						</div>
 					</div>

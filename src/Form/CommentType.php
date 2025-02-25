@@ -21,7 +21,7 @@ class CommentType extends AbstractType
                 'label' => 'Ajouter un commentaire',
                 'constraints' => [
                     new Regex([
-                        'pattern' => '/[a-zA-Z]{3,}[a-zA-Z0-9\-]*/',
+                        'pattern' => '/[a-zA-Z]{3,}[a-zA-Z0-9\- ]*/',
                         'message' => 'Le message doit contenir au moins 3 lettres.',
                     ]),
                 ],
