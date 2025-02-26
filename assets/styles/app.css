@@ -181,6 +181,34 @@ summary {
     animation: fadeOut 0.5s ease-in-out 4.5s forwards;
 }
 
+/*LES ERREURS DE FORMULAIRE*/
+
+.error-message {
+    color: red;
+    font-size: 14px;
+    list-style: none; /* Supprime les puces */
+    padding: 5px;
+    background-color: #ffe6e6; /* Fond léger pour alerter l'utilisateur */
+    border-left: 4px solid red; /* Effet de mise en valeur */
+    margin-top: 5px;
+    border-radius: 4px;
+}
+.mb-1 ul {
+    color: red;
+    font-size: 14px;
+    padding-left: 0; /* Enlève l'indentation */
+    margin-top: 5px;
+    background-color: #ffe6e6;
+    border-left: 4px solid red;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+.mb-1 ul li {
+    list-style: none;
+    padding: 2px 0;
+}
+
 
 /*SPECIFIQUE */
 
