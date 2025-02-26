@@ -1,6 +1,8 @@
 function initTricksPagination() {
     let currentPage = 1;
     const zoneArrow = document.getElementById('arrowUp');
+    zoneArrow.style.display = "none"; 
+
     if (!zoneArrow) return;
 
     zoneArrow.style.display = "none";
@@ -50,17 +52,17 @@ function initTricksPagination() {
     };
 }
 
-// 🔥 Exécuter au chargement de la page
+// Exécuter au chargement de la page
 document.addEventListener('DOMContentLoaded', initTricksPagination);
 
-// 🔄 Gestion du retour en arrière
+// Gestion du retour en arrière
 window.addEventListener("pageshow", function (event) {
     if (event.persisted) {
         initTricksPagination();
     }
 });
 
-// 📌 Gestion des changements de page via liens
+//Gestion des changements de page via liens
 document.addEventListener("click", function (event) {
     const link = event.target.closest("a");
     if (link && link.href && !link.target) {
