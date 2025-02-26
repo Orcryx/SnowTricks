@@ -4,7 +4,7 @@
 
 {% block hero %}
 	<div class="hero-picture">
-		<img src="{{ trick.image }}" alt="Image présentant la figure {{ trick.name }}">
+		<img src="{{ trick.image }}" alt="Image présentant la figure {{ trick.name }}" class="img-shadow">
 		<div class="hero-text grand-text ombre">
 			<h1>{{trick.name}}</h1>
 		</div>
@@ -27,7 +27,7 @@
 {% endblock %}
 
 {% block zoneOne %}
-	<div class="container-sm">
+	<div class="contain">
 		{% if trick.picture is not empty or trick.video is not empty %}
 			<div id="media">
 				{% for picture in trick.picture %}

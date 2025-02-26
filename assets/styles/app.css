@@ -59,7 +59,7 @@ summary {
 {
     flex-grow: 1;
 
-    padding: 20px 20px 0 20px;
+    /* padding: 20px 20px 0 20px; */
     
     background-image: url("b3.svg");
     background-repeat: no-repeat;
@@ -72,12 +72,13 @@ summary {
     width: 350px;
 }
 
-.container-sm
+.contain
 {
-  
+        margin: 0 30px 0 30px;
+        padding: 20px;
         background-color: #fff;
         box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-}  
+    }  
 /*LES FLEXBOX*/
 
 .flex-center
@@ -269,7 +270,6 @@ display: none;
     background-color: #fff;
 }
 
-
 #formulaire div
 {
     display: flex;
@@ -277,6 +277,11 @@ display: none;
     gap: 10px;
 }
 
+#trick_submit
+{
+    width: 100%;
+    margin: 20px 0;
+}
 .figure
 {
     height: 100%;
@@ -386,6 +391,9 @@ display: none;
   {
       position: relative;
       padding: 70px 30px 0 30px;
+
+      text-align: center;
+
   }
   
   .hero-picture img
@@ -396,7 +404,15 @@ display: none;
       background-position: center;
       background-repeat: no-repeat;
       background-size: cover;
+
       position: relative;
+
+  }
+
+  .hero-picture img.img-shadow
+  {
+    box-shadow: rgba(50, 50, 93, 0.25) 0px -6px 12px -2px, rgba(0, 0, 0, 0.3) 0px -3px 7px -3px;
+
   }
 
 /*commentaire du trick*/
@@ -450,7 +466,6 @@ display: none;
 
     padding: 0 10px;
 }
-
 
 .card {
     display: flex;

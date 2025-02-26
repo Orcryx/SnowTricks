@@ -13,7 +13,8 @@ setTimeout(() => {
 
     if (imageInput && heroImage) {
         imageInput.addEventListener("input", function () {
-            heroImage.src = imageInput.value || "https://img.freepik.com/vecteurs-libre/illustration-icone-galerie_53876-27002.jpg?t=st=1740487305~exp=1740490905~hmac=83aff2dde6b95f4397a299c3ad47f43307c472699f7e33fddd89784565044a42&w=740";
+            heroImage.src = imageInput.value || "https://img.freepik.com/vecteurs-libre/appareil-photo-photo_24877-52018.jpg?t=st=1740566928~exp=1740570528~hmac=9ffda7a4c657a869e0a0c07a6f934e1036309f313485bc15d6141d49c45c17af&w=826";
+            heroImage.classList.add("img-shadow");
         });
     }
 
@@ -35,7 +36,7 @@ setTimeout(() => {
 
         if (type === "picture") {
             let imagePlaceholder = document.createElement("img");
-            imagePlaceholder.src = "https://via.placeholder.com/150";
+            imagePlaceholder.src = "https://img.freepik.com/vecteurs-libre/appareil-photo-photo_24877-52018.jpg?t=st=1740566928~exp=1740570528~hmac=9ffda7a4c657a869e0a0c07a6f934e1036309f313485bc15d6141d49c45c17af&w=826";
             imagePlaceholder.alt = "Image du Trick";
             imagePlaceholder.classList.add("img-thumbnail", "mb-2");
             imagePlaceholder.style.width = "210px";
@@ -43,7 +44,7 @@ setTimeout(() => {
 
             let imageInput = formContainer.querySelector("input[id^='trick_picture'][id$='_src']");
             imageInput.addEventListener("input", function () {
-                imagePlaceholder.src = imageInput.value || "https://via.placeholder.com/150";
+                imagePlaceholder.src = imageInput.value || "https://img.freepik.com/vecteurs-libre/appareil-photo-photo_24877-52018.jpg?t=st=1740566928~exp=1740570528~hmac=9ffda7a4c657a869e0a0c07a6f934e1036309f313485bc15d6141d49c45c17af&w=826";
             });
 
             div.appendChild(imagePlaceholder);

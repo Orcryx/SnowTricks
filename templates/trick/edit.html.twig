@@ -3,15 +3,15 @@
 {% block title %}Modifier un Trick
 {% endblock %}
 {% block hero %}
-	<div class="hero-picture">
-		<img src="{{ trick.image }}" alt="Image présentant la figure {{ trick.name }}">
+	<div class="hero-picture img-shadow">
+		<img src="{{ trick.image }}" alt="Image présentant la figure {{ trick.name }}" class="img-shadow">
 		<div class="hero-text grand-text ombre">
 			<h1>{{trick.name}}</h1>
 		</div>
 	</div>
 {% endblock %}
 {% block zoneOne %}
-	<div class="container-sm mt-4">
+	<div class="contain">
 		<div>
 			<div class="form-error">
 				{{ form_errors(form, {'attr': {'class': 'error-message'}}) }}
