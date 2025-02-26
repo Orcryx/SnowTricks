@@ -134,6 +134,54 @@ summary {
     gap: 10px;
 }
 
+/*LES MESSAGES FLASH*/
+
+#flash {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.message {
+    padding: 10px 20px;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: bold;
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.flash-notice {
+    background-color: #3498db;
+}
+
+.flash-success {
+    background-color: #2ecc71;
+}
+
+.flash-verify_email_error {
+    background-color: #f1c40f;
+    color: #333;
+}
+
+.flash-error {
+    background-color: #e74c3c;
+}
+
+/* Animation pour faire disparaître le message */
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+.message {
+    animation: fadeOut 0.5s ease-in-out 4.5s forwards;
+}
+
+
 /*SPECIFIQUE */
 
 #load-more, #comments-container

@@ -81,10 +81,19 @@
 				{{ form_widget(form.category, {'attr': {'class': 'form-select'}}) }}
 				{{ form_errors(form.category) }}
 			</div>
-			<div class="hidden">
-				{{ form_widget(form.picture) }}
-				{{ form_widget(form.video) }}
-			</div>
+			{% if form.picture.vars.data is empty %}
+				<div class="hidden">
+					{{ form_widget(form.picture) }}
+				</div>
+			{% endif %}
+
+			{% if form.video.vars.data is empty %}
+				<div class="hidden">
+					{{ form_widget(form.video) }}
+				</div>
+			{% endif %}
+
+
 			{{form_row(form.submit)}}
 			{{ form_end(form) }}
 		</div>
