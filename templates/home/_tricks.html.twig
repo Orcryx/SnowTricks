@@ -1,8 +1,8 @@
 <div class="card-deck">
 	{% for trick in tricks %}
 		<a href="{{ path('app_trick_show', {slug: trick.slug}) }}" class="trick">
-			<div class="card bg-light mb-3">
-				<img src="{{ trick.image }}" alt="Image présentant la figure {{ trick.name }}" class="card-img-top">
+			<div class="card mb-3">
+				<img src="{{ trick.image }}" alt="Image présentant la figure {{ trick.name }}">
 				<div class="card-desc flex-center">
 					<h5 class="card-title flex">{{ trick.name }}</h5>
 					{% if app.user %}

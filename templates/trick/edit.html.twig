@@ -37,7 +37,7 @@
 						{% for picture in form.picture %}
 							<div class="picture-item d-flex align-items-start mb-3 carte-collection">
 								{% if picture.vars.value.src is not empty %}
-									<img src="{{ picture.vars.value.src }}" alt="Image du Trick" class="img-thumbnail mb-2" style="width: 210px; height : 210px ">
+									<img src="{{ picture.vars.value.src }}" alt="Image du Trick" class="img-thumbnail mb-2">
 								{% endif %}
 								<div class="flex-column zone-media-form">
 									{{ form_row(picture.name, {'attr': {'class': 'form-control me-2'}}) }}

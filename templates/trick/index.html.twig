@@ -87,7 +87,9 @@
 				</div>
 			</div>
 		</div>
-
+		<div id="btn-resp-display">
+			<button class="btn btn-primary mt-2" type="button" onclick="toggleMedia()">Voir les médias</button>
+		</div>
 		<div id="details" class="flex-column-center">
 			<h2>{{trick.name}}</h2>
 			<div id="details-descr">{{trick.description}}</div>
@@ -145,5 +147,19 @@
 		{% endif %}
 
 	</div>
+	<script>
+		function toggleMedia() {
+var mediaDiv = document.getElementById('media');
+var button = document.querySelector('#btn-resp-display button');
 
+// Toggle the display of the media div
+if (mediaDiv.style.display === 'none' || mediaDiv.style.display === '') {
+mediaDiv.style.display = 'block';
+button.textContent = "Masquer les médias"; // Change button text when media is shown
+} else {
+mediaDiv.style.display = 'none';
+button.textContent = "Voir les médias"; // Revert button text when media is hidden
+}
+}
+	</script>
 {% endblock %}

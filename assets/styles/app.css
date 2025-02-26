@@ -57,7 +57,16 @@ summary {
 
 .navbar
 {
+    height: 60px;
+    
     padding:0 20px;
+    
+    background-color: #212529;
+}
+
+.navbar-brand, .navbar-brand:hover, .nav-link, .nav-link:hover
+{
+    color: #fff;
 }
 
 .content 
@@ -255,12 +264,17 @@ display: none;
 #btn-trickZone
 {
     position: absolute;
-    top: 70px;
+    top: 90px;
     right: 40px;
 
     gap: 10px;
     
     padding: 20px;
+}
+
+#btn-resp-display
+{
+    display: none;
 }
 
 #formulaire 
@@ -401,7 +415,7 @@ display: none;
   .hero-picture
   {
       position: relative;
-      padding: 70px 30px 0 30px;
+      padding: 90px 30px 0 30px;
 
       text-align: center;
 
@@ -488,10 +502,9 @@ display: none;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: center;
 
     width: 350px; 
-    max-width: 17rem;
+    max-width: 100%;
     height: 300px; /* Hauteur fixe */
 
     border: 1px solid #ddd;
@@ -504,6 +517,8 @@ display: none;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
     padding: 10px;
+
+    text-align: center;
 }
 
 .card-form {
@@ -536,6 +551,18 @@ display: none;
     font-size: 1rem;
 }
 
+.card img
+{
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 5px 5px 0 0 ;
+}
+
+.card-desc
+{
+    margin-top: 10px;
+}
 
 /*Les carte de collection */
 
@@ -592,7 +619,7 @@ display: none;
   font-weight: 700;
 }
 
-.zone-media-iframe iframe
+.zone-media-iframe iframe, .img-thumbnail
 {
     height: 210px;
     width: 210px;
@@ -624,26 +651,31 @@ display: none;
 
     #bottomNav
     {
-        display: block;
+        display: flex;
+        padding: 0 25%;
     }
 
-    footer
+    #footer
     {
         display: none;
     }
 
     .card {
         width: 100%; 
-        max-width: none;
-        max-height: 350px;
-    
+        height: auto;
+        
         border: 1px solid #ddd;
         border-radius: 8px;
-
     
         margin: 0 10px;
     }
 
+    .card img 
+    {
+        height: 200px;
+
+        object-fit: cover;
+    }
 
     .card-deck
     {
@@ -657,6 +689,60 @@ display: none;
         display: flex;
         
     }
+
+
+    #media
+    { 
+        display: none;
+        flex-direction: column;
+    }
+
+    .col-sm-3
+    {
+        width: 100%;
+    }
+
+    .hero-picture 
+    {
+    
+        padding:0;
+    }
+
+    .contain 
+    {
+        margin: 0 0 60px 0;
+        height: 100%;
+    }
+
+    #btn-trickZone 
+    {
+        top: 10px;
+        right: 10px;
+    }
+
+    #btn-resp-display
+    {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    .carte-collection
+    {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .img-thumbnail, .zone-media-iframe iframe
+    {
+        width: 100%;
+        height: auto;
+    }
+
+    .zone-media-iframe
+    {
+        width: 100%;
+    }
+
 }
 
-@media screen and (min-width: 801px) {}
