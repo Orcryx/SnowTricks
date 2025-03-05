@@ -22,24 +22,25 @@ Développez de A à Z le site communautaire SnowTricks
 ## Configuration
 
 1. Configuration de la base de données :
-    - Créer une base de données SQL nommée "Snowtricj" (par exemple avec DBeaver)
-    - Importez le fichier de base de données se trouvant dans document/snowtrick.sql pour créer la structure et les données initiales nécessaires.
+    - Créer une base de données SQL nommée "SnowTricks" (par exemple avec DBeaver).
+    - Importez le fichier de base de données se trouvant dans livrables/dump-SnowTricks-202503051543.sql pour créer la structure et les données initiales nécessaires.
 
 ## Installation
 
-1. **Cloner le dépôt** : Clonez ce dépôt sur votre machine locale.
+1. Cloner le dépôt : 
+ - Clonez ce dépôt sur votre machine locale.
 2. Accéder au dossier du projet :
     - cd blog
 3. Installer les dépendances avec Composer :
     - composer install
-4. Installer symfony
+4. Installer symfony (voir composer.json)
 5. Installer Twig
 
 
 ## Utilisation
 
 Pour exécuter le projet, démarrez votre serveur local (Apache, Nginx, ou un serveur intégré comme celui de PHP) et accédez à l’index de l'application.
-Accédez à l’application dans votre navigateur via http://localhost:3000.
+Accédez à l’application dans votre navigateur via http://127.0.0.1:8000/ .
 Utilisateur :
 
 -   Dev
