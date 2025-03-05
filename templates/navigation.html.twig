@@ -1,0 +1,38 @@
+<nav id="topNav" class="navbar fixed-top flex-between">
+	<a class="navbar-brand" href="{{ path('app_home') }}">
+		<i class="fa-solid fa-snowflake"></i>
+		SnowTricks
+	</a>
+	<div class="flex gap10">
+		<a class="nav-link" href="{{ path('app_home') }}">Accueil</a>
+		{% if app.user %}
+			<a class="nav-link" href="{{ path('app_trick_new') }}">Tricks</a>
+			<a class="nav-link" href="{{ path('app_logout') }}">Se déconnecter</a>
+		{% else %}
+			<a class="nav-link" href="{{ path('app_login') }}">Se connecter</a>
+		{% endif %}
+		<a class="nav-link" href="{{ path('app_register') }}">Créer un compte</a>
+	</div>
+</nav>
+<nav id="bottomNav" class="navbar fixed-bottom ">
+
+	<a class="nav-link" href="{{ path('app_home') }}">
+		<i class="fas fa-home"></i>
+	</a>
+	{% if app.user %}
+		<a class="nav-link" href="{{ path('app_trick_new') }}">
+			<i class="fa-solid fa-person-snowboarding"></i>
+		</a>
+		<a class="nav-link" href="{{ path('app_logout') }}">
+			<i class="fas fa-sign-out-alt"></i>
+		</a>
+	{% else %}
+		<a class="nav-link" href="{{ path('app_login') }}">
+			<i class="fas fa-sign-in-alt"></i>
+		</a>
+	{% endif %}
+	<a class="nav-link" href="{{ path('app_register') }}">
+		<i class="fas fa-user-plus"></i>
+	</a>
+
+</nav>

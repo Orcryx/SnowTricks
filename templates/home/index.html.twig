@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SnowTricks - Accueil
+{% endblock %}
+{% block hero %}
+	<div id="zoneHero">
+		<div class="hero-image">
+			<div class="hero-text">
+				<h1>Snowtricks</h1>
+				<div>
+					<p>Bienvenue sur Snowtricks ! Chaque virage vous rapproche un peu plus de la perfection sur les pistes enneigées !</p>
+					<a href="#gallery">
+						<i class="fa-solid fa-arrow-down"></i>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+{% block zoneOne %}
+	<div id="zoneTwo">
+		<span id="gallery"></span>
+		<div id="trick-container" class="flex">
+			{% include "home/_tricks.html.twig" %}
+		</div>
+		{% include "home/_pagination.html.twig" %}
+		<div id="arrowUp">
+			<a href="#gallery">
+				<i class="fa-solid fa-arrow-up"></i>
+			</a>
+		</div>
+	</div>
+{% endblock %}

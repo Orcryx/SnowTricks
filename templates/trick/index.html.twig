@@ -1,0 +1,169 @@
+{% extends 'base.html.twig' %}
+{% block title %}SnowTricks - trick
+{% endblock %}
+
+{% block hero %}
+	<div class="hero-picture">
+		<img src="{{ trick.image }}" alt="Image présentant la figure {{ trick.name }}" class="img-shadow">
+		<div class="hero-text text-shadow">
+			<h1>{{trick.name}}</h1>
+		</div>
+
+		{% if app.user %}
+			<div id="btn-trickZone" class="flex">
+				<a href="{{ path('app_trick_edit',{slug : trick.slug}) }}">
+					<button type="button" class="btn btn-primary mt-2">
+						<i class="fa-solid fa-pen"></i>
+					</button>
+				</a>
+				<a href="{{ path('app_trick_remove',{slug : trick.slug}) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce trick ? Cette action est irréversible.')">
+					<button type="submit" class="btn btn-primary mt-2">
+						<i class="fa-solid fa-trash"></i>
+					</button>
+				</a>
+			</div>
+		{% endif %}
+	</div>
+{% endblock %}
+
+{% block zoneOne %}
+	<div class="contain">
+		{% if trick.picture is not empty or trick.video is not empty %}
+			<div id="media">
+				{% for picture in trick.picture %}
+					<a href="#" class="col-sm-3" data-bs-toggle="modal" data-bs-target="#lightboxModal">
+						<div class="figure">
+							<img data-bs-target="#lightboxCarousel" data-bs-slide-to="{{ loop.index0 }}" src="{{ picture.src }}" class="figure-img img-fluid rounded">
+						</div>
+					</a>
+				{% endfor %}
+				{% for video in trick.video %}
+					{% if "youtube.com" in video.src or "youtu.be" in video.src %}
+						<iframe src="{{ video.src | replace({'youtu.be/': 'www.youtube.com/embed/', 'watch?v=': 'embed/'}) }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+					{% else %}
+						<video controls width="250">
+							<source src="{{ video.src }}" type="video/mp4">
+							<a href="{{ video.src }}">MP4</a>
+						</video>
+					{% endif %}
+				{% endfor %}
+			</div>
+			<hr class="my-4"/>
+		{% endif %}
+		<div class="modal fade" id="lightboxModal" tabindex="-1" aria-labelledby="lightboxModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-xl modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-body">
+						<div id="lightboxCarousel" class="carousel slide" data-bs-ride="carousel">
+							<div class="carousel-inner ratio ratio-16x9 bg-dark">
+								{% for picture in trick.picture %}
+									<div class="carousel-item {% if loop.first %}active{% endif %} text-center">
+										<img src="{{ picture.src }}" class="img-fluid mh-100">
+									</div>
+								{% endfor %}
+								{% for video in trick.video %}
+									<div class="carousel-item text-center">
+										{% if "youtube.com" in video.src or "youtu.be" in video.src %}
+											<iframe class="img-fluid mh-200" src="{{ video.src | replace({'youtu.be/': 'www.youtube.com/embed/', 'watch?v=': 'embed/'}) }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+										{% else %}
+											<video controls class="img-fluid mh-100">
+												<source src="{{ video.src }}" type="video/mp4">
+												<a href="{{ video.src }}">MP4</a>
+											</video>
+										{% endif %}
+									</div>
+								{% endfor %}
+							</div>
+							<button class="carousel-control-prev" type="button" data-bs-target="#lightboxCarousel" data-bs-slide="prev">
+								<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+								<span class="visually-hidden">Previous</span>
+							</button>
+							<button class="carousel-control-next" type="button" data-bs-target="#lightboxCarousel" data-bs-slide="next">
+								<span class="carousel-control-next-icon" aria-hidden="true"></span>
+								<span class="visually-hidden">Next</span>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="btn-resp-display">
+			<button class="btn btn-primary mt-2" type="button" onclick="toggleMedia()">Voir les médias</button>
+		</div>
+		<div id="details" class="flex-column-center">
+			<h2>{{trick.name}}</h2>
+			<div id="details-descr">{{trick.description}}</div>
+			<div id="details-info" class="flex">
+				<p class="encart">{{ trick.category.name }}</p>
+				<p class="encart">
+					Mise en ligne :
+					{{trick.createAt|date("d/m/Y")}}</p>
+				<p class="encart">Dernière modification :
+					{{trick.updateAt|date("d/m/Y")}}</p>
+			</div>
+		</div>
+		<hr class="my-4"/>
+		<div id="details-info" class="flex-column">
+			{% if app.user %}
+				<div id="comment-form" class="mt-4">
+					<div class="">
+						<div class="card-body">
+							{{ form_start(form, {'attr': {'class': 'needs-validation'}}) }}
+							<div class="form-group">
+								{{ form_label(form.content, 'Ajouter un commentaire', {'label_attr': {'for': 'commentContent', 'class': 'form-label'}}) }}
+								{{ form_widget(form.content, {'attr': {'class': 'form-control', 'id': 'commentContent', 'rows': 4}}) }}
+								{{ form_errors(form.content) }}
+							</div>
+							<div class="flex-center">
+								<button type="submit" class="btn btn-primary mt-2">Envoyer</button>
+							</div>
+							{{ form_end(form) }}
+						</div>
+					</div>
+				</div>
+				<hr class="my-4"/>
+			{% endif %}
+		</div>
+		<div id="comments-container">
+			{% for comment in trick.comments %}
+				<div class="comment-bloc flex-column" {% if loop.index > 5 %} style="display: none;" {% else %} style="display: flex;" {% endif %}>
+					<div class="commentaire flex">
+						<div class="avatar">
+							{% if comment.user and comment.user.avatar %}
+								<img src="{{ comment.user.avatar }}" alt="Avatar de {{ comment.user.pseudo }}" class="avatar-img">
+							{% else %}
+								<img src="https://img.freepik.com/free-vector/para-snowboard-concept-illustration_114360-18502.jpg?t=st=1739357466~exp=1739361066~hmac=b818099bdbc92853d7d27ba02bc77f9772328ee776b0a503dbdb1f312a5d7408&w=740" alt="Avatar par défaut" class="avatar-img">
+							{% endif %}
+						</div>
+						<div class="texte">
+							<div class="tl700">{{ comment.user.pseudo }}</div>
+							<div class="txtI200">{{ comment.createAt|date("d/m/Y")}}</div>
+							<div class="topgap10">{{ comment.content }}</div>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+		{% if trick.comments|length > 5 %}
+			<div class="flex-center">
+				<button id="load-more" class="btn btn-primary mt-2">Afficher plus</button>
+			</div>
+		{% endif %}
+
+	</div>
+	<script>
+		function toggleMedia() {
+var mediaDiv = document.getElementById('media');
+var button = document.querySelector('#btn-resp-display button');
+
+// Toggle the display of the media div
+if (mediaDiv.style.display === 'none' || mediaDiv.style.display === '') {
+mediaDiv.style.display = 'block';
+button.textContent = "Masquer les médias"; // Change button text when media is shown
+} else {
+mediaDiv.style.display = 'none';
+button.textContent = "Voir les médias"; // Revert button text when media is hidden
+}
+}
+	</script>
+{% endblock %}
