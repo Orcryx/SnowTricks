@@ -135,7 +135,11 @@
 								<img src="https://img.freepik.com/free-vector/para-snowboard-concept-illustration_114360-18502.jpg?t=st=1739357466~exp=1739361066~hmac=b818099bdbc92853d7d27ba02bc77f9772328ee776b0a503dbdb1f312a5d7408&w=740" alt="Avatar par défaut" class="avatar-img">
 							{% endif %}
 						</div>
-						<div class="texte">{{ comment.content }}</div>
+						<div class="texte">
+							<div class="tl700">{{ comment.user.pseudo }}</div>
+							<div class="txtI200">{{ comment.createAt|date("d/m/Y")}}</div>
+							<div class="topgap10">{{ comment.content }}</div>
+						</div>
 					</div>
 				</div>
 			{% endfor %}

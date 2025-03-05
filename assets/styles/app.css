@@ -153,7 +153,7 @@ summary {
 
 #flash {
     position: fixed;
-    top: 20px;
+    top: 40px;
     right: 20px;
     z-index: 1000;
 }
@@ -198,7 +198,7 @@ summary {
 
 /*LES ERREURS DE FORMULAIRE*/
 
-.error-message, .alert-danger, .error-message {
+.error-message, .alert-danger {
     color: red;
     font-size: 14px;
     list-style: none; /* Supprime les puces */
@@ -223,6 +223,24 @@ summary {
     list-style: none;
     padding: 2px 0;
 }
+
+/* Appliquer le style uniquement aux erreurs dans des <ul><li> */
+.flex-column.zone-media-form ul {
+    color: red;
+    font-size: 14px;
+    list-style: none; /* Supprime les puces */
+    padding: 5px;
+    background-color: #ffe6e6; /* Fond léger pour alerter l'utilisateur */
+    border-left: 4px solid red; /* Effet de mise en valeur */
+    margin-top: 5px;
+    border-radius: 4px;
+}
+
+/* S'assurer que les <li> héritent bien du style */
+.flex-column.zone-media-form ul li {
+    margin-left: 0; /* Supprime l'indentation par défaut */
+}
+
 
 
 /*SPECIFIQUE */
@@ -301,18 +319,6 @@ display: none;
     width: 100%;
     margin: 20px 0;
 }
-.figure
-{
-    height: 100%;
-    width: 300px;
-}
-
-.figure img
-{
-    height:100% ;
-    width: 100%;
-    object-fit: cover;
-}
 
 
 #details-info
@@ -332,6 +338,18 @@ display: none;
     display: none;
 }
 
+.figure
+{
+    height: 100%;
+    width: 300px;
+}
+
+.figure img
+{
+    height:100% ;
+    width: 100%;
+    object-fit: cover;
+}
 
 .encart
 {
@@ -383,6 +401,26 @@ display: none;
       transform: translate(0, 2px);
     }
   }
+
+.tl700
+{
+    font-size: 1em;
+    font-weight: 700;
+}
+
+.txtI200
+{
+    font-size: 0.8em;
+    font-weight: 200;
+    font-style:unset;
+
+    color: grey;
+}
+
+.topgap10
+{
+    margin-top: 10px;
+}
 
 /*Les bannières heros*/
 
@@ -490,6 +528,7 @@ display: none;
     width: 100%;
 
     display: flex;  
+    justify-content: center;
 
     gap : 2px;
 
@@ -567,7 +606,7 @@ display: none;
 .carte-collection
 {
     /* width:; */
-    height: 230px;    
+    height: 250px;    
 
     display: flex;
     gap: 20px;
@@ -609,7 +648,6 @@ display: none;
     gap: 10px;
     /* padding: 10px; */
     /* border: 1px solid purSple; */
-
 }
 
  label
