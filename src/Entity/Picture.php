@@ -26,9 +26,14 @@ class Picture
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $updateAt = null;
 
-    #[ORM\ManyToOne(inversedBy: 'picture')]
+    // #[ORM\ManyToOne(inversedBy: 'picture')]
+    // #[ORM\JoinColumn(nullable: false)]
+    // private ?Trick $trick = null;
+
+    #[ORM\ManyToOne(targetEntity: Trick::class, inversedBy: "picture")]
     #[ORM\JoinColumn(nullable: false)]
     private ?Trick $trick = null;
+
 
     public function getId(): ?int
     {

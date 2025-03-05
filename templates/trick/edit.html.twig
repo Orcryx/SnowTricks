@@ -1,0 +1,101 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier un Trick
+{% endblock %}
+{% block hero %}
+	<div class="hero-picture img-shadow">
+		<img src="{{ trick.image }}" alt="Image présentant la figure {{ trick.name }}" class="img-shadow">
+		<div class="hero-text grand-text ombre">
+			<h1>{{trick.name}}</h1>
+		</div>
+	</div>
+{% endblock %}
+{% block zoneOne %}
+	<div class="contain">
+		<div>
+			<div class="form-error">
+				{{ form_errors(form, {'attr': {'class': 'error-message'}}) }}
+			</div>
+			{{ form_start(form , {'method': 'POST'}) }}
+			<div class="flex-column gap10">
+				<h3>Images de mise en avant</h3>
+				<div id="editTrick-input" class="flex-column">
+					{{ form_row(form.image, {'attr': {'class': 'form-control'}}) }}
+					{{ form_errors(form.image, {'attr': {'class': 'error-message'}}) }}
+				</div>
+				<div class="mb-1">
+					{{ form_label(form.name) }}
+					{{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+					{{ form_errors(form.name, {'attr': {'class': 'error-message'}}) }}
+				</div>
+			</div>
+			<div id="zone-media">
+				<div class="zone-media">
+					<h3>Images associées</h3>
+					<button type="button" class="btn btn-success mt-2" id="add-picture">Ajouter une image</button>
+					<div id="picture-collection" data-prototype="{{ form_widget(form.picture.vars.prototype)|e('html_attr') }}">
+						{% for picture in form.picture %}
+							<div class="picture-item d-flex align-items-start mb-3 carte-collection">
+								{% if picture.vars.value.src is not empty %}
+									<img src="{{ picture.vars.value.src }}" alt="Image du Trick" class="img-thumbnail mb-2">
+								{% endif %}
+								<div class="flex-column zone-media-form">
+									{{ form_row(picture.name, {'attr': {'class': 'form-control me-2'}}) }}
+									{{ form_row(picture.src, {'attr': {'class': 'form-control me-2'}}) }}
+									<button type="button" class="btn btn-danger remove-picture">Supprimer</button>
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+				<div class="zone-media">
+					<h3>Vidéos associées</h3>
+					<button type="button" class="btn btn-success mt-2" id="add-video">Ajouter une vidéo</button>
+					<div id="video-collection" data-prototype="{{ form_widget(form.video.vars.prototype)|e('html_attr') }}">
+						{% for video in form.video %}
+							<div class="video-item d-flex align-items-start mb-3 carte-collection">
+								{% if video.vars.value.src is not empty %}
+									<div class="flex-column zone-media-iframe">
+										<iframe src="{{ video.vars.value.src | replace({'youtu.be/': 'www.youtube.com/embed/', 'watch?v=': 'embed/'}) }}" frameborder="0" allowfullscreen class="mb-2"></iframe>
+									</div>
+								{% endif %}
+								<div class="flex-column zone-media-form">
+									{{ form_row(video.name, {'attr': {'class': 'form-control me-2'}}) }}
+									{{ form_row(video.src, {'attr': {'class': 'form-control me-2'}}) }}
+									<button type="button" class="btn btn-danger remove-video">Supprimer</button>
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+
+			</div>
+			<div class="mb-3">
+				{{ form_label(form.description) }}
+				{{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+				{{ form_errors(form.description, {'attr': {'class': 'error-message'}}) }}
+			</div>
+
+			<div class="mb-1">
+				{{ form_label(form.category) }}
+				{{ form_widget(form.category, {'attr': {'class': 'form-select'}}) }}
+				{{ form_errors(form.category, {'attr': {'class': 'error-message'}}) }}
+			</div>
+			{% if form.picture.vars.data is empty %}
+				<div class="hidden">
+					{{ form_widget(form.picture) }}
+				</div>
+			{% endif %}
+
+			{% if form.video.vars.data is empty %}
+				<div class="hidden">
+					{{ form_widget(form.video) }}
+				</div>
+			{% endif %}
+
+
+			{{form_row(form.submit)}}
+			{{ form_end(form) }}
+		</div>
+	</div>
+{% endblock %}

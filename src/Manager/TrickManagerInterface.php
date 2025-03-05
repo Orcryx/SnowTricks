@@ -2,18 +2,21 @@
 
 namespace App\Manager;
 
-use App\Entity\Comment;
 use App\Entity\Trick;
-use App\Entity\User;
-
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 interface TrickManagerInterface
 {
-
-    // /**
-    //  * Retourne le contenu d'un trick.
-    //  * @return array<trick>
-    //  */
-
-    // public function getTricksList(): array;
+    /**
+     * Récupère tous les tricks.
+     *
+     * @return Trick[]
+     */
+    public function getAllTricks(): array;
+    public function createTrick(Trick $trick): bool;
+    public function updateTrick(Trick $trick): bool;
+    public function deleteTrick(Trick $trick): void;
+    public function getTrick(string $slug): ?Trick;
+    public function getPaginatedTricks(int $page, int $limit = 5): Paginator;
+    public function getNumberTricks(): int;
 }

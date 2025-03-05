@@ -1,1 +1,26 @@
-<footer>gdfgd</footer></div>
+<footer id="footer" class="flex-center navbar-dark bg-dark">
+	<div id="infoFooter">Projet OpenClassRooms</div>
+	<nav class="navbar" id="navigationIcone">
+		<div class="flex-center">
+			<a href="{{ path('app_home') }}">
+				<i class="fas fa-home"></i>
+			</a>
+
+			{% if app.user %}
+				<a href="{{ path('app_trick_new') }}">
+					<i class="fa-solid fa-person-snowboarding"></i>
+				</a>
+				<a href="{{ path('app_logout') }}">
+					<i class="fas fa-sign-out-alt"></i>
+				</a>
+			{% else %}
+				<a href="{{ path('app_login') }}">
+					<i class="fas fa-sign-in-alt"></i>
+				</a>
+			{% endif %}
+			<a href="{{ path('app_register') }}">
+				<i class="fas fa-user-plus"></i>
+			</a>
+		</div>
+	</nav>
+</footer>

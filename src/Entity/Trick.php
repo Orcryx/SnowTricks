@@ -3,12 +3,16 @@
 namespace App\Entity;
 
 use App\Repository\TrickRepository;
+use DateTime;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TrickRepository::class)]
+#[UniqueEntity(fields: ['name'], message: 'Ce nom est déjà utilisé pour un autre trick.')]
 class Trick
 {
     #[ORM\Id]
@@ -16,9 +20,12 @@ class Trick
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Le nom du trick est obligatoire.')]
+    #[Assert\Regex('/^[a-zA-Z]{3,}[a-zA-Z0-9\- ]*$/', message: 'Le titre doit contenir au moins 5 lettres et peut inclure des chiffres et des tirets.')]
+    #[ORM\Column(length: 255,  unique: true)]
     private ?string $name = null;
 
+    #[Assert\NotBlank(message: 'Une description est nécessaire.')]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
@@ -35,16 +42,16 @@ class Trick
     /**
      * @var Collection<int, Picture>
      */
-    #[ORM\OneToMany(targetEntity: Picture::class, mappedBy: 'trick', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Picture::class, mappedBy: 'trick',  cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $picture;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 255, unique: true, nullable: true)]
     private ?string $slug = null;
 
     /**
      * @var Collection<int, Video>
      */
-    #[ORM\OneToMany(targetEntity: Video::class, mappedBy: 'trick', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Video::class, mappedBy: 'trick',  cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $video;
 
     /**
@@ -56,11 +63,16 @@ class Trick
     #[ORM\ManyToOne(inversedBy: 'trick')]
     private ?User $user = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $image = null;
+
     public function __construct()
     {
         $this->picture = new ArrayCollection();
         $this->video = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->createAt = new \DateTime();
+        $this->updateAt = new \DateTime();
     }
 
     public function getId(): ?int
@@ -238,6 +250,27 @@ class Trick
     public function setUser(?User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function generateSlug(): string
+    {
+        if (null === $this->name) {
+            throw new \LogicException('Le nom du trick est requis pour générer un slug.');
+        }
+
+        return strtolower(trim(preg_replace('/\s+/', '-', $this->name)));
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(string $image): static
+    {
+        $this->image = $image;
 
         return $this;
     }

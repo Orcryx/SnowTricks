@@ -2,44 +2,32 @@
 
 {% block title %}SnowTricks - Accueil
 {% endblock %}
-
-{% block sectionOne %}
-	<hero>HeroBannière</hero>
-	<h1></h1>
-	<a href="#gallery">
-		<i class="fa-solid fa-arrow-down"></i>
-	</a>
-	<div>
-
-		Bienvenue sur Snowtricks !
-				
-				Bienvenue sur SnowTricks, votre plateforme dédiée au snowboard et aux sports de glisse hivernaux ! Découvrez et maîtrisez les figures emblématiques de cette discipline grâce à nos tutoriels détaillés. Que vous soyez débutant ou rider expérimenté, plongez dans nos vidéos instructives, nos guides pas à pas et nos conseils pratiques pour perfectionner votre technique sur les pistes enneigées. Mais SnowTricks, c'est également une communauté vibrante de passionnés. Rejoignez-nous pour partager vos expériences, échanger des astuces et évoluer ensemble dans cet univers unique du snowboard. Préparez-vous à repousser vos limites et à vivre des sensations inoubliables avec SnowTricks, là où la glisse devient une passion partagée !
-				
-				Explorez notre site pour des astuces, des techniques et une immersion totale dans le monde du snowboard. Devenez membre de notre communauté dynamique et laissez-vous emporter par l'excitation et la camaraderie que seul le snowboard peut offrir. Bienvenue sur SnowTricks, où chaque virage vous rapproche un peu plus de la perfection sur les pistes enneigées !
-
+{% block hero %}
+	<div id="zoneHero">
+		<div class="hero-image">
+			<div class="hero-text">
+				<h1>Snowtricks</h1>
+				<div>
+					<p>Bienvenue sur Snowtricks ! Chaque virage vous rapproche un peu plus de la perfection sur les pistes enneigées !</p>
+					<a href="#gallery">
+						<i class="fa-solid fa-arrow-down"></i>
+					</a>
+				</div>
+			</div>
+		</div>
 	</div>
 {% endblock %}
-
-{% block sectionTwo %}
-	<div id="gallery" class="flex">
-		{% for trick in tricks %}
-			<a href="{{ path('app_trick',{slug: trick.slug, id : trick.id}) }}">
-				<div class="card flex-center">
-					<div class="card-image"></div>
-					<div class="card-content">
-						<h2>{{trick.name}}</h2>
-						{% for picture in trick.picture %}
-							{% if picture.name == "default" %}
-								<img src="{{ picture.src}}" alt="Image présentant la figure {{ trick.name }}">
-							{% endif %}
-						{% endfor %}
-						<p>{{trick.description}}</p>
-					</div>
-				</div>
+{% block zoneOne %}
+	<div id="zoneTwo">
+		<span id="gallery"></span>
+		<div id="trick-container" class="flex">
+			{% include "home/_tricks.html.twig" %}
+		</div>
+		{% include "home/_pagination.html.twig" %}
+		<div id="arrowUp">
+			<a href="#gallery">
+				<i class="fa-solid fa-arrow-up"></i>
 			</a>
-		{% endfor %}
+		</div>
 	</div>
-	<a href="#gallery">
-		<i class="fa-solid fa-arrow-up"></i>
-	</a>
 {% endblock %}

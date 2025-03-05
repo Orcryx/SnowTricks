@@ -1,0 +1,26 @@
+<div class="card-deck">
+	{% for trick in tricks %}
+		<a href="{{ path('app_trick_show', {slug: trick.slug}) }}" class="trick">
+			<div class="card mb-3">
+				<img src="{{ trick.image }}" alt="Image présentant la figure {{ trick.name }}">
+				<div class="card-desc flex-center">
+					<h5 class="card-title flex">{{ trick.name }}</h5>
+					{% if app.user %}
+						<div class="flex gap10">
+							<a href="{{ path('app_trick_edit', {slug: trick.slug}) }}">
+								<i class="fa-solid fa-pen"></i>
+							</a>
+							<a href="{{ path('app_trick_remove', {slug: trick.slug}) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce trick ? Cette action est irréversible.')">
+								<i class="fa-solid fa-trash"></i>
+							</a>
+						</div>
+					{% endif %}
+				</div>
+				<p class="card-text">
+					<small class="text-muted">Last updated
+						{{trick.updateAt|date("d/m/Y")}}</small>
+				</p>
+			</div>
+		</a>
+	{% endfor %}
+</div>

@@ -1,0 +1,22 @@
+<div id="flash">
+	{% for message in app.flashes('notice') %}
+		<div class="message flash-notice">
+			{{ message }}
+		</div>
+	{% endfor %}
+	{% for message in app.flashes('success') %}
+		<div class="message flash-success">
+			{{ message }}
+		</div>
+	{% endfor %}
+	{% for message in app.flashes('verify_email_error') %}
+		<div class="message flash-verify_email_error">
+			{{ message }}
+		</div>
+	{% endfor %}
+	{% for message in app.flashes('error') %}
+		<div class="message flash-error">
+			{{ message }}
+		</div>
+	{% endfor %}
+</div>

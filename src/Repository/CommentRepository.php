@@ -16,6 +16,25 @@ class CommentRepository extends ServiceEntityRepository
         parent::__construct($registry, Comment::class);
     }
 
+    public function save(Comment $comment, bool $flush = true): void
+    {
+        $this->getEntityManager()->persist($comment);
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
+    public function manageDate(Comment $comment, \DateTime $currentDate): void
+    {
+
+        if ($comment->getCreateAt() === null) {
+            $comment->setCreateAt($currentDate); // Définit une date de création si elle est absente
+
+            $comment->setUpdateAt($currentDate); // Met à jour la date de modification
+        }
+    }
+
+
     //    /**
     //     * @return Comment[] Returns an array of Comment objects
     //     */

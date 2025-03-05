@@ -1,22 +1,27 @@
-{% extends 'layout.html.twig' %}
+{% extends 'base.html.twig' %}
 
-{% block title %}Reset your password{% endblock %}
+{% block title %}Reset your password
+{% endblock %}
 
-{% block sectionOne %}
-    {% for flash_error in app.flashes('reset_password_error') %}
-        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-    {% endfor %}
-    <h1>Reset your password</h1>
+{% block zoneOne %}
+	<div id="zoneUnique">
 
-    {{ form_start(requestForm) }}
-        {{ form_row(requestForm.email) }}
-        <div>
-            <small>
-                Entrez votre adresse e-mail et nous vous enverrons un
-                lien pour réinitialiser votre mot de passe.
-            </small>
-        </div>
+		<div id="formulaire">
+			{% for flash_error in app.flashes('reset_password_error') %}
+				<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+			{% endfor %}
+			<h1>Reset your password</h1>
 
-        <button class="btn btn-primary">Send password reset email</button>
-    {{ form_end(requestForm) }}
+			{{ form_start(requestForm) }}
+			{{ form_row(requestForm.email) }}
+			<div>
+				<small>
+					Entrez votre adresse e-mail et nous vous enverrons un lien pour réinitialiser votre mot de passe.
+				</small>
+			</div>
+
+			<button class="btn btn-primary">Send password reset email</button>
+			{{ form_end(requestForm) }}
+		</div>
+	</div>
 {% endblock %}
