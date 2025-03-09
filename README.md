@@ -47,7 +47,7 @@ Développez de A à Z le site communautaire SnowTricks
         - php bin/console make:migration
     - Exécution des migrations
         - php bin/console doctrine:migrations:migrate
-    - Chargement des données en BDD - voir le dump dans l'archive du dossier Livrables
+    - Chargement des données en BDD - voir le dump dans le dossier livrables/SnowTricks.sql
 
 
 ## Utilisation
@@ -56,6 +56,7 @@ Pour exécuter le projet :
     - cd my-project/
 
 Accédez à l’application dans votre navigateur via http://127.0.0.1:8000/ :
+
     - symfony server:start
 
 Utilisateur :
